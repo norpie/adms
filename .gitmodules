@@ -1,0 +1,3 @@
+[submodule "src/EZLog"]
+	path = src/EZLog
+	url = https://github.com/apetitjean/EZLog
