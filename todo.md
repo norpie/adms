@@ -1,0 +1,72 @@
+# Active Directory Management System
+
+## MVP
+
+- [ ] Bulk user
+    - [ ] Creation
+    - [ ] Deletion
+    - [ ] Modification
+    - [ ] Group assignment
+- [ ] Bulk group
+    - [ ] Creation
+    - [ ] Deletion
+- [ ] Bulk password
+    - [ ] Reset
+    - [ ] Expiry
+- [ ] Logging
+    - [ ] Errors - ERR
+    - [ ] Actions - INF
+    - [ ] Warnings - WRN
+    - [ ] Verbosity param
+- [ ] Export to CSV
+    - [ ] Users
+    - [ ] Groups
+- [ ] Parameter Validation
+    - [ ] Mandatory
+    - [ ] Abort on error
+    - [ ] Default values on missing
+    - [ ] Skip on missing
+- [ ] Help
+    - [ ] Usage
+    - [ ] Docs
+    - [ ] Examples
+    - [ ] Parameters
+- [ ] Reporting
+    - [ ] User
+    - [ ] Group
+    - [ ] Password
+    - [ ] Errors
+- [ ] Error handling
+    - [ ] Exit on error
+    - [ ] Skip on error
+- [ ] Testing
+    - [ ] Unit
+    - [ ] Integration
+    - [ ] Functional
+- [ ] GUI
+    - [ ] PowerShell forms
+    - [ ] Desktop
+- [ ] Internationalization
+    - [ ] English
+    - [ ] Dutch
+
+## Extras
+
+- [ ] Bulk Policy
+    - [ ] Creation
+    - [ ] Deletion
+    - [ ] Modification
+    - [ ] Assignment
+        - [ ] User
+        - [ ] Group
+- [ ] Bulk Entity Linking
+    - [ ] User
+    - [ ] Group
+    - [ ] Computer
+- [ ] Graphical Reporting
+    - [ ] User
+    - [ ] Group
+    - [ ] Password
+    - [ ] Errors
+- [ ] Step-by-step
+    - [ ] Interactive
