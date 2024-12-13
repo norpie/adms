@@ -15,6 +15,7 @@ param(
 )
 
 . $PSScriptRoot/log.ps1
+. $PSScriptRoot/locale.ps1
 
 $LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
@@ -22,8 +23,15 @@ $LoggingOptions = @{
     ConsoleVerbosity = $ConsoleVerbosity
 }
 
+$Locale = Get-Best-Locale
+
+$LocaleOptions = @{
+    Locale = $Locale
+    LocaleData = Read-Locale -Locale $Locale
+}
+
+$Greeting = Get-Message -LocaleOptions $LocaleOptions -MessageName 'GREET'
+
 Write-Log-Header -LoggingOptions $LoggingOptions
-Write-Log        -LoggingOptions $LoggingOptions -Category INF -Message 'This is an information to be written in the log file'
-Write-Log        -LoggingOptions $LoggingOptions -Category ERR -Message 'This is an error to be written in the log file'
-Write-Log        -LoggingOptions $LoggingOptions -Category WAR -Message 'This is a warning to be written in the log file'
+Write-Log        -LoggingOptions $LoggingOptions -Category INF -Message "$Greeting"
 Write-Log-Footer -LoggingOptions $LoggingOptions
