@@ -18,8 +18,15 @@ Function Write-Help {
     Write-Host "$Tab adms.ps1"
     $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName "PARAMETERS"
     Write-Host $Message
+    $MaxLength = 0
+    foreach ($Parameter in $Parameters) {
+        if ($Parameter.Length -gt $MaxLength) {
+            $MaxLength = $Parameter.Length
+        }
+    }
     foreach ($Parameter in $Parameters) {
         $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName "Help$Parameter"
-        Write-Host "$Tab ${Parameter}: $Message"
+        $Parameter = $Parameter.PadRight($MaxLength)
+        Write-Host "$Tab -${Parameter} $Message"
     }
 }
