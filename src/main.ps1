@@ -11,11 +11,15 @@ param(
 
     [int]
     [ValidateRange(1, 3)]
-    $ConsoleVerbosity = 1
+    $ConsoleVerbosity = 1,
+
+    [switch]
+    $Help
 )
 
 . $PSScriptRoot/log.ps1
 . $PSScriptRoot/locale.ps1
+. $PSScriptRoot/help.ps1
 
 $LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
@@ -30,8 +34,10 @@ $LocaleOptions = @{
     LocaleData = Read-Locale -Locale $Locale
 }
 
-$Greeting = Get-Message -LocaleOptions $LocaleOptions -MessageName 'GREET'
+if ($Help) {
+    Write-Help -LocaleOptions $LocaleOptions
+    exit
+}
 
 Write-Log-Header -LoggingOptions $LoggingOptions
-Write-Log        -LoggingOptions $LoggingOptions -Category INF -Message "$Greeting"
 Write-Log-Footer -LoggingOptions $LoggingOptions

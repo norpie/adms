@@ -42,5 +42,8 @@ Function Get-Message {
         $MessageName
     )
     $Message = $LocaleOptions.LocaleData[$MessageName]
+    if (-not $Message) {
+        return "Localization name not found for variable: $MessageName"
+    }
     return $Message
 }
