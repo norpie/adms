@@ -4,5 +4,6 @@ HelpLogFileName,Set the name of the log file.
 HelpLogVerbosity,Set the verbosity of the log file.
 HelpConsoleVerbosity,Set the verbosity of the console output.
 HelpHelp,Display this help message.
-NAME,NAME
-PARAMETERS,PARAMETERS
+Name,NAME
+Parameters,PARAMETERS
+ParameterAliases,PARAMETER ALIASES

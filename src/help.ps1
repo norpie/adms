@@ -1,10 +1,29 @@
 # This file implements the help command for the shell.
 . $PSScriptRoot/locale.ps1
 
+$Tab = [char]9
+
+Function Get-Padding {
+    param (
+        $CurrentPadding,
+        $Content
+    )
+    $MaxLength = $CurrentPadding
+    foreach ($Content in $Content) {
+        if ($Content.Length -gt $MaxLength) {
+            $MaxLength = $Content.Length
+        }
+    }
+    return $MaxLength
+}
+
 Function Write-Help {
     param(
         $LocaleOptions
     )
+    $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName "Name"
+    Write-Host $Message
+    Write-Host "$Tab adms.ps1"
     $Parameters = @(
         "LogDir",
         "LogFileName",
@@ -12,21 +31,43 @@ Function Write-Help {
         "ConsoleVerbosity",
         "Help"
     )
-    $Tab = [char]9
-    $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName "NAME"
-    Write-Host $Message
-    Write-Host "$Tab adms.ps1"
-    $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName "PARAMETERS"
-    Write-Host $Message
-    $MaxLength = 0
-    foreach ($Parameter in $Parameters) {
-        if ($Parameter.Length -gt $MaxLength) {
-            $MaxLength = $Parameter.Length
-        }
+    $Aliases = @{
+        "H" = "Help"
     }
-    foreach ($Parameter in $Parameters) {
-        $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName "Help$Parameter"
-        $Parameter = $Parameter.PadRight($MaxLength)
-        Write-Host "$Tab -${Parameter} $Message"
+    $Padding = Get-Padding -Content $Parameters
+    $Padding = Get-Padding -CurrentPadding $Padding -Content $Aliases.Keys
+    Write-Arrayed-Help-Section -LocaleOptions $LocaleOptions -Padding $Padding -SectionName "Parameters" -SectionContent $Parameters
+    Write-Mapped-Help-Section -LocaleOptions $LocaleOptions -Padding $Padding -SectionName "ParameterAliases" -SectionContent $Aliases
+}
+
+Function Write-Arrayed-Help-Section {
+    param (
+        $LocaleOptions,
+        $Padding,
+        $SectionName,
+        $SectionContent
+    )
+    $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName $SectionName
+    Write-Host $Message
+    foreach ($Content in $SectionContent) {
+        $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName "Help$Content"
+        $Content = $Content.PadRight($Padding)
+        Write-Host "$Tab -${Content} $Message"
+    }
+}
+
+Function Write-Mapped-Help-Section {
+    param (
+        $LocaleOptions,
+        $Padding,
+        $SectionName,
+        $SectionContent
+    )
+    $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName $SectionName
+    Write-Host $Message
+    foreach ($Key in $SectionContent.Keys) {
+        $Value = $SectionContent[$Key]
+        $PaddedKey = $Key.PadRight($Padding)
+        Write-Host "$Tab -$PaddedKey -$Value"
     }
 }
