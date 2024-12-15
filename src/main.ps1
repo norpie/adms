@@ -14,7 +14,9 @@ param(
     $ConsoleVerbosity = 1,
 
     [switch]
-    $Help
+    $Help,
+    [switch]
+    $H
 )
 
 . $PSScriptRoot/log.ps1
@@ -34,7 +36,7 @@ $LocaleOptions = @{
     LocaleData = Read-Locale -Locale $Locale
 }
 
-if ($Help) {
+if ($Help -or $H) {
     Write-Help -LocaleOptions $LocaleOptions
     exit
 }
