@@ -1,7 +1,9 @@
 Name,Value
+
 Name,NAME
 Parameters,PARAMETERS
 ParameterAliases,PARAMETER ALIASES
+
 HelpLogDir,Set the directory where the log files will be stored.
 HelpLogFileName,Set the name of the log file.
 HelpLogVerbosity,Set the verbosity of the log file.
@@ -15,3 +17,12 @@ HelpUserInputFile,Set the input file for the users.
 HelpGroupInputFile,Set the input file for the groups.
 HelpPolicyInputFile,Set the input file for the GPOs.
 HelpLinkInputFile,Set the input file for the linking users, groups, and computers.
+
+StartCreateOUs,Creating OUs...
+CreatingOU,Creating OU:
+ExistingOU,OU already exists:
+CreatedOU,Created OU:
+CreatingOUFailed,Failed to create OU:
+DeletingOU,Deleting OU:
+DeletedOU,Deleted OU:
+EndCreateOUs,OUs created.
