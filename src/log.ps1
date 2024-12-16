@@ -1,5 +1,7 @@
 Import-Module $psscriptroot\EZLog\src\EZLog.psm1
 
+. $psscriptroot\locale.ps1
+
 $CategoryDictionary = @{
     'INF' = 1
     'WAR' = 2
@@ -45,5 +47,25 @@ Function Write-Log {
     }
     if ($CategoryDictionary[$Category] -ge $LoggingOptions.ConsoleVerbosity) {
         Write-Host "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $Category, $Message"
+    }
+}
+
+Function Write-Log-Abstract {
+    param (
+        $LoggingOptions,
+        $LocaleOptions,
+        [string]$Category,
+        [string]$MessageName,
+        $AdditionalMessage,
+        [switch]$Throw
+    )
+    $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName $MessageName
+    $FullMessage = "$Message"
+    if ($AdditionalMessage -ne "") {
+        $FullMessage = "$Message $AdditionalMessage"
+    }
+    Write-Log -LoggingOptions $LoggingOptions -Category $Category -Message $FullMessage
+    if ($Throw) {
+        throw $FullMessage
     }
 }
