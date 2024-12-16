@@ -29,7 +29,15 @@ Function Write-Help {
         "LogFileName",
         "LogVerbosity",
         "ConsoleVerbosity",
-        "Help"
+        "Help",
+        "ErrorHandling",
+        "OverwriteExisting",
+        "FillDefaults",
+        "OUInputFile",
+        "UserInputFile",
+        "GroupInputFile",
+        "PolicyInputFile",
+        "LinkInputFile"
     )
     $Aliases = @{
         "H" = "Help"

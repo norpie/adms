@@ -16,7 +16,28 @@ param(
     [switch]
     $Help,
     [switch]
-    $H
+    $H,
+
+    [int]
+    [ValidateRange(1, 3)]
+    $ErrorHandling = 3, # 3 = Stop, 2 = Warn Skip, 1 = Silent Skip
+    [switch]
+    $OverwriteExisting,
+    [switch]
+    $FillDefaults,
+
+    [string]
+    $OUInputFile,
+    [string]
+    $UserInputFile,
+    [string]
+    $GroupInputFile,
+
+    [string]
+    $PolicyInputFile,
+
+    [string]
+    $LinkInputFile
 )
 
 . $PSScriptRoot/log.ps1
@@ -36,9 +57,16 @@ $LocaleOptions = @{
     LocaleData = Read-Locale -Locale $Locale
 }
 
-if ($Help -or $H) {
+if ($Help -or $H)
+{
     Write-Help -LocaleOptions $LocaleOptions
     exit
+}
+
+$ADOptions = @{
+    ErrorHandling = $ErrorHandling
+    OverwriteExisting = $OverwriteExisting
+    FillDefaults = $FillDefaults
 }
 
 Write-Log-Header -LoggingOptions $LoggingOptions
