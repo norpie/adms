@@ -43,6 +43,7 @@ param(
 . $PSScriptRoot/log.ps1
 . $PSScriptRoot/locale.ps1
 . $PSScriptRoot/help.ps1
+. $PSScriptRoot/ad/ou.ps1
 
 $LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
@@ -70,4 +71,8 @@ $ADOptions = @{
 }
 
 Write-Log-Header -LoggingOptions $LoggingOptions
+if ($OUInputFile)
+{
+    New-OUs -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -ADOptions $ADOptions -OUInputFile $OUInputFile
+}
 Write-Log-Footer -LoggingOptions $LoggingOptions
