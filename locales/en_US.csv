@@ -18,6 +18,9 @@ HelpGroupInputFile,Set the input file for the groups.
 HelpPolicyInputFile,Set the input file for the GPOs.
 HelpLinkInputFile,Set the input file for the linking users, groups, and computers.
 
+MovingObject,Moving object:
+MovedObject,Moved object:
+
 StartCreateOUs,Creating OUs...
 CreatingOU,Creating OU:
 ExistingOU,OU already exists:

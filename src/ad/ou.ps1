@@ -1,83 +1,133 @@
 . $PSScriptRoot\..\log.ps1
 . $PSScriptRoot\util.ps1
 
+Function Get-Top-Level
+{
+    $Top = Get-ADDomain | Select-Object -ExpandProperty DNSRoot
+    $Top = $Top -replace '\.', ',DC='
+    $Top = "DC=$Top"
+    return $Top
+}
+
+Function Get-Temp-OU
+{
+    $Name = [System.Guid]::NewGuid().ToString()
+    $OU = New-ADOrganizationalUnit -Name $Name -ProtectedFromAccidentalDeletion $false -PassThru
+    return $OU
+}
+
 Function Read-OU-Fields
 {
     param(
-        [hashtable] $LoggingOptions,
-        [hashtable] $LocaleOptions,
-        [hashtable] $ADOptions,
         $OU
     )
-    $OU.Name = Read-Field -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -ADOptions $ADOptions -Field $OU.Name
-    $OU.Protect = Read-Field -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -ADOptions $ADOptions -Field $OU.Protect
+    $OU.Name = Read-Field -Field $OU.Name
+    $OU.Protect = Read-Field -Field $OU.Protect -Default $false
     $OU.Protect = [bool]::Parse($OU.Protect)
-    $OU.Description = Read-Field -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -ADOptions $ADOptions -Field $OU.Description
+    $OU.Description = Read-Field -Field $OU.Description -Default ''
     return $OU
+}
+
+Function Move-Children-Up
+{
+    param(
+        $OU,
+        $Temp
+    )
+    $Children = Get-ADObject -Filter * -SearchBase $OU -SearchScope OneLevel
+    $NewChildren = @()
+    foreach ($Child in $Children)
+    {
+        Write-Log-Abstract -Category 'INF' -MessageName 'MovingObject' -AdditionalMessage $Child.Name
+        $NewChild = Move-ADObject -Identity $Child.DistinguishedName -TargetPath $Temp -PassThru
+        $NewChildren += $NewChild
+        Write-Log-Abstract -Category 'INF' -MessageName 'MovedObject' -AdditionalMessage $Child.Name
+    }
+    return $NewChildren
+}
+
+Function Move-Children-Back
+{
+    param(
+        $OU,
+        $Children
+    )
+    foreach ($Child in $Children)
+    {
+        Write-Log-Abstract -Category 'INF' -MessageName 'MovingObject' -AdditionalMessage $Child.Name
+        Move-ADObject -Identity $Child.DistinguishedName -TargetPath $OU.DistinguishedName
+        Write-Log-Abstract -Category 'INF' -MessageName 'MovedObject' -AdditionalMessage $Child.Name
+    }
+}
+
+Function Write-Over-Existing
+{
+    param(
+        $OU,
+        $Existing
+    )
+    $Temp = Get-Temp-OU
+    $Children = Move-Children-Up -OU $Existing.DistinguishedName -Temp $Temp.DistinguishedName
+    Set-ADObject -Identity $Existing.DistinguishedName -ProtectedFromAccidentalDeletion:$false -PassThru | Out-Null
+    Remove-ADOrganizationalUnit -Identity $Existing.DistinguishedName -Confirm:$false
+    $New = New-ADOrganizationalUnit -Name $OU.Name -ProtectedFromAccidentalDeletion $OU.Protect -Description $OU.Description -PassThru
+    Move-Children-Back -OU $New -Children $Children
+    Remove-ADOrganizationalUnit -Identity $Temp.DistinguishedName -Confirm:$false
 }
 
 Function New-OU
 {
     param(
-        [hashtable] $LoggingOptions,
-        [hashtable] $LocaleOptions,
-        [hashtable] $ADOptions,
         $OU
     )
-    $OU = Read-OU-Fields -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -ADOptions $ADOptions -OU $OU
-    Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'INF' -MessageName 'CreatingOU' -AdditionalMessage $OU.Name
-    # Get the old one if it exists
+    $OU = Read-OU-Fields -OU $OU
+    Write-Log-Abstract -Category 'INF' -MessageName 'CreatingOU' -AdditionalMessage $OU.Name
     $Name = $OU.Name
     $Existing = Get-ADOrganizationalUnit -Filter {Name -eq $Name}
     if ($Existing)
     {
-        if ($ADOptions.OverwriteExisting)
+        if ($global:ADOptions.OverwriteExisting)
         {
-            Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'INF' -MessageName 'DeletingOU' -AdditionalMessage $OU.Name
-            Set-ADObject -Identity $Existing.DistinguishedName -ProtectedFromAccidentalDeletion:$false -PassThru | Out-Null
-            Remove-ADOrganizationalUnit -Identity $Existing.DistinguishedName -Confirm:$false
-            Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'INF' -MessageName 'DeletedOU' -AdditionalMessage $OU.Name
+            Write-Over-Existing -OU $OU -Existing $Existing
+            return
         } elseif
-            ($ADOptions.ErrorHandling -eq 3)
+            ($global:ADOptions.ErrorHandling -eq 3)
         {
-            Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'ERR' -MessageName 'ExistingOU' -AdditionalMessage $OU.Name -Throw
-        } elseif ($ADOptions.ErrorHandling -eq 2)
+            Write-Log-Abstract -Category 'ERR' -MessageName 'ExistingOU' -AdditionalMessage $OU.Name -Throw
+        } elseif ($global:ADOptions.ErrorHandling -eq 2)
         {
-            Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'WAR' -MessageName 'ExistingOU' -AdditionalMessage $OU.Name
+            Write-Log-Abstract -Category 'WAR' -MessageName 'ExistingOU' -AdditionalMessage $OU.Name
             return
         }
     }
-    New-ADOrganizationalUnit -Name $OU.Name -ProtectedFromAccidentalDeletion $OU.Protect -Description $OU.Description  | Out-Null
-    Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'INF' -MessageName 'CreatedOU' -AdditionalMessage $OU.Name
+    New-ADOrganizationalUnit -Name $OU.Name -ProtectedFromAccidentalDeletion $OU.Protect -Description $OU.Description
+    Write-Log-Abstract -Category 'INF' -MessageName 'CreatedOU' -AdditionalMessage $OU.Name
 }
 
 Function New-OUs
 {
     param (
-        [hashtable] $LoggingOptions,
-        [hashtable] $LocaleOptions,
-        [hashtable] $ADOptions,
         [string] $OUInputFile
     )
-    Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'INF' -MessageName 'StartCreateOUs'
+    Write-Log-Abstract -Category 'INF' -MessageName 'StartCreateOUs'
     $OUs = Import-Csv -Path $OUInputFile
     for ($i = 0; $i -lt $OUs.Length; $i++)
     {
         try
         {
             $OU = $OUs[$i]
-            New-OU -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -ADOptions $ADOptions -OU $OU
+            New-OU -OU $OU
         } catch
         {
-            if ($ADOptions.ErrorHandling -eq 2)
+            if ($global:ADOptions.ErrorHandling -eq 2)
             {
-                Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'WAR' -MessageName 'CreatingOUFailed' -AdditionalMessage $OU.Name
+                Write-Log-Abstract -Category 'WAR' -MessageName 'CreatingOUFailed' -AdditionalMessage $OU.Name
                 continue
-            } elseif ($ADOptions.ErrorHandling -eq 3)
+            } elseif ($global:ADOptions.ErrorHandling -eq 3)
             {
-                Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'ERR' -MessageName 'CreatingOUFailed' -AdditionalMessage $OU.Name -Throw
+                Write-Log-Abstract -Category 'ERR' -MessageName 'CreatingOUFailed' -AdditionalMessage $OU.Name -Throw
             }
         }
     }
-    Write-Log-Abstract -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -Category 'INF' -MessageName 'EndCreateOUs'
+    Write-Log-Abstract -Category 'INF' -MessageName 'EndCreateOUs'
 }
