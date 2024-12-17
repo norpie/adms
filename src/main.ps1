@@ -60,7 +60,7 @@ $global:LocaleOptions = @{
 
 if ($Help -or $H)
 {
-    Write-Help -LocaleOptions $LocaleOptions
+    Write-Help
     exit
 }
 
@@ -70,9 +70,9 @@ $global:ADOptions = @{
     FillDefaults = $FillDefaults
 }
 
-Write-Log-Header -LoggingOptions $LoggingOptions
+Write-Log-Header
 if ($OUInputFile)
 {
     New-OUs -OUInputFile $OUInputFile
 }
-Write-Log-Footer -LoggingOptions $LoggingOptions
+Write-Log-Footer
