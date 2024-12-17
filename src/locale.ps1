@@ -37,11 +37,10 @@ Function Read-Locale {
 
 Function Get-Message {
     param(
-        $LocaleOptions,
         [string]
         $MessageName
     )
-    $Message = $LocaleOptions.LocaleData[$MessageName]
+    $Message = $global:LocaleOptions.LocaleData[$MessageName]
     if (-not $Message) {
         return "Localization name not found for variable: $MessageName"
     }

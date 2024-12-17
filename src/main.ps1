@@ -45,7 +45,7 @@ param(
 . $PSScriptRoot/help.ps1
 . $PSScriptRoot/ad/ou.ps1
 
-$LoggingOptions = @{
+$global:LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
     LogVerbosity = $LogVerbosity
     ConsoleVerbosity = $ConsoleVerbosity
@@ -53,7 +53,7 @@ $LoggingOptions = @{
 
 $Locale = Get-Best-Locale
 
-$LocaleOptions = @{
+$global:LocaleOptions = @{
     Locale = $Locale
     LocaleData = Read-Locale -Locale $Locale
 }
@@ -64,7 +64,7 @@ if ($Help -or $H)
     exit
 }
 
-$ADOptions = @{
+$global:ADOptions = @{
     ErrorHandling = $ErrorHandling
     OverwriteExisting = $OverwriteExisting
     FillDefaults = $FillDefaults
@@ -73,6 +73,6 @@ $ADOptions = @{
 Write-Log-Header -LoggingOptions $LoggingOptions
 if ($OUInputFile)
 {
-    New-OUs -LoggingOptions $LoggingOptions -LocaleOptions $LocaleOptions -ADOptions $ADOptions -OUInputFile $OUInputFile
+    New-OUs -OUInputFile $OUInputFile
 }
 Write-Log-Footer -LoggingOptions $LoggingOptions

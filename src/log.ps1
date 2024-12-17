@@ -8,64 +8,66 @@ $CategoryDictionary = @{
     'ERR' = 3
 }
 
-Function Get-Log-File {
+Function Get-Log-File
+{
     param (
         [string]$LogDir,
         [string]$LogFileName = ""
     )
-    if ($LogFileName -eq "") {
+    if ($LogFileName -eq "")
+    {
         $LogFileName = "adms_$(Get-Date -Format 'yyyy-MM-dd_HH-mm-ss').log"
     }
-    if (-not (Test-Path $LogDir)) {
+    if (-not (Test-Path $LogDir))
+    {
         New-Item -ItemType Directory -Path $LogDir
     }
     return "$LogDir\$LogFileName"
 }
 
-Function Write-Log-Header {
-    param (
-        $LoggingOptions
-    )
-    Write-EZLog -Header -LogFile $LoggingOptions.LogFile
+Function Write-Log-Header
+{
+    Write-EZLog -Header -LogFile $global:LoggingOptions.LogFile
 }
 
-Function Write-Log-Footer {
-    param (
-        $LoggingOptions
-    )
-    Write-EZLog -Footer -LogFile $LoggingOptions.LogFile
+Function Write-Log-Footer
+{
+    Write-EZLog -Footer -LogFile $global:LoggingOptions.LogFile
 }
 
-Function Write-Log {
+Function Write-Log
+{
     param (
-        $LoggingOptions,
         [string]$Category,
         [string]$Message
     )
-    if ($CategoryDictionary[$Category] -ge $LoggingOptions.LogVerbosity) {
+    if ($CategoryDictionary[$Category] -ge $global:LoggingOptions.LogVerbosity)
+    {
         Write-EZLog -Category $Category -Message $Message -LogFile $LoggingOptions.LogFile
     }
-    if ($CategoryDictionary[$Category] -ge $LoggingOptions.ConsoleVerbosity) {
+    if ($CategoryDictionary[$Category] -ge $global:LoggingOptions.ConsoleVerbosity)
+    {
         Write-Host "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $Category, $Message"
     }
 }
 
-Function Write-Log-Abstract {
+Function Write-Log-Abstract
+{
     param (
-        $LoggingOptions,
-        $LocaleOptions,
         [string]$Category,
         [string]$MessageName,
         $AdditionalMessage,
         [switch]$Throw
     )
-    $Message = Get-Message -LocaleOptions $LocaleOptions -MessageName $MessageName
+    $Message = Get-Message -MessageName $MessageName
     $FullMessage = "$Message"
-    if ($AdditionalMessage -ne "") {
+    if ($AdditionalMessage -ne "")
+    {
         $FullMessage = "$Message $AdditionalMessage"
     }
-    Write-Log -LoggingOptions $LoggingOptions -Category $Category -Message $FullMessage
-    if ($Throw) {
+    Write-Log -Category $Category -Message $FullMessage
+    if ($Throw)
+    {
         throw $FullMessage
     }
 }
