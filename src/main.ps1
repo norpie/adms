@@ -25,9 +25,16 @@ param(
     $OverwriteExisting,
     [switch]
     $FillDefaults,
+    [switch]
+    $RecursiveDelete,
 
     [string]
-    $OUInputFile,
+    $OUAddInputFile,
+    [string]
+    $OUDeleteInputFile,
+    [string]
+    $OUModifyInputFile,
+
     [string]
     $UserInputFile,
     [string]
@@ -68,11 +75,16 @@ $global:ADOptions = @{
     ErrorHandling = $ErrorHandling
     OverwriteExisting = $OverwriteExisting
     FillDefaults = $FillDefaults
+    RecursiveDelete = $RecursiveDelete
 }
 
 Write-Log-Header
-if ($OUInputFile)
+if ($OUAddInputFile)
 {
-    New-OUs -OUInputFile $OUInputFile
+    New-OUs -OUInputFile $OUAddInputFile
+}
+if ($OUDeleteInputFile)
+{
+    Remove-OUs -OUInputFile $OUDeleteInputFile
 }
 Write-Log-Footer

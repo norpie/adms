@@ -68,7 +68,7 @@ Function Write-Over-Existing
     )
     $Temp = Get-Temp-OU
     $Children = Move-Children-Up -OU $Existing.DistinguishedName -Temp $Temp.DistinguishedName
-    Set-ADObject -Identity $Existing.DistinguishedName -ProtectedFromAccidentalDeletion:$false -PassThru | Out-Null
+    Set-ADObject -Identity $Existing.DistinguishedName -ProtectedFromAccidentalDeletion:$false
     Remove-ADOrganizationalUnit -Identity $Existing.DistinguishedName -Confirm:$false
     $New = New-ADOrganizationalUnit -Name $OU.Name -ProtectedFromAccidentalDeletion $OU.Protect -Description $OU.Description -PassThru
     Move-Children-Back -OU $New -Children $Children
@@ -130,4 +130,54 @@ Function New-OUs
         }
     }
     Write-Log-Abstract -Category 'INF' -MessageName 'EndCreateOUs'
+}
+
+Function Remove-OUs
+{
+    param (
+        [string] $OUInputFile
+    )
+    Write-Log-Abstract -Category 'INF' -MessageName 'StartRemoveOUs'
+    $OUs = Import-Csv -Path $OUInputFile
+    for ($i = 0; $i -lt $OUs.Length; $i++)
+    {
+        try
+        {
+            $OU = $OUs[$i]
+            $Name = $OU.Name
+            $Existing = Get-ADOrganizationalUnit -Filter {Name -eq $Name}
+            if (!$Existing)
+            {
+                if ($global:ADOptions.ErrorHandling -eq 2)
+                {
+                    Write-Log-Abstract -Category 'WAR' -MessageName 'RemovingOUFailed' -AdditionalMessage $OU.Name
+                    continue
+                } elseif ($global:ADOptions.ErrorHandling -eq 3)
+                {
+                    Write-Host $_.Exception.Message
+                    Write-Log-Abstract -Category 'ERR' -MessageName 'RemovingOUFailed' -AdditionalMessage $OU.Name -Throw
+                }
+            }
+            Set-ADObject -Identity $Existing.DistinguishedName -ProtectedFromAccidentalDeletion:$false
+            if ($global:ADOptions.RecursiveDelete)
+            {
+                Remove-ADOrganizationalUnit -Identity $Existing.DistinguishedName -Recursive -Confirm:$false
+            } else
+            {
+                Remove-ADOrganizationalUnit -Identity $Existing.DistinguishedName -Confirm:$false
+            }
+            Write-Log-Abstract -Category 'INF' -MessageName 'RemovedOU' -AdditionalMessage $OU.Name
+        } catch
+        {
+            if ($global:ADOptions.ErrorHandling -eq 2)
+            {
+                Write-Log-Abstract -Category 'WAR' -MessageName 'RemovingOUFailed' -AdditionalMessage $OU.Name
+                continue
+            } elseif ($global:ADOptions.ErrorHandling -eq 3)
+            {
+                Write-Host $_.Exception.Message
+                Write-Log-Abstract -Category 'ERR' -MessageName 'RemovingOUFailed' -AdditionalMessage $OU.Name -Throw
+            }
+        }
+    }
 }
