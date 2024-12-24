@@ -36,9 +36,11 @@ param(
     $OUModifyInputFile,
 
     [string]
-    $UserInputFile,
+    $UserAddInputFile,
     [string]
-    $GroupInputFile,
+    $UserDeleteInputFile,
+    [string]
+    $UserModifyInputFile,
 
     [string]
     $PolicyInputFile,
@@ -51,6 +53,7 @@ param(
 . $PSScriptRoot/locale.ps1
 . $PSScriptRoot/help.ps1
 . $PSScriptRoot/ad/ou.ps1
+. $PSScriptRoot/ad/user.ps1
 
 $global:LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
@@ -79,12 +82,32 @@ $global:ADOptions = @{
 }
 
 Write-Log-Header
+
+# OU Operations
 if ($OUAddInputFile)
 {
     New-OUs -OUInputFile $OUAddInputFile
 }
+
 if ($OUDeleteInputFile)
 {
     Remove-OUs -OUInputFile $OUDeleteInputFile
 }
+# User Operations
+if ($UserAddInputFile)
+{
+    New-Users -UserInputFile $UserAddInputFile
+}
+
+if ($UserDeleteInputFile)
+{
+    Remove-Users -UserInputFile $UserDeleteInputFile
+}
+
+if ($UserModifyInputFile)
+{
+    Edit-Users -UserInputFile $UserModifyInputFile
+    What;
+}
+
 Write-Log-Footer
