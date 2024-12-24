@@ -105,6 +105,12 @@ if ($OUDeleteInputFile)
 {
     Remove-OUs -OUInputFile $OUDeleteInputFile
 }
+
+if ($OUModifyInputFile)
+{
+    Edit-OUs -OUInputFile $OUModifyInputFile
+}
+
 # User Operations
 if ($UserAddInputFile)
 {
