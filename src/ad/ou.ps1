@@ -1,13 +1,6 @@
 . $PSScriptRoot\..\log.ps1
 . $PSScriptRoot\util.ps1
-
-Function Get-Top-Level
-{
-    $Top = Get-ADDomain | Select-Object -ExpandProperty DNSRoot
-    $Top = $Top -replace '\.', ',DC='
-    $Top = "DC=$Top"
-    return $Top
-}
+. $PSScriptRoot\path.ps1
 
 Function Get-Temp-OU
 {
@@ -21,6 +14,7 @@ Function Read-OU-Fields
     param(
         $OU
     )
+    $OU.Path = Read-Field -Field $OU.Path -Default ''
     $OU.Name = Read-Field -Field $OU.Name
     $OU.Protect = Read-Field -Field $OU.Protect -Default $false
     $OU.Protect = [bool]::Parse($OU.Protect)
@@ -180,4 +174,11 @@ Function Remove-OUs
             }
         }
     }
+}
+
+Function Edit-OUs {
+    param (
+        [string] $OUInputFile
+    )
+    # TODO: Implement this function
 }
