@@ -50,6 +50,13 @@ param(
     $GroupModifyInputFile,
 
     [string]
+    $ExportOUsFile,
+    [string]
+    $ExportUsersFile,
+    [string]
+    $ExportGroupsFile,
+
+    [string]
     $LinkInputFile
 )
 
@@ -58,6 +65,7 @@ param(
 . $PSScriptRoot/help.ps1
 . $PSScriptRoot/ad/ou.ps1
 . $PSScriptRoot/ad/user.ps1
+. $PSScriptRoot/ad/export.ps1
 
 $global:LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
@@ -128,6 +136,22 @@ if ($GroupDeleteInputFile)
 if ($GroupModifyInputFile)
 {
     Edit-Groups -GroupInputFile $GroupModifyInputFile
+}
+
+# Export Operations
+if ($ExportOUsFile)
+{
+    Export-OUs -OUExportFile $ExportOUsFile
+}
+
+if ($ExportGroupsFile)
+{
+    Export-Groups -GroupExportFile $ExportGroupsFile
+}
+
+if ($ExportUsersFile)
+{
+    Export-Users -UserExportFile $ExportUsersFile
 }
 
 Write-Log-Footer
