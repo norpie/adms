@@ -43,7 +43,11 @@ param(
     $UserModifyInputFile,
 
     [string]
-    $PolicyInputFile,
+    $GroupAddInputFile,
+    [string]
+    $GroupDeleteInputFile,
+    [string]
+    $GroupModifyInputFile,
 
     [string]
     $LinkInputFile
@@ -108,6 +112,22 @@ if ($UserModifyInputFile)
 {
     Edit-Users -UserInputFile $UserModifyInputFile
     What;
+}
+
+# Group Operations
+if ($GroupAddInputFile)
+{
+    New-Groups -GroupInputFile $GroupAddInputFile
+}
+
+if ($GroupDeleteInputFile)
+{
+    Remove-Groups -GroupInputFile $GroupDeleteInputFile
+}
+
+if ($GroupModifyInputFile)
+{
+    Edit-Groups -GroupInputFile $GroupModifyInputFile
 }
 
 Write-Log-Footer
