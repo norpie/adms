@@ -9,7 +9,7 @@ Function Get-Temp-OU
     return $OU
 }
 
-Function Read-OU-Fields
+Function Read-Create-OU-Fields
 {
     param(
         $OU
@@ -20,6 +20,17 @@ Function Read-OU-Fields
     $OU.Protect = Read-Field -Field $OU.Protect -Default $false -FieldName "Protect"
     $OU.Protect = [bool]::Parse($OU.Protect)
     $OU.Description = Read-Field -Field $OU.Description -Default '' -FieldName "Description"
+    return $OU
+}
+
+Function Read-Remove-OU-Fields
+{
+    param(
+        $OU
+    )
+    $OU.Name = Read-Field -Field $OU.Name -FieldName "Name"
+    $OU.Path = Read-Field -Field $OU.Path -FieldName "Path" -Default ''
+    $OU.Path = Get-Parsed-Path -Path $OU.Path
     return $OU
 }
 
@@ -75,7 +86,7 @@ Function New-OU
     param(
         $OU
     )
-    $OU = Read-OU-Fields -OU $OU
+    $OU = Read-Create-OU-Fields -OU $OU
     Write-Log-Abstract -Category 'INF' -MessageName 'CreatingOU' -AdditionalMessage $OU.Name
     $Name = $OU.Name
     $Existing = Get-ADOrganizationalUnit -Filter {Name -eq $Name}
@@ -154,10 +165,7 @@ Function Remove-OUs
     {
         try
         {
-            $OU = $OUs[$i]
-            $OU.Name = Read-Field -Field $OU.Name -FieldName "Name"
-            $OU.Path = Read-Field -Field $OU.Path -FieldName "Path" -Default ''
-            $OU.Path = Get-Parsed-Path -Path $OU.Path
+            $OU = Read-Remove-OU-Fields -OU $OUs[$i]
             $Name = $OU.Name
             $Existing = Get-ADOrganizationalUnit -Filter {Name -eq $Name} -SearchBase $OU.Path
             Write-Log-Abstract -Category 'INF' -MessageName 'RemovingOU' -AdditionalMessage $OU.Name
