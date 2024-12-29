@@ -57,7 +57,8 @@ Function Write-Log-Abstract
         [string]$Category,
         [string]$MessageName,
         $AdditionalMessage,
-        [switch]$Throw
+        [switch]$Throw,
+        [switch]$Exit
     )
     $Message = Get-Message -MessageName $MessageName
     $FullMessage = "$Message"
@@ -66,6 +67,10 @@ Function Write-Log-Abstract
         $FullMessage = "$Message $AdditionalMessage"
     }
     Write-Log -Category $Category -Message $FullMessage
+    if ($Exit)
+    {
+        exit
+    }
     if ($Throw)
     {
         throw $FullMessage
