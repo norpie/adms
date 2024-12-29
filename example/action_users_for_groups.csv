@@ -1,4 +1,4 @@
 Action,Username,GroupName
 Add,jdoe,IT_Admins
 Add,asmith,HR_Team
-Remove,bjones,Marketing_Team
+Add,bjones,Marketing_Team
