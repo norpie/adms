@@ -29,35 +29,11 @@ param(
     $RecursiveDelete,
 
     [string]
-    $OUAddInputFile,
+    $Entity,
     [string]
-    $OUDeleteInputFile,
+    $Operation,
     [string]
-    $OUModifyInputFile,
-
-    [string]
-    $UserAddInputFile,
-    [string]
-    $UserDeleteInputFile,
-    [string]
-    $UserModifyInputFile,
-
-    [string]
-    $GroupAddInputFile,
-    [string]
-    $GroupDeleteInputFile,
-    [string]
-    $GroupModifyInputFile,
-
-    [string]
-    $ExportOUsFile,
-    [string]
-    $ExportUsersFile,
-    [string]
-    $ExportGroupsFile,
-
-    [string]
-    $LinkInputFile
+    $File
 )
 
 . $PSScriptRoot/log.ps1
@@ -95,69 +71,30 @@ $global:ADOptions = @{
 
 Write-Log-Header
 
-# OU Operations
-if ($OUAddInputFile)
+if ($Entity -and $Operation -and $File)
 {
-    New-OUs -OUInputFile $OUAddInputFile
-}
-
-if ($OUDeleteInputFile)
+    if ($Entity -eq "OU")
+    {
+        Handle-OU-Operation -Operation $Operation -File $File
+        return
+    } elseif ($Entity -eq "User")
+    {
+        Handle-User-Operation -Operation $Operation -File $File
+        return
+    } elseif ($Entity -eq "Group")
+    {
+        Handle-Group-Operation -Operation $Operation -File $File
+        return
+    }
+} elseif (-not $Entity)
 {
-    Remove-OUs -OUInputFile $OUDeleteInputFile
-}
-
-if ($OUModifyInputFile)
+    Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-Entity" -Exit
+} elseif (-not $Operation)
 {
-    Edit-OUs -OUInputFile $OUModifyInputFile
-}
-
-# User Operations
-if ($UserAddInputFile)
+    Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-Operation" -Exit
+} elseif (-not $File)
 {
-    New-Users -UserInputFile $UserAddInputFile
-}
-
-if ($UserDeleteInputFile)
-{
-    Remove-Users -UserInputFile $UserDeleteInputFile
-}
-
-if ($UserModifyInputFile)
-{
-    Edit-Users -UserInputFile $UserModifyInputFile
-    What;
-}
-
-# Group Operations
-if ($GroupAddInputFile)
-{
-    New-Groups -GroupInputFile $GroupAddInputFile
-}
-
-if ($GroupDeleteInputFile)
-{
-    Remove-Groups -GroupInputFile $GroupDeleteInputFile
-}
-
-if ($GroupModifyInputFile)
-{
-    Edit-Groups -GroupInputFile $GroupModifyInputFile
-}
-
-# Export Operations
-if ($ExportOUsFile)
-{
-    Export-OUs -OUExportFile $ExportOUsFile
-}
-
-if ($ExportGroupsFile)
-{
-    Export-Groups -GroupExportFile $ExportGroupsFile
-}
-
-if ($ExportUsersFile)
-{
-    Export-Users -UserExportFile $ExportUsersFile
+    Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-File" -Exit
 }
 
 Write-Log-Footer
