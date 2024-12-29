@@ -1,0 +1,4 @@
+Action,GroupName,Description,Owner
+Create,IT_Admins,Administrators for IT department,jdoe
+Modify,HR_Team,Human Resources group,asmith
+Delete,Marketing_Team,Marketing group,bjones
