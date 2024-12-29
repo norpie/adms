@@ -177,7 +177,6 @@ Function Remove-OUs
                     continue
                 } elseif ($global:ADOptions.ErrorHandling -eq 3)
                 {
-                    Write-Host $_.Exception.Message
                     Write-Log-Abstract -Category 'ERR' -MessageName 'RemovingOUFailed' -AdditionalMessage $OU.Name -Throw
                 }
             }
