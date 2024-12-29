@@ -69,23 +69,35 @@ $global:ADOptions = @{
     RecursiveDelete = $RecursiveDelete
 }
 
+function Invoke-Operation
+{
+    param (
+        [string]
+        $Operation,
+        $Content
+    )
+    if ($Entity -eq "OU")
+    {
+        Invoke-OU-Operation -Operation $Operation -Content $Content
+    } elseif ($Entity -eq "User")
+    {
+        Invoke-User-Operation -Operation $Operation -Content $Content
+    } elseif ($Entity -eq "Group")
+    {
+        Invoke-Group-Operation -Operation $Operation -Content $Content
+    }
+}
+
 Write-Log-Header
 
 if ($Entity -and $Operation -and $File)
 {
-    if ($Entity -eq "OU")
+    if (-not (Test-Path $File))
     {
-        Handle-OU-Operation -Operation $Operation -File $File
-        return
-    } elseif ($Entity -eq "User")
-    {
-        Handle-User-Operation -Operation $Operation -File $File
-        return
-    } elseif ($Entity -eq "Group")
-    {
-        Handle-Group-Operation -Operation $Operation -File $File
-        return
+        Write-Log-Abstract -Category ERR -MessageName "FileNotFound" -AdditionalMessage $File -Exit
     }
+    $Content = Import-Csv -Path $File
+    Invoke-Operation -Operation $Operation -Content $Content
 } elseif (-not $Entity)
 {
     Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-Entity" -Exit

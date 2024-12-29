@@ -99,31 +99,30 @@ Function New-OU
     Write-Log-Abstract -Category 'INF' -MessageName 'CreatedOU' -AdditionalMessage $OU.Name
 }
 
-Function Handle-OU-Operation
+Function Invoke-OU-Operation
 {
     param(
         [string] $Operation,
-        [string] $File
+        $Content
     )
     if ($Operation -eq 'Create')
     {
-        New-OUs -OUInputFile $File
+        New-OUs -OUs $Content
     } elseif ($Operation -eq 'Delete')
     {
-        Remove-OUs -OUInputFile $File
-    } elseif ($Operation -eq 'Modify')
+        Remove-OUs -OUs $Content
+    } else
     {
-        Modify-OUs -OUInputFile $File
+        Write-Log-Abstract -Category 'ERR' -MessageName 'InvalidOperation' -AdditionalMessage $Operation -Exit
     }
 }
 
 Function New-OUs
 {
     param (
-        [string] $OUInputFile
+        $OUs
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'StartCreateOUs'
-    $OUs = Import-Csv -Path $OUInputFile
     for ($i = 0; $i -lt $OUs.Length; $i++)
     {
         try
@@ -148,17 +147,20 @@ Function New-OUs
 Function Remove-OUs
 {
     param (
-        [string] $OUInputFile
+        $OUs
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'StartRemoveOUs'
-    $OUs = Import-Csv -Path $OUInputFile
     for ($i = 0; $i -lt $OUs.Length; $i++)
     {
         try
         {
             $OU = $OUs[$i]
+            $OU.Name = Read-Field -Field $OU.Name -FieldName "Name"
+            $OU.Path = Read-Field -Field $OU.Path -FieldName "Path" -Default ''
+            $OU.Path = Get-Parsed-Path -Path $OU.Path
             $Name = $OU.Name
-            $Existing = Get-ADOrganizationalUnit -Filter {Name -eq $Name}
+            $Existing = Get-ADOrganizationalUnit -Filter {Name -eq $Name} -SearchBase $OU.Path
+            Write-Log-Abstract -Category 'INF' -MessageName 'RemovingOU' -AdditionalMessage $OU.Name
             if (!$Existing)
             {
                 if ($global:ADOptions.ErrorHandling -eq 2)
@@ -188,17 +190,9 @@ Function Remove-OUs
                 continue
             } elseif ($global:ADOptions.ErrorHandling -eq 3)
             {
-                Write-Host $_.Exception.Message
                 Write-Log-Abstract -Category 'ERR' -MessageName 'RemovingOUFailed' -AdditionalMessage $OU.Name -Throw
             }
         }
     }
-}
-
-Function Modify-OUs
-{
-    param (
-        [string] $OUInputFile
-    )
-    # TODO: Implement this function
+    Write-Log-Abstract -Category 'INF' -MessageName 'EndRemoveOUs'
 }
