@@ -30,11 +30,9 @@ Function Write-Help {
         "ErrorHandling",
         "OverwriteExisting",
         "FillDefaults",
-        "OUInputFile",
-        "UserInputFile",
-        "GroupInputFile",
-        "PolicyInputFile",
-        "LinkInputFile"
+        "Entity",
+        "Operation",
+        "File"
     )
     $Aliases = @{
         "H" = "Help"

@@ -12,11 +12,14 @@ HelpHelp,Display this help message.
 HelpErrorHandling,Set the error handling mode.
 HelpOverwriteExisting,Overwrite existing AD entities.
 HelpFillDefaults,Fill missing values with default values for fields that are not required.
-HelpOUInputFile,Set the input file for the OUs.
-HelpUserInputFile,Set the input file for the users.
-HelpGroupInputFile,Set the input file for the groups.
-HelpPolicyInputFile,Set the input file for the GPOs.
-HelpLinkInputFile,Set the input file for the linking users, groups, and computers.
+
+HelpEntity,The type of entity to process [OU Group User]
+HelpOperation,The type of operation to process [Create Delete Modify]
+HelpFile,The file to read the data from.
+
+MissingParameter,Missing parameter:
+MissingField,Missing field in CSV:
+MissingFieldDefault,Missing field in CSV, using default value:
 
 MovingObject,Moving object:
 MovedObject,Moved object:
