@@ -22,14 +22,19 @@ MissingParameter,Missing parameter:
 MissingField,Missing field in CSV:
 MissingFieldDefault,Missing field in CSV, using default value:
 
+InvalidOperation,Invalid operation for entity:
+
 MovingObject,Moving object:
 MovedObject,Moved object:
 
 StartCreateOUs,Creating OUs...
+StartRemoveOUs,Removing OUs...
 CreatingOU,Creating OU:
+RemovingOU,Removing OU:
 ExistingOU,OU already exists:
 CreatedOU,Created OU:
+RemovedOU,Removed OU:
 CreatingOUFailed,Failed to create OU:
-DeletingOU,Deleting OU:
-DeletedOU,Deleted OU:
+RemovingOUFailed, Failed to remove OU:
 EndCreateOUs,OUs created.
+EndRemoveOUs,OUs removed.
