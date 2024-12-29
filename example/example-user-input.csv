@@ -1,5 +1,4 @@
-Path,Name,DisplayName,Password
-,admin,Admin,password
-Example,user1,User 1,password
-Example/Test,user2,User 2,password
-Example,user3,User 3,password
+Action,Path,Username,DisplayName,Password,Email,Department,Status
+Add,Users,jdoe,Jane Doe,password,jdoe@mail.com,IT,Active
+Add,Users,asmith,Alice Smith,password,asmith@mail.com,HR,Active
+Add,Users,bjones,Ben Jones,password,bjones@mail.com,Marketing,Active
