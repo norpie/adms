@@ -30,6 +30,7 @@ Function Write-Help {
         "ErrorHandling",
         "OverwriteExisting",
         "FillDefaults",
+        "RecursiveDelete",
         "Entity",
         "Operation",
         "File"
