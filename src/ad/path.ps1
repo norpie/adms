@@ -13,11 +13,20 @@ Function Get-Parsed-Path
         $Path
     )
     # Support both Windows and Unix paths
+    $Path = $Path -replace 'ROOT/', ''
+    $Path = $Path -replace 'ROOT', ''
     $Path = $Path -replace '\\', '/'
     $Path = $Path -split '/'
-    $Path = $Path | ForEach-Object { "DC=$_" }
+    $Path = $Path | ForEach-Object { "OU=$_" }
     $Path = $Path -join ','
-    $Path = "OU=$Path,$(Get-Top-Level)"
+    if ($Path -eq 'OU=')
+    {
+        $Path = "$(Get-Top-Level)"
+    } else
+    {
+        $Path = "$Path,$(Get-Top-Level)"
+    }
+    return $Path
 }
 
 # Takes a string like "OU=OU,DC=To,DC=Path,DC=Example,DC=com" and returns a string like "Example/Path/To/OU"
