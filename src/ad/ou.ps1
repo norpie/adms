@@ -14,11 +14,12 @@ Function Read-OU-Fields
     param(
         $OU
     )
-    $OU.Path = Read-Field -Field $OU.Path -Default ''
-    $OU.Name = Read-Field -Field $OU.Name
-    $OU.Protect = Read-Field -Field $OU.Protect -Default $false
+    $OU.Path = Read-Field -Field $OU.Path -FieldName "Path" -Default ''
+    $OU.Path = Get-Parsed-Path -Path $OU.Path
+    $OU.Name = Read-Field -Field $OU.Name -FieldName "Name"
+    $OU.Protect = Read-Field -Field $OU.Protect -Default $false -FieldName "Protect"
     $OU.Protect = [bool]::Parse($OU.Protect)
-    $OU.Description = Read-Field -Field $OU.Description -Default ''
+    $OU.Description = Read-Field -Field $OU.Description -Default '' -FieldName "Description"
     return $OU
 }
 
@@ -64,7 +65,7 @@ Function Write-Over-Existing
     $Children = Move-Children-Up -OU $Existing.DistinguishedName -Temp $Temp.DistinguishedName
     Set-ADObject -Identity $Existing.DistinguishedName -ProtectedFromAccidentalDeletion:$false
     Remove-ADOrganizationalUnit -Identity $Existing.DistinguishedName -Confirm:$false
-    $New = New-ADOrganizationalUnit -Name $OU.Name -ProtectedFromAccidentalDeletion $OU.Protect -Description $OU.Description -PassThru
+    $New = New-ADOrganizationalUnit -Name $OU.Name -ProtectedFromAccidentalDeletion $OU.Protect -Path $OU.Path -Description $OU.Description -PassThru
     Move-Children-Back -OU $New -Children $Children
     Remove-ADOrganizationalUnit -Identity $Temp.DistinguishedName -Confirm:$false
 }
@@ -94,8 +95,26 @@ Function New-OU
             return
         }
     }
-    New-ADOrganizationalUnit -Name $OU.Name -ProtectedFromAccidentalDeletion $OU.Protect -Description $OU.Description
+    New-ADOrganizationalUnit -Name $OU.Name -ProtectedFromAccidentalDeletion $OU.Protect -Path $OU.Path -Description $OU.Description
     Write-Log-Abstract -Category 'INF' -MessageName 'CreatedOU' -AdditionalMessage $OU.Name
+}
+
+Function Handle-OU-Operation
+{
+    param(
+        [string] $Operation,
+        [string] $File
+    )
+    if ($Operation -eq 'Create')
+    {
+        New-OUs -OUInputFile $File
+    } elseif ($Operation -eq 'Delete')
+    {
+        Remove-OUs -OUInputFile $File
+    } elseif ($Operation -eq 'Modify')
+    {
+        Modify-OUs -OUInputFile $File
+    }
 }
 
 Function New-OUs
@@ -176,7 +195,8 @@ Function Remove-OUs
     }
 }
 
-Function Edit-OUs {
+Function Modify-OUs
+{
     param (
         [string] $OUInputFile
     )
