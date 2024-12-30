@@ -143,7 +143,7 @@ Function Invoke-OU-Action
         Remove-OU -OU $Action
     } else
     {
-        Write-Log-Abstract -Category 'ERR' -MessageName 'InvalidAction' -AdditionalMessage $Action.Action -Throw
+        Write-Log-Abstract -Category 'ERR' -MessageName 'InvalidOUAction' -AdditionalMessage $Action.Action -Throw
     }
 }
 
