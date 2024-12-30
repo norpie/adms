@@ -40,7 +40,12 @@ param(
 . $PSScriptRoot/ad/ou.ps1
 . $PSScriptRoot/ad/user.ps1
 . $PSScriptRoot/ad/group.ps1
+. $PSScriptRoot/ad/groupuser.ps1
 . $PSScriptRoot/ad/export.ps1
+
+Register-EngineEvent PowerShell.Exiting –Action {
+    Write-Log-Footer
+}
 
 $global:LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
@@ -110,5 +115,3 @@ if ($Entity -and $File)
 {
     Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-File" -Exit
 }
-
-Write-Log-Footer
