@@ -46,3 +46,11 @@ AddedUser,Added user:
 RemovedUser,Removed user:
 AddingUserFailed,Failed to add user:
 RemovingUserFailed,Failed to remove user:
+
+AddingGroup,Adding group:
+RemovingGroup,Removing group:
+ExistingGroup,Group already exists:
+AddedGroup,Added group:
+RemovedGroup,Removed group:
+AddingGroupFailed,Failed to add group:
+RemovingGroupFailed,Failed to remove group:

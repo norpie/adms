@@ -39,6 +39,7 @@ param(
 . $PSScriptRoot/help.ps1
 . $PSScriptRoot/ad/ou.ps1
 . $PSScriptRoot/ad/user.ps1
+. $PSScriptRoot/ad/group.ps1
 . $PSScriptRoot/ad/export.ps1
 
 $global:LoggingOptions = @{
