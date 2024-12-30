@@ -1,4 +1,5 @@
 . $PSScriptRoot\..\log.ps1
+. $PSScriptRoot\..\actionlog.ps1
 . $PSScriptRoot\util.ps1
 . $PSScriptRoot\path.ps1
 
@@ -21,8 +22,10 @@ Function Invoke-GroupUser-Actions
             {
                 Write-Log-Abstract -Category 'ERR' -MessageName 'UserGroupActionFailed' -AdditionalMessage $_.Exception.Message -Throw
             }
+            Write-Action-To-Action-Log -ActionName 'UserToGroup' -Action $Action.Action -Id "$($Action.UserName):$($Action.GroupName)" -Result 'Failed'
             continue
         }
+        Write-Action-To-Action-Log -ActionName 'UserToGroup' -Action $Action.Action -Id "$($Action.UserName):$($Action.GroupName)" -Result 'Success'
     }
 }
 

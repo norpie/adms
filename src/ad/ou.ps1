@@ -1,4 +1,5 @@
 . $PSScriptRoot\..\log.ps1
+. $PSScriptRoot\..\actionlog.ps1
 . $PSScriptRoot\util.ps1
 . $PSScriptRoot\path.ps1
 
@@ -124,8 +125,10 @@ Function Invoke-OU-Actions
             {
                 Write-Log-Abstract -Category 'ERR' -MessageName 'OUActionFailed' -AdditionalMessage $_.Exception.Message -Throw
             }
+            Write-Action-To-Action-Log -ActionName 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Failed'
             continue
         }
+        Write-Action-To-Action-Log -ActionName 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Success'
     }
 }
 

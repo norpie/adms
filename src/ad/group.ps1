@@ -1,4 +1,5 @@
 . $PSScriptRoot\..\log.ps1
+. $PSScriptRoot\..\actionlog.ps1
 . $PSScriptRoot\util.ps1
 . $PSScriptRoot\path.ps1
 
@@ -41,8 +42,10 @@ Function Invoke-Group-Actions
             {
                 Write-Log-Abstract -Category 'ERR' -MessageName 'GroupActionFailed' -AdditionalMessage $_.Exception.Message -Throw
             }
+            Write-Action-To-Action-Log -ActionName 'Group' -Action $Action.Action -Id $Action.Name -Result 'Failed'
             continue
         }
+        Write-Action-To-Action-Log -ActionName 'Group' -Action $Action.Action -Id $Action.Name -Result 'Success'
     }
 }
 

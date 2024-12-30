@@ -1,6 +1,8 @@
 param(
     [string]
     $LogDir = "$PSScriptRoot\..\logs",
+    [string]
+    $ActionLogDir = "$PSScriptRoot\..\actionlogs",
 
     [string]
     $LogFileName,
@@ -35,6 +37,7 @@ param(
 )
 
 . $PSScriptRoot/log.ps1
+. $PSScriptRoot/actionlog.ps1
 . $PSScriptRoot/locale.ps1
 . $PSScriptRoot/help.ps1
 . $PSScriptRoot/ad/ou.ps1
@@ -49,6 +52,7 @@ Register-EngineEvent PowerShell.Exiting –Action {
 
 $global:LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
+    ActionLogFile = Get-Action-Log-File -LogDir $ActionLogDir
     LogVerbosity = $LogVerbosity
     ConsoleVerbosity = $ConsoleVerbosity
 }
@@ -99,6 +103,7 @@ function Invoke-Actions
 }
 
 Write-Log-Header
+Write-Action-Log-Header
 
 if ($Entity -and $File)
 {
