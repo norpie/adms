@@ -9,7 +9,7 @@ Function Read-Field
     {
         if ($Default)
         {
-            Write-Log-Abstract -Category 'INF' -MessageName 'MissingFieldDefault' -AdditionalMessage "$(FieldName): $Default"
+            Write-Log-Abstract -Category 'INF' -MessageName 'MissingFieldDefault' -AdditionalMessage "$($FieldName): $Default"
             return $Default
         }
         if ($global:ADOptions.ErrorHandling -eq 3)
