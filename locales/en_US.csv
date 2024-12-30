@@ -54,3 +54,8 @@ AddedGroup,Added group:
 RemovedGroup,Removed group:
 AddingGroupFailed,Failed to add group:
 RemovingGroupFailed,Failed to remove group:
+
+AddingUserToGroup,Adding user to group:
+RemovingUserFromGroup,Removing user from group:
+AddedUserToGroup,Added user to group:
+RemovedUserFromGroup,Removed user from group:

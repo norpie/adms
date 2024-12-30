@@ -84,6 +84,12 @@ function Invoke-Actions
     } elseif ($Entity -eq "Group")
     {
         Invoke-Group-Actions -Actions $Actions
+    } elseif ($Entity -eq "GroupUser")
+    {
+        Invoke-GroupUser-Actions -Actions $Actions
+    } else
+    {
+        Write-Log-Abstract -Category ERR -MessageName "UnknownEntity" -AdditionalMessage $Entity -Exit
     }
 }
 
