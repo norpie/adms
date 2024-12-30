@@ -1,4 +1,4 @@
-Action,GroupName,Description,Owner
-Create,IT_Admins,Administrators for IT department,jdoe
-Modify,HR_Team,Human Resources group,asmith
-Delete,Marketing_Team,Marketing group,bjones
+Action,Path,Name,Scope,Type,Description
+Add,ROOT/Example,IT_Admins,DomainLocal,Security,Administrators for IT department
+Add,ROOT/Example,HR_Team,DomainLocal,Security,Human Resources group
+Add,ROOT/Example,Marketing_Team,DomainLocal,Security,Marketing group
