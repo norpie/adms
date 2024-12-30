@@ -48,7 +48,7 @@ param(
 
 Register-EngineEvent PowerShell.Exiting –Action {
     Write-Log-Footer
-}
+} -SupportEvent
 
 $global:LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
