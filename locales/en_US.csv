@@ -38,3 +38,11 @@ CreatingOUFailed,Failed to create OU:
 RemovingOUFailed, Failed to remove OU:
 EndCreateOUs,OUs created.
 EndRemoveOUs,OUs removed.
+
+AddingUser,Adding user:
+RemovingUser,Removing user:
+ExistingUser,User already exists:
+AddedUser,Added user:
+RemovedUser,Removed user:
+AddingUserFailed,Failed to add user:
+RemovingUserFailed,Failed to remove user:

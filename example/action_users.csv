@@ -1,4 +1,4 @@
-Action,Path,Username,DisplayName,Password,Email,Department,Status
-Add,Users,jdoe,Jane Doe,password,jdoe@mail.com,IT,Active
-Add,Users,asmith,Alice Smith,password,asmith@mail.com,HR,Active
-Add,Users,bjones,Ben Jones,password,bjones@mail.com,Marketing,Active
+Action,Path,Name,DisplayName,Password,Email,Department,Status
+Add,ROOT/Example,jdoe,Jane Doe,Password1,jdoe@mail.com,IT,Active
+Add,ROOT/Example,asmith,Alice Smith,Password1,asmith@mail.com,HR,Active
+Add,ROOT/Example,bjones,Ben Jones,Password1,bjones@mail.com,Marketing,Active
