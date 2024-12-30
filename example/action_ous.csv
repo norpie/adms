@@ -1,3 +1,5 @@
 Action,Path,Name,Protect,Description
 Add,ROOT,Example,False,Example OU
 Add,ROOT/Example,Example Child,False,Example's Example Child OU
+Remove,ROOT/Example,Example Child,False,Example's Example Child OU
+ADD,ROOT/Example,Example Child,False,Example's Example Child OU

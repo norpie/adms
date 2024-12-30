@@ -31,8 +31,6 @@ param(
     [string]
     $Entity,
     [string]
-    $Operation,
-    [string]
     $File
 )
 
@@ -69,41 +67,38 @@ $global:ADOptions = @{
     RecursiveDelete = $RecursiveDelete
 }
 
-function Invoke-Operation
+function Invoke-Actions
 {
     param (
         [string]
-        $Operation,
-        $Content
+        $Entity,
+        $Actions
     )
     if ($Entity -eq "OU")
     {
-        Invoke-OU-Operation -Operation $Operation -Content $Content
+        Invoke-OU-Actions -Actions $Actions
     } elseif ($Entity -eq "User")
     {
-        Invoke-User-Operation -Operation $Operation -Content $Content
+        Invoke-User-Actions -Actions $Actions
     } elseif ($Entity -eq "Group")
     {
-        Invoke-Group-Operation -Operation $Operation -Content $Content
+        Invoke-Group-Actions -Actions $Actions
     }
 }
 
 Write-Log-Header
 
-if ($Entity -and $Operation -and $File)
+if ($Entity -and $File)
 {
     if (-not (Test-Path $File))
     {
         Write-Log-Abstract -Category ERR -MessageName "FileNotFound" -AdditionalMessage $File -Exit
     }
-    $Content = Import-Csv -Path $File
-    Invoke-Operation -Operation $Operation -Content $Content
+    $Actions = Import-Csv -Path $File
+    Invoke-Actions -Entity $Entity -Actions $Actions
 } elseif (-not $Entity)
 {
     Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-Entity" -Exit
-} elseif (-not $Operation)
-{
-    Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-Operation" -Exit
 } elseif (-not $File)
 {
     Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-File" -Exit

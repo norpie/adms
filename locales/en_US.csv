@@ -15,14 +15,14 @@ HelpRecursiveDelete,Recursively delete OUs.
 HelpFillDefaults,Fill missing values with default values for fields that are not required.
 
 HelpEntity,The type of entity to process [OU Group User]
-HelpOperation,The type of operation to process [Create Delete Modify]
+HelpAction,The type of operation to process [Create Delete Modify]
 HelpFile,The file to read the data from.
 
 MissingParameter,Missing parameter:
 MissingField,Missing field in CSV:
 MissingFieldDefault,Missing field in CSV, using default value:
 
-InvalidOperation,Invalid operation for entity:
+InvalidAction,Invalid operation for entity:
 
 MovingObject,Moving object:
 MovedObject,Moved object:

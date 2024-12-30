@@ -32,7 +32,7 @@ Function Write-Help {
         "FillDefaults",
         "RecursiveDelete",
         "Entity",
-        "Operation",
+        "Action",
         "File"
     )
     $Aliases = @{
