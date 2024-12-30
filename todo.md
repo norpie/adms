@@ -2,43 +2,48 @@
 
 ## MVP
 
-- [ ] Bulk user
-    - [ ] Creation
-    - [ ] Deletion
+- [X] Bulk OU
+    - [X] Creation
+    - [X] Deletion
     - [ ] Modification
-    - [ ] Group assignment
-- [ ] Bulk group
-    - [ ] Creation
-    - [ ] Deletion
+- [X] Bulk group
+    - [X] Creation
+    - [X] Deletion
+    - [ ] Modification
+- [X] Bulk user
+    - [X] Creation
+    - [X] Deletion
+    - [ ] Modification
 - [ ] Bulk password
     - [ ] Reset
     - [ ] Expiry
-- [ ] Logging
-    - [ ] Errors - ERR
-    - [ ] Actions - INF
-    - [ ] Warnings - WRN
-    - [ ] Verbosity param
-- [ ] Export to CSV
+- [X] Logging
+    - [X] Errors - ERR
+    - [X] Actions - INF
+    - [X] Warnings - WRN
+    - [X] Verbosity param
+- [X] Export to CSV
     - [ ] Users
     - [ ] Groups
-- [ ] Parameter Validation
-    - [ ] Mandatory
-    - [ ] Abort on error
-    - [ ] Default values on missing
-    - [ ] Skip on missing
-- [ ] Help
+    - [ ] OUs
+- [X] Parameter Validation
+    - [X] Mandatory
+    - [X] Abort on error
+    - [X] Default values on missing
+    - [X] Skip on missing
+- [X] Help
     - [ ] Usage
     - [ ] Docs
     - [ ] Examples
-    - [ ] Parameters
-- [ ] Reporting
-    - [ ] User
-    - [ ] Group
-    - [ ] Password
+    - [X] Parameters
+- [X] Reporting
+    - [X] User
+    - [X] Group
+    - [X] Password
     - [ ] Errors
-- [ ] Error handling
-    - [ ] Exit on error
-    - [ ] Skip on error
+- [X] Error handling
+    - [X] Exit on error
+    - [X] Skip on error
 - [ ] Testing
     - [ ] Unit
     - [ ] Integration
@@ -46,8 +51,8 @@
 - [ ] GUI
     - [ ] PowerShell forms
     - [ ] Desktop
-- [ ] Internationalization
-    - [ ] English
+- [X] Internationalization
+    - [X] English
     - [ ] Dutch
 
 ## Extras
