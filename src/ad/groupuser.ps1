@@ -17,11 +17,11 @@ Function Invoke-GroupUser-Actions
             if ($global:ADOptions.ErrorHandling -eq 2)
             {
                 Write-Log-Abstract -Category 'WAR' -MessageName 'UserGroupActionFailed' -AdditionalMessage $_.Exception.Message
-                continue
             } elseif ($global:ADOptions.ErrorHandling -eq 3)
             {
                 Write-Log-Abstract -Category 'ERR' -MessageName 'UserGroupActionFailed' -AdditionalMessage $_.Exception.Message -Throw
             }
+            continue
         }
     }
 }

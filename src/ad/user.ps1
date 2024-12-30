@@ -40,11 +40,11 @@ Function Invoke-User-Actions
             if ($global:ADOptions.ErrorHandling -eq 2)
             {
                 Write-Log-Abstract -Category 'WAR' -MessageName 'UserActionFailed' -AdditionalMessage $_.Exception.Message
-                continue
             } elseif ($global:ADOptions.ErrorHandling -eq 3)
             {
                 Write-Log-Abstract -Category 'ERR' -MessageName 'UserActionFailed' -AdditionalMessage $_.Exception.Message -Throw
             }
+            continue
         }
     }
 }

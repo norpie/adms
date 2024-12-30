@@ -37,11 +37,11 @@ Function Invoke-Group-Actions
             if ($global:ADOptions.ErrorHandling -eq 2)
             {
                 Write-Log-Abstract -Category 'WAR' -MessageName 'GroupActionFailed' -AdditionalMessage $_.Exception.Message
-                continue
             } elseif ($global:ADOptions.ErrorHandling -eq 3)
             {
                 Write-Log-Abstract -Category 'ERR' -MessageName 'GroupActionFailed' -AdditionalMessage $_.Exception.Message -Throw
             }
+            continue
         }
     }
 }

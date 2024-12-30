@@ -120,11 +120,11 @@ Function Invoke-OU-Actions
             if ($global:ADOptions.ErrorHandling -eq 2)
             {
                 Write-Log-Abstract -Category 'WAR' -MessageName 'OUActionFailed' -AdditionalMessage $_.Exception.Message
-                continue
             } elseif ($global:ADOptions.ErrorHandling -eq 3)
             {
                 Write-Log-Abstract -Category 'ERR' -MessageName 'OUActionFailed' -AdditionalMessage $_.Exception.Message -Throw
             }
+            continue
         }
     }
 }
