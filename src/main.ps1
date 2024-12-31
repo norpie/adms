@@ -33,7 +33,9 @@ param(
     [string]
     $Entity,
     [string]
-    $File
+    $File,
+    [switch]
+    $Export
 )
 
 . $PSScriptRoot/log.ps1
@@ -102,17 +104,46 @@ function Invoke-Actions
     }
 }
 
+Function Invoke-Export
+{
+    param (
+        [string]
+        $Entity,
+        [string]
+        $File
+    )
+    if ($Entity -eq "OU")
+    {
+        Export-OUs -File $File
+    } elseif ($Entity -eq "User")
+    {
+        Export-Users -File $File
+    } elseif ($Entity -eq "Group")
+    {
+        Export-Groups -File $File
+    } else
+    {
+        Write-Log-Abstract -Category ERR -MessageName "UnknownEntity" -AdditionalMessage $Entity -Exit
+    }
+}
+
 Write-Log-Header
 Write-Action-Log-Header
 
 if ($Entity -and $File)
 {
-    if (-not (Test-Path $File))
+    if ($Export)
     {
-        Write-Log-Abstract -Category ERR -MessageName "FileNotFound" -AdditionalMessage $File -Exit
+        Invoke-Export -Entity $Entity -File $File
+    } else
+    {
+        if (-not (Test-Path $File))
+        {
+            Write-Log-Abstract -Category ERR -MessageName "FileNotFound" -AdditionalMessage $File -Exit
+        }
+        $Actions = Import-Csv -Path $File
+        Invoke-Actions -Entity $Entity -Actions $Actions
     }
-    $Actions = Import-Csv -Path $File
-    Invoke-Actions -Entity $Entity -Actions $Actions
 } elseif (-not $Entity)
 {
     Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-Entity" -Exit
