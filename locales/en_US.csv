@@ -5,18 +5,20 @@ Parameters,PARAMETERS
 ParameterAliases,PARAMETER ALIASES
 
 HelpLogDir,Set the directory where the log files will be stored.
+HelpActionLogDir,Set the directory where the action log files will be stored.
 HelpLogFileName,Set the name of the log file.
+HelpActionLogFileName,Set the name of the action log file.
 HelpLogVerbosity,Set the verbosity of the log file.
 HelpConsoleVerbosity,Set the verbosity of the console output.
 HelpHelp,Display this help message.
 HelpErrorHandling,Set the error handling mode.
 HelpOverwriteExisting,Overwrite existing AD entities.
-HelpRecursiveDelete,Recursively delete OUs.
 HelpFillDefaults,Fill missing values with default values for fields that are not required.
+HelpRecursiveDelete,Recursively delete OUs.
 
-HelpEntity,The type of entity to process [OU Group User]
-HelpAction,The type of operation to process [Create Delete Modify]
+HelpEntity,The type of entity to process [OU Group User GroupUser]
 HelpFile,The file to read the data from.
+HelpExport,Is this an export operation.
 
 MissingParameter,Missing parameter:
 MissingField,Missing field in CSV:

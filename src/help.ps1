@@ -23,7 +23,9 @@ Function Write-Help {
     Write-Host "$Tab adms.ps1"
     $Parameters = @(
         "LogDir",
+        "ActionLogDir",
         "LogFileName",
+        "ActionLogFileName",
         "LogVerbosity",
         "ConsoleVerbosity",
         "Help",
@@ -32,8 +34,8 @@ Function Write-Help {
         "FillDefaults",
         "RecursiveDelete",
         "Entity",
-        "Action",
-        "File"
+        "File",
+        "Export"
     )
     $Aliases = @{
         "H" = "Help"
