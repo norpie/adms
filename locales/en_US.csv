@@ -23,6 +23,7 @@ MissingField,Missing field in CSV:
 MissingFieldDefault,Missing field in CSV, using default value:
 
 InvalidAction,Invalid operation for entity:
+FileNotFound,File not found:
 
 MovingObject,Moving object:
 MovedObject,Moved object:
