@@ -29,16 +29,29 @@ Function Get-Parsed-Path
     return $Path
 }
 
-# Takes a string like "OU=OU,DC=To,DC=Path,DC=Example,DC=com" and returns a string like "Example/Path/To/OU"
+# Takes a string like "OU=OU,DC=To,DC=Path,DC=Example,DC=com" and returns a string like "Example/Path/To"
 Function Get-Unparsed-Path
 {
     param(
         $Path
     )
-    $Path = $Path -replace 'DC=', ''
+    $Path = $Path -replace ",$(Get-Top-Level)", ''
+    while ($Path -match '^CN=')
+    {
+        $Path = $Path -replace '^CN=',''
+        $Path = $Path -replace '^[^,]*', ''
+        $Path = $Path -replace '^,',''
+    }
     $Path = $Path -replace 'OU=', ''
+    $Path = $Path -replace 'DC=', ','
     $Path = $Path -replace ',', '/'
-    $Path = $Path -replace '^/', ''
+    if ($Path -eq '')
+    {
+        $Path = 'ROOT'
+    } else
+    {
+        $Path = "$Path/ROOT"
+    }
     $Split = $Path -split '/'
     $Reversed = ""
     for ($i = $Split.Length - 1; $i -ge 0; $i--)
@@ -49,5 +62,6 @@ Function Get-Unparsed-Path
             $Reversed += "/"
         }
     }
+    $Path = $Reversed
     return $Path
 }
