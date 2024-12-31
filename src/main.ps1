@@ -3,9 +3,10 @@ param(
     $LogDir = "$PSScriptRoot\..\logs",
     [string]
     $ActionLogDir = "$PSScriptRoot\..\actionlogs",
-
     [string]
     $LogFileName,
+    [string]
+    $ActionLogFileName,
 
     [int]
     [ValidateRange(1, 3)]
@@ -54,7 +55,7 @@ Register-EngineEvent PowerShell.Exiting –Action {
 
 $global:LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
-    ActionLogFile = Get-Action-Log-File -LogDir $ActionLogDir
+    ActionLogFile = Get-Action-Log-File -LogDir $ActionLogDir -LogFileName $ActionLogFileName
     LogVerbosity = $LogVerbosity
     ConsoleVerbosity = $ConsoleVerbosity
 }
