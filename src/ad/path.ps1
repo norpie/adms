@@ -38,9 +38,11 @@ Function Get-Parsed-Path
 Function Get-Unparsed-Path
 {
     param(
-        $Path
+        $Path,
+        $TopLevel = $(Get-Top-Level)
     )
-    $Path = $Path -replace ",$(Get-Top-Level)", ''
+    $Path = $Path -replace ",$TopLevel", ''
+    $Path = $Path -replace "$TopLevel", ''
     while ($Path -match '^CN=')
     {
         $Path = $Path -replace '^CN=',''
@@ -52,7 +54,7 @@ Function Get-Unparsed-Path
     $Path = $Path -replace ',', '/'
     if ($Path -eq '')
     {
-        $Path = 'ROOT'
+        return 'ROOT'
     } else
     {
         $Path = "$Path/ROOT"
