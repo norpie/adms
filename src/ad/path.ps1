@@ -10,21 +10,26 @@ Function Get-Top-Level
 Function Get-Parsed-Path
 {
     param(
-        $Path
+        $Path,
+        $TopLevel
     )
-    # Support both Windows and Unix paths
+    if (-not $TopLevel)
+    {
+        $TopLevel = Get-Top-Level
+    }
     $Path = $Path -replace 'ROOT/', ''
     $Path = $Path -replace 'ROOT', ''
     $Path = $Path -replace '\\', '/'
     $Path = $Path -split '/'
+    [array]::Reverse($Path)
     $Path = $Path | ForEach-Object { "OU=$_" }
     $Path = $Path -join ','
     if ($Path -eq 'OU=')
     {
-        $Path = "$(Get-Top-Level)"
+        $Path = $TopLevel
     } else
     {
-        $Path = "$Path,$(Get-Top-Level)"
+        $Path = "$Path,$TopLevel"
     }
     return $Path
 }
