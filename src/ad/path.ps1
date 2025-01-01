@@ -11,12 +11,8 @@ Function Get-Parsed-Path
 {
     param(
         $Path,
-        $TopLevel
+        $TopLevel = $(Get-Top-Level)
     )
-    if (-not $TopLevel)
-    {
-        $TopLevel = Get-Top-Level
-    }
     $Path = $Path -replace 'ROOT/', ''
     $Path = $Path -replace 'ROOT', ''
     $Path = $Path -replace '\\', '/'
