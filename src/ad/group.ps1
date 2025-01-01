@@ -28,25 +28,34 @@ Function Invoke-Group-Actions
     param (
         $Actions
     )
+    $Report = @{
+        Todo = $Actions.Count
+        Success = 0
+        Errored = 0
+    }
     foreach ($Action in $Actions)
     {
         try
         {
             Invoke-Group-Action -Action $Action
+            $Report.Success++
         } catch
         {
+            Write-Action-To-Action-Log -ActionName 'Group' -Action $Action.Action -Id $Action.Name -Result 'Failed'
+            $Report.Errored++
             if ($global:ADOptions.ErrorHandling -eq 2)
             {
                 Write-Log-Abstract -Category 'WAR' -MessageName 'GroupActionFailed' -AdditionalMessage $_.Exception.Message
+                continue
             } elseif ($global:ADOptions.ErrorHandling -eq 3)
             {
-                Write-Log-Abstract -Category 'ERR' -MessageName 'GroupActionFailed' -AdditionalMessage $_.Exception.Message -Throw
+                Write-Log-Abstract -Category 'ERR' -MessageName 'GroupActionFailed' -AdditionalMessage $_.Exception.Message
+                break
             }
-            Write-Action-To-Action-Log -ActionName 'Group' -Action $Action.Action -Id $Action.Name -Result 'Failed'
-            continue
         }
         Write-Action-To-Action-Log -ActionName 'Group' -Action $Action.Action -Id $Action.Name -Result 'Success'
     }
+    return $Report
 }
 
 Function Invoke-Group-Action

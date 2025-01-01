@@ -35,14 +35,19 @@ param(
     $Entity,
     [string]
     $File,
+
     [switch]
-    $Export
+    $Export,
+
+    [switch]
+    $MakeReport
 )
 
 . $PSScriptRoot/log.ps1
 . $PSScriptRoot/actionlog.ps1
 . $PSScriptRoot/locale.ps1
 . $PSScriptRoot/help.ps1
+. $PSScriptRoot/report.ps1
 . $PSScriptRoot/ad/ou.ps1
 . $PSScriptRoot/ad/user.ps1
 . $PSScriptRoot/ad/group.ps1
@@ -89,20 +94,21 @@ function Invoke-Actions
     )
     if ($Entity -eq "OU")
     {
-        Invoke-OU-Actions -Actions $Actions
+        $Report = Invoke-OU-Actions -Actions $Actions
     } elseif ($Entity -eq "User")
     {
-        Invoke-User-Actions -Actions $Actions
+        $Report = Invoke-User-Actions -Actions $Actions
     } elseif ($Entity -eq "Group")
     {
-        Invoke-Group-Actions -Actions $Actions
+        $Report = Invoke-Group-Actions -Actions $Actions
     } elseif ($Entity -eq "GroupUser")
     {
-        Invoke-GroupUser-Actions -Actions $Actions
+        $Report = Invoke-GroupUser-Actions -Actions $Actions
     } else
     {
         Write-Log-Abstract -Category ERR -MessageName "UnknownEntity" -AdditionalMessage $Entity -Exit
     }
+    return $Report
 }
 
 Function Invoke-Export
@@ -143,7 +149,11 @@ if ($Entity -and $File)
             Write-Log-Abstract -Category ERR -MessageName "FileNotFound" -AdditionalMessage $File -Exit
         }
         $Actions = Import-Csv -Path $File
-        Invoke-Actions -Entity $Entity -Actions $Actions
+        $Report = Invoke-Actions -Entity $Entity -Actions $Actions
+        if ($MakeReport)
+        {
+            Write-Report -Report $Report
+        }
     }
 } elseif (-not $Entity)
 {

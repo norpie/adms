@@ -31,25 +31,34 @@ Function Invoke-User-Actions
     param (
         $Actions
     )
+    $Report = @{
+        Todo = $Actions.Count
+        Success = 0
+        Errored = 0
+    }
     foreach ($Action in $Actions)
     {
         try
         {
             Invoke-User-Action -Action $Action
+            $Report.Success++
         } catch
         {
+            $Report.Errored++
+            Write-Action-To-Action-Log -ActionName 'User' -Action $Action.Action -Id $Action.Name -Result 'Failed'
             if ($global:ADOptions.ErrorHandling -eq 2)
             {
                 Write-Log-Abstract -Category 'WAR' -MessageName 'UserActionFailed' -AdditionalMessage $_.Exception.Message
+                continue
             } elseif ($global:ADOptions.ErrorHandling -eq 3)
             {
-                Write-Log-Abstract -Category 'ERR' -MessageName 'UserActionFailed' -AdditionalMessage $_.Exception.Message -Throw
+                Write-Log-Abstract -Category 'ERR' -MessageName 'UserActionFailed' -AdditionalMessage $_.Exception.Message
+                break
             }
-            Write-Action-To-Action-Log -ActionName 'User' -Action $Action.Action -Id $Action.Name -Result 'Failed'
-            continue
         }
         Write-Action-To-Action-Log -ActionName 'User' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Success'
     }
+    return $Report
 }
 
 Function Invoke-User-Action

@@ -111,25 +111,34 @@ Function Invoke-OU-Actions
     param(
         $Actions
     )
+    $Report = @{
+        Todo = $Actions.Count
+        Success = 0
+        Errored = 0
+    }
     foreach ($Action in $Actions)
     {
         try
         {
             Invoke-OU-Action -Action $Action
+            Write-Action-To-Action-Log -ActionName 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Success'
+            $Report.Success++
         } catch
         {
+            Write-Action-To-Action-Log -ActionName 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Failed'
+            $Report.Errored++
             if ($global:ADOptions.ErrorHandling -eq 2)
             {
                 Write-Log-Abstract -Category 'WAR' -MessageName 'OUActionFailed' -AdditionalMessage $_.Exception.Message
+                continue
             } elseif ($global:ADOptions.ErrorHandling -eq 3)
             {
-                Write-Log-Abstract -Category 'ERR' -MessageName 'OUActionFailed' -AdditionalMessage $_.Exception.Message -Throw
+                Write-Log-Abstract -Category 'ERR' -MessageName 'OUActionFailed' -AdditionalMessage $_.Exception.Message
+                break
             }
-            Write-Action-To-Action-Log -ActionName 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Failed'
-            continue
         }
-        Write-Action-To-Action-Log -ActionName 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Success'
     }
+    return $Report
 }
 
 Function Invoke-OU-Action
