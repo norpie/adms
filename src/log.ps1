@@ -1,4 +1,4 @@
-Import-Module $psscriptroot\EZLog\src\EZLog.psm1
+Import-Module EZLog.psm1
 
 . $psscriptroot\locale.ps1
 
