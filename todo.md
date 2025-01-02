@@ -69,6 +69,6 @@
     - [ ] Group
     - [ ] Password
     - [ ] Errors
-- [ ] API Reporting
+- [X] API Reporting
 - [ ] Step-by-step
     - [ ] Interactive
