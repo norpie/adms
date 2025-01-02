@@ -40,7 +40,9 @@ param(
     $Export,
 
     [switch]
-    $MakeReport
+    $MakeReport,
+    [string]
+    $ApiReport
 )
 
 . $PSScriptRoot/log.ps1
@@ -152,7 +154,7 @@ if ($Entity -and $File)
         $Report = Invoke-Actions -Entity $Entity -Actions $Actions
         if ($MakeReport)
         {
-            Write-Report -Report $Report
+            Write-Report -Report $Report -ApiReport $ApiReport
         }
     }
 } elseif (-not $Entity)

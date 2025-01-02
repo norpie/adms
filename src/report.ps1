@@ -1,7 +1,8 @@
 Function Write-Report
 {
     param (
-        $Report
+        $Report,
+        $ApiReport
     )
     # Report is a hashtable with keys: Success, Errored, Todo
     Write-Host "# Report:"
@@ -21,5 +22,8 @@ Function Write-Report
     {
         Write-Host "## Not ran:"
         Write-Host "$($Report.Todo - ($Report.Success + $Report.Errored))/$($Report.Todo)"
+    }
+    if ($ApiReport) {
+        Invoke-RestMethod -Method Post -Uri $ApiReport -Body $Report
     }
 }
