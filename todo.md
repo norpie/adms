@@ -14,25 +14,22 @@
     - [X] Creation
     - [X] Deletion
     - [ ] Modification
-- [ ] Bulk password
-    - [ ] Reset
-    - [ ] Expiry
 - [X] Logging
     - [X] Errors - ERR
     - [X] Actions - INF
     - [X] Warnings - WRN
     - [X] Verbosity param
 - [X] Export to CSV
-    - [ ] Users
-    - [ ] Groups
-    - [ ] OUs
+    - [X] Users
+    - [X] Groups
+    - [X] OUs
 - [X] Parameter Validation
     - [X] Mandatory
     - [X] Abort on error
     - [X] Default values on missing
     - [X] Skip on missing
 - [X] Help
-    - [ ] Usage
+    - [X] Usage
     - [ ] Docs
     - [ ] Examples
     - [X] Parameters
@@ -44,13 +41,12 @@
 - [X] Error handling
     - [X] Exit on error
     - [X] Skip on error
-- [ ] Testing
-    - [ ] Unit
+- [X] Testing
+    - [X] Unit
     - [ ] Integration
     - [ ] Functional
-- [ ] GUI
-    - [ ] PowerShell forms
-    - [ ] Desktop
+- [X] GUI
+    - [X] PowerShell forms
 - [X] Internationalization
     - [X] English
     - [ ] Dutch
@@ -64,14 +60,15 @@
     - [ ] Assignment
         - [ ] User
         - [ ] Group
-- [ ] Bulk Entity Linking
-    - [ ] User
-    - [ ] Group
+- [X] Bulk Entity Linking
+    - [X] User
+    - [X] Group
     - [ ] Computer
 - [ ] Graphical Reporting
     - [ ] User
     - [ ] Group
     - [ ] Password
     - [ ] Errors
+- [ ] API Reporting
 - [ ] Step-by-step
     - [ ] Interactive
