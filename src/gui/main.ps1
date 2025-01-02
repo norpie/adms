@@ -77,6 +77,17 @@ $BrowseButton.Text = "Browse"
 $BrowseLabel.AutoSize = $true
 $Panel.Controls.Add($BrowseButton)
 
+$ApiReportLabel = New-Object System.Windows.Forms.Label
+$ApiReportLabel.Text = "Report to endpoint (optional)"
+$ApiReportLabel.AutoSize = $true
+$Panel.Controls.Add($ApiReportLabel)
+
+$ApiReportTextInput = New-Object System.Windows.Forms.TextBox
+$ApiReportTextInput.Text = ""
+$ApiReportTextInput.AutoSize = $true
+$Panel.Controls.Add($ApiReportTextInput)
+
+
 $RadioPanel = New-Object System.Windows.Forms.FlowLayoutPanel
 $RadioPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
 $RadioPanel.Size = New-Object System.Drawing.Size(200, 200)
@@ -184,6 +195,9 @@ $ExecuteButton.Add_Click({
         if ($RecursiveDeleteCheckbox.Checked)
         {
             $Command += " -Recursive"
+        }
+        if ($ApiReportTextInput.Text -ne "") {
+            $Command += " -MakeReport -ApiReport $($ApiReportTextInput.Text)"
         }
         # Run the command
         Invoke-Expression $Command
