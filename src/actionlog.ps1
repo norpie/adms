@@ -18,17 +18,24 @@ Function Get-Action-Log-File
 Function Write-Action-Log-Header
 {
     $ActionLog = $global:LoggingOptions.ActionLogFile
-    Add-Content -Path $ActionLog -Value "ActionName,Action,Id,Result"
+    Add-Content -Path $ActionLog -Value "Entity,Action,Id,Result"
 }
 
 Function Write-Action-To-Action-Log
 {
     param (
-        [string]$ActionName,
+        [string]$Entity,
         [string]$Action,
         [string]$Id,
         [string]$Result
     )
     $ActionLog = $global:LoggingOptions.ActionLogFile
-    Add-Content -Path $ActionLog -Value "$ActionName,$Action,$Id,$Result"
+    Add-Content -Path $ActionLog -Value "$Entity,$Action,$Id,$Result"
+    $ActionObject = @{
+        Entity = $Entity
+        Action = $Action
+        Id = $Id
+        Result = $Result
+    }
+    $global:ActionLog += $ActionObject
 }

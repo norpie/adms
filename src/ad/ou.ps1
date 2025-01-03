@@ -111,22 +111,15 @@ Function Invoke-OU-Actions
     param(
         $Actions
     )
-    $Report = @{
-        Todo = $Actions.Count
-        Success = 0
-        Errored = 0
-    }
     foreach ($Action in $Actions)
     {
         try
         {
             Invoke-OU-Action -Action $Action
-            Write-Action-To-Action-Log -ActionName 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Success'
-            $Report.Success++
+            Write-Action-To-Action-Log -Entity 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Success'
         } catch
         {
-            Write-Action-To-Action-Log -ActionName 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Failed'
-            $Report.Errored++
+            Write-Action-To-Action-Log -Entity 'OU' -Action $Action.Action -Id "$($Action.Name):$($Action.Path)" -Result 'Failed'
             if ($global:ADOptions.ErrorHandling -eq 2)
             {
                 Write-Log-Abstract -Category 'WAR' -MessageName 'OUActionFailed' -AdditionalMessage $_.Exception.Message
@@ -138,7 +131,6 @@ Function Invoke-OU-Actions
             }
         }
     }
-    return $Report
 }
 
 Function Invoke-OU-Action

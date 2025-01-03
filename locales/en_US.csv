@@ -77,3 +77,14 @@ AddingUserToGroup,Adding user to group:
 RemovingUserFromGroup,Removing user from group:
 AddedUserToGroup,Added user to group:
 RemovedUserFromGroup,Removed user from group:
+
+ReportTitle,# Report
+ReportSubject,Subject:
+ActionSummary,## Action Summary
+ActionAddedCount,Added:
+ActionRemovedCount,Removed:
+ActionModifiedCount,Failed:
+ActionTotalCount,Total:
+CompletionSummary,## Completion Summary
+CompletionSuccessCount,Success:
+CompletionErrorCount,Failed:

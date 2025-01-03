@@ -67,6 +67,8 @@ $global:LoggingOptions = @{
     ConsoleVerbosity = $ConsoleVerbosity
 }
 
+$global:ActionLog = @()
+
 $Locale = Get-Best-Locale
 
 $global:LocaleOptions = @{
@@ -96,21 +98,20 @@ function Invoke-Actions
     )
     if ($Entity -eq "OU")
     {
-        $Report = Invoke-OU-Actions -Actions $Actions
+        Invoke-OU-Actions -Actions $Actions
     } elseif ($Entity -eq "User")
     {
-        $Report = Invoke-User-Actions -Actions $Actions
+        Invoke-User-Actions -Actions $Actions
     } elseif ($Entity -eq "Group")
     {
-        $Report = Invoke-Group-Actions -Actions $Actions
+        Invoke-Group-Actions -Actions $Actions
     } elseif ($Entity -eq "GroupUser")
     {
-        $Report = Invoke-GroupUser-Actions -Actions $Actions
+        Invoke-GroupUser-Actions -Actions $Actions
     } else
     {
         Write-Log-Abstract -Category ERR -MessageName "UnknownEntity" -AdditionalMessage $Entity -Exit
     }
-    return $Report
 }
 
 Function Invoke-Export
@@ -151,10 +152,10 @@ if ($Entity -and $File)
             Write-Log-Abstract -Category ERR -MessageName "FileNotFound" -AdditionalMessage $File -Exit
         }
         $Actions = Import-Csv -Path $File
-        $Report = Invoke-Actions -Entity $Entity -Actions $Actions
+        Invoke-Actions -Entity $Entity -Actions $Actions
         if ($MakeReport)
         {
-            Write-Report -Report $Report -ApiReport $ApiReport
+            Write-Report -ApiReport $ApiReport
         }
     }
 } elseif (-not $Entity)

@@ -1,29 +1,54 @@
+. $PSScriptRoot/log.ps1
+
 Function Write-Report
 {
     param (
-        $Report,
         $ApiReport
     )
-    # Report is a hashtable with keys: Success, Errored, Todo
-    Write-Host "# Report:"
-    Write-Host "## Todo:"
-    Write-Host "$($Report.Todo)"
-    if ($Report.Errored -ne 0)
+    if ($global:ActionLog.Size -eq 0)
     {
-        Write-Host "## Errored:"
-        Write-Host "$($Report.Errored)/$($Report.Todo)"
+        Write-host "# Nothing to report."
+        return
     }
-    if ($Report.Success -ne 0)
+    if ($ApiReport)
     {
-        Write-Host "## Success:"
-        Write-Host "$($Report.Success)/$($Report.Todo)"
+        Invoke-RestMethod -Method Post -Uri $ApiReport -Body $global:ActionLog
     }
-    if ($Report.Success + $Report.Errored -lt $Report.Todo)
+    $Entity = $global:ActionLog[0].Entity
+    $Success = 0
+    $Errored = 0
+    $Added = 0
+    $Removed = 0
+    $Modified = 0
+    foreach ($item in $global:ActionLog)
     {
-        Write-Host "## Not ran:"
-        Write-Host "$($Report.Todo - ($Report.Success + $Report.Errored))/$($Report.Todo)"
+        if ($item.Result -eq "Success")
+        {
+            $Success++
+        } else
+        {
+            $Errored++
+        }
+        if ($item.Action -eq "Add")
+        {
+            $Added++
+        } elseif ($item.Action -eq "Remove")
+        {
+            $Removed++
+        } elseif ($item.Action -eq "Modify")
+        {
+            $Modified++
+        }
     }
-    if ($ApiReport) {
-        Invoke-RestMethod -Method Post -Uri $ApiReport -Body $Report
-    }
+    $Total = $Success + $Errored
+    Write-Log-Abstract -Category INF -MessageName "ReportTitle"
+    Write-Log-Abstract -Category INF -MessageName "ReportSubject" -AdditionalMessage "$Entity"
+    Write-Log-Abstract -Category INF -MessageName "ActionSummary"
+    Write-Log-Abstract -Category INF -MessageName "ActionAddedCount" -AdditionalMessage "$Added"
+    Write-Log-Abstract -Category INF -MessageName "ActionRemovedCount" -AdditionalMessage "$Removed"
+    Write-Log-Abstract -Category INF -MessageName "ActionModifiedCount" -AdditionalMessage "$Modified"
+    Write-Log-Abstract -Category INF -MessageName "ActionTotalCount" -AdditionalMessage "$Total"
+    Write-Log-Abstract -Category INF -MessageName "CompletionSummary"
+    Write-Log-Abstract -Category INF -MessageName "CompletionSuccessCount" -AdditionalMessage "$Success"
+    Write-Log-Abstract -Category INF -MessageName "CompletionErrorCount" -AdditionalMessage "$Errored"
 }
