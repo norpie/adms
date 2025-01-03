@@ -165,3 +165,5 @@ if ($Entity -and $File)
 {
     Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-File" -Exit
 }
+
+Write-Help
