@@ -1,5 +1,21 @@
 Action,Path,Name,Protect,Description
-Add,ROOT,Example,False,Example OU
-Add,ROOT/Example,Example Child,False,Example's Example Child OU
-Remove,ROOT/Example,Example Child,False,Example's Example Child OU
-Add,ROOT/Example,Example Child,False,Example's Example Child OU
+Add,ROOT,Company,True,Top-level company organisational unit
+Add,ROOT/Company,IT,True,Information Technology department
+Add,ROOT/Company/IT,Support,False,IT Support team
+Add,ROOT/Company/IT,Development,False,Software Development team
+Add,ROOT/Company/IT/Development,Frontend,False,Frontend Developers team
+Add,ROOT/Company/IT/Development,Backend,False,Backend Developers team
+Add,ROOT/Company,HR,True,Human Resources department
+Add,ROOT/Company/HR,Recruitment,False,HR Recruitment team
+Add,ROOT/Company/HR,Payroll,False,HR Payroll team
+Add,ROOT/Company,Finance,True,Finance department
+Add,ROOT/Company/Finance,Accounts,False,Finance Accounts team
+Add,ROOT/Company/Finance,Audit,False,Finance Audit team
+Add,ROOT/Company,Sales,True,Sales department
+Add,ROOT/Company/Sales,Domestic,False,Sales team handling domestic markets
+Add,ROOT/Company/Sales/Domestic,Regional Office East,False,Regional sales office for the east
+Add,ROOT/Company/Sales/Domestic,Regional Office West,False,Regional sales office for the west
+Add,ROOT/Company/Sales,International,False,Sales team handling international markets
+Add,ROOT/Company/Sales/International,EMEA,False,Sales team for Europe, Middle East, and Africa
+Add,ROOT/Company/Sales/International,APAC,False,Sales team for Asia-Pacific
+Add,ROOT/Company/Sales/International,Americas,False,Sales team for North and South America

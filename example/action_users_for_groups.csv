@@ -1,4 +1,10 @@
 Action,UserName,GroupName
-Add,jdoe,IT_Admins
-Add,asmith,HR_Team
-Add,bjones,Marketing_Team
+Add,jdoe,Support_Team
+Add,asmith,HR_Admins
+Add,cmiller,Finance_Admins
+Add,dwilson,East_Sales_Team
+Add,efrancis,EMEA_Sales_Team
+Add,fgarcia,Frontend_Developers
+Add,gharris,Backend_Developers
+Add,hthompson,Payroll_Team
+Add,ijackson,Audit_Team

@@ -1,4 +1,12 @@
 Action,Path,Name,Scope,Type,Description
-Add,ROOT/Example,IT_Admins,DomainLocal,Security,Administrators for IT department
-Add,ROOT/Example,HR_Team,DomainLocal,Security,Human Resources group
-Add,ROOT/Example,Marketing_Team,DomainLocal,Security,Marketing group
+Add,ROOT/Company/IT,IT_Admins,DomainLocal,Security,Administrators for IT department
+Add,ROOT/Company/HR,HR_Admins,DomainLocal,Security,Administrators for HR department
+Add,ROOT/Company/Finance,Finance_Admins,DomainLocal,Security,Administrators for Finance department
+Add,ROOT/Company/Sales,Sales_Admins,DomainLocal,Security,Administrators for Sales department
+Add,ROOT/Company/IT/Development/Frontend,Frontend_Developers,DomainLocal,Security,Team of Frontend Developers
+Add,ROOT/Company/IT/Development/Backend,Backend_Developers,DomainLocal,Security,Team of Backend Developers
+Add,ROOT/Company/IT/Support,Support_Team,DomainLocal,Security,IT Support Team
+Add,ROOT/Company/Sales/Domestic/Regional Office East,East_Sales_Team,DomainLocal,Security,Sales Team for Regional Office East
+Add,ROOT/Company/Sales/International/EMEA,EMEA_Sales_Team,DomainLocal,Security,Sales Team for EMEA
+Add,ROOT/Company/HR/Payroll,Payroll_Team,DomainLocal,Security,HR Payroll Team
+Add,ROOT/Company/Finance/Audit,Audit_Team,DomainLocal,Security,Finance Audit Team

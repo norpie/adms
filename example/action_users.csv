@@ -1,4 +1,10 @@
 Action,Path,Name,DisplayName,Password,Email,Department,Status
-Add,ROOT/Example,jdoe,Jane Doe,Password1,jdoe@mail.com,IT,Active
-Add,ROOT/Example,asmith,Alice Smith,Password1,asmith@mail.com,HR,Active
-Add,ROOT/Example,bjones,Ben Jones,Password1,bjones@mail.com,Marketing,Active
+Add,ROOT/Company/IT/Support,jdoe,Jane Doe,Password1,jdoe@mail.com,IT Support,Active
+Add,ROOT/Company/HR/Recruitment,asmith,Alice Smith,Password1,asmith@mail.com,HR Recruitment,Active
+Add,ROOT/Company/Finance/Accounts,cmiller,Charlie Miller,Password1,cmiller@mail.com,Finance Accounts,Active
+Add,ROOT/Company/Sales/Domestic/Regional Office East,dwilson,Diana Wilson,Password1,dwilson@mail.com,Sales - Regional Office East,Active
+Add,ROOT/Company/Sales/International/EMEA,efrancis,Edward Francis,Password1,efrancis@mail.com,Sales - EMEA,Active
+Add,ROOT/Company/IT/Development/Frontend,fgarcia,Fiona Garcia,Password1,fgarcia@mail.com,IT Development - Frontend,Active
+Add,ROOT/Company/IT/Development/Backend,gharris,George Harris,Password1,gharris@mail.com,IT Development - Backend,Active
+Add,ROOT/Company/HR/Payroll,hthompson,Hannah Thompson,Password1,hthompson@mail.com,HR Payroll,Active
+Add,ROOT/Company/Finance/Audit,ijackson,Isaac Jackson,Password1,ijackson@mail.com,Finance Audit,Active
