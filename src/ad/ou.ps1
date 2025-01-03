@@ -41,6 +41,7 @@ Function Move-Children-Up
     foreach ($Child in $Children)
     {
         Write-Log-Abstract -Category 'INF' -MessageName 'MovingObject' -AdditionalMessage $Child.Name
+        Set-ADObject -Identity $Child.DistinguishedName -ProtectedFromAccidentalDeletion:$false
         $NewChild = Move-ADObject -Identity $Child.DistinguishedName -TargetPath $Temp -PassThru
         $NewChildren += $NewChild
         Write-Log-Abstract -Category 'INF' -MessageName 'MovedObject' -AdditionalMessage $Child.Name
