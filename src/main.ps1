@@ -31,6 +31,9 @@ param(
     [switch]
     $RecursiveDelete,
 
+    [switch]
+    $Reset,
+
     [string]
     $Entity,
     [string]
@@ -89,6 +92,27 @@ $global:ADOptions = @{
     RecursiveDelete = $RecursiveDelete
 }
 
+function Reset
+{
+    $OUs = Get-ADOrganizationalUnit -Filter * -Properties CanonicalName | Where-Object { $_.Name -notin $DefaultOUs } | Sort-Object -Descending { $_.DistinguishedName.Length }
+    foreach ($OU in $OUs)
+    {
+        Write-Log-Abstract -MessageName "RemovingOU" -AdditionalMessage $OU.Name
+        Set-ADObject -Identity $OU.DistinguishedName -ProtectedFromAccidentalDeletion:$false
+        Remove-ADOrganizationalUnit -Identity $OU.DistinguishedName -Recursive -Confirm:$false
+        Write-Log-Abstract -MessageName "RemovedOU" -AdditionalMessage $OU.Name
+    }
+}
+
+Write-Log-Header
+Write-Action-Log-Header
+
+if ($Reset)
+{
+    Reset
+    exit
+}
+
 function Invoke-Actions
 {
     param (
@@ -137,9 +161,6 @@ Function Invoke-Export
     }
 }
 
-Write-Log-Header
-Write-Action-Log-Header
-
 if ($Entity -and $File)
 {
     if ($Export)
@@ -158,6 +179,7 @@ if ($Entity -and $File)
             Write-Report -ApiReport $ApiReport
         }
     }
+    exit
 } elseif (-not $Entity)
 {
     Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-Entity" -Exit

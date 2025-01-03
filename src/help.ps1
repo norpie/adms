@@ -30,6 +30,7 @@ Function Write-Help {
         "ConsoleVerbosity",
         "Help",
         "ErrorHandling",
+        "Reset"
         "OverwriteExisting",
         "FillDefaults",
         "RecursiveDelete",

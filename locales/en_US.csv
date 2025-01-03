@@ -13,6 +13,7 @@ HelpConsoleVerbosity,Set the verbosity of the console output.
 HelpHelp,Display this help message.
 HelpErrorHandling,Set the error handling mode.
 HelpOverwriteExisting,Overwrite existing AD entities.
+HelpReset,Deletes all user-made OUs recursively.
 HelpFillDefaults,Fill missing values with default values for fields that are not required.
 HelpRecursiveDelete,Recursively delete OUs.
 
