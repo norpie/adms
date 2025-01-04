@@ -87,7 +87,7 @@ ReportSubject,Subject:
 ActionSummary,## Action Summary
 ActionAddedCount,Added:
 ActionRemovedCount,Removed:
-ActionModifiedCount,Failed:
+ActionModifiedCount,Modified:
 ActionTotalCount,Total:
 CompletionSummary,## Completion Summary
 CompletionSuccessCount,Success:
