@@ -223,15 +223,5 @@ $ExecuteButton.Add_Click({
 
 $Panel.Controls.Add($ExecuteButton)
 
-$OutputTextBox = New-Object System.Windows.Forms.TextBox
-$OutputTextBox.Multiline = $true
-$OutputTextBox.ScrollBars = "Vertical"
-$OutputTextBox.ReadOnly = $true
-$OutputTextBox.AutoSize = $true
-$OutputTextBox.Font = New-Object System.Drawing.Font("Consolas", 8)
-$OutputTextBox.Text = ""
-
-$Panel.Controls.Add($OutputTextBox)
-
 $Main.Topmost = $true
 $Main.ShowDialog()
