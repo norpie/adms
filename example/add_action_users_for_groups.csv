@@ -1,10 +1,10 @@
-Action,UserName,GroupName
-Add,jdoe,Support_Team
-Add,asmith,HR_Admins
-Add,cmiller,Finance_Admins
-Add,dwilson,East_Sales_Team
-Add,efrancis,EMEA_Sales_Team
-Add,fgarcia,Frontend_Developers
-Add,gharris,Backend_Developers
-Add,hthompson,Payroll_Team
-Add,ijackson,Audit_Team
+Action,UserPath,GroupPath
+Add,ROOT/Company/IT/Support/jdoe,ROOT/Company/IT/Support/Support_Team
+Add,ROOT/Company/HR/Recruitment/asmith,ROOT/Company/HR/HR_Admins
+Add,ROOT/Company/Finance/Accounts/cmiller,ROOT/Company/Finance/Finance_Admins
+Add,ROOT/Company/Sales/Domestic/Regional Office East/dwilson,ROOT/Company/Sales/Domestic/Regional Office East/East_Sales_Team
+Add,ROOT/Company/Sales/International/EMEA/efrancis,ROOT/Company/Sales/International/EMEA/EMEA_Sales_Team
+Add,ROOT/Company/IT/Development/Frontend/fgarcia,ROOT/Company/IT/Development/Frontend/Frontend_Developers
+Add,ROOT/Company/IT/Development/Backend/gharris,ROOT/Company/IT/Development/Backend/Backend_Developers
+Add,ROOT/Company/HR/Payroll/hthompson,ROOT/Company/HR/Payroll/Payroll_Team
+Add,ROOT/Company/Finance/Audit/ijackson,ROOT/Company/Finance/Audit/Audit_Team
