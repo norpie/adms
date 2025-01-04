@@ -146,10 +146,35 @@ Function Invoke-OU-Action
     } elseif ($Action.Action -eq 'Remove')
     {
         Remove-OU -OU $Action
+    } elseif ($Action.Action -eq 'Modify')
+    {
+        Set-OU -OU $Action
     } else
     {
         Write-Log-Abstract -Category 'ERR' -MessageName 'InvalidOUAction' -AdditionalMessage $Action.Action -Throw
     }
+}
+
+Function Set-OU
+{
+    param (
+        $OU
+    )
+    $OU = Read-OU-Fields -OU $OU
+    $Path = $OU.Path
+    $Existing = Get-ADOrganizationalUnit -Filter {DistinguishedName -eq $Path}
+    if (-not $Existing)
+    {
+        throw "OUNotFound"
+    }
+    Write-Log-Abstract -Category 'INF' -MessageName 'ModifyingOU' -AdditionalMessage $OU.Name
+    Set-ADOrganizationalUnit -Identity $Existing.DistinguishedName -ProtectedFromAccidentalDeletion:$false
+    Set-ADOrganizationalUnit -Identity $Existing.DistinguishedName -Description $OU.Description
+    if ($OU.Name -ne $Existing.Name)
+    {
+        Rename-ADObject -Identity $Existing.DistinguishedName -NewName $OU.Name
+    }
+    Write-Log-Abstract -Category 'INF' -MessageName 'ModifyingOUComplete' -AdditionalMessage $OU.Name
 }
 
 Function Remove-OU

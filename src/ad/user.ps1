@@ -8,15 +8,23 @@ Function Read-User-Fields
     param (
         $User,
         [switch]
-        $Remove
+        $Remove,
+        [switch]
+        $LastCN
     )
     $User.Path = Read-Field -Field $User.Path -Default '' -FieldName 'Path'
+    if ($LastCN)
+    {
+        $User.Path = Get-Parsed-Path -Path $User.Path -LastCN
+    } else
+    {
+        $User.Path = Get-Parsed-Path -Path $User.Path
+    }
     if ($Remove)
     {
         $User.Path = Get-Parsed-Path -Path $User.Path -LastCN
         return $User
     }
-    $User.Path = Get-Parsed-Path -Path $User.Path
     $User.Name = Read-Field -Field $User.Name -FieldName 'Name'
     $User.DisplayName = Read-Field -Field $User.DisplayName -FieldName 'DisplayName'
     $User.Password = Read-Field -Field $User.Password -FieldName 'Password'
@@ -24,6 +32,13 @@ Function Read-User-Fields
     $User.Email = Read-Field -Field $User.Email -Default '' -FieldName 'Email'
     $User.Department = Read-Field -Field $User.Department -Default '' -FieldName 'Department'
     $User.Status = Read-Field -Field $User.Status -Default 'Active' -FieldName 'Status'
+    if ($User.Status -eq 'Active')
+    {
+        $User.Status = $true
+    } else
+    {
+        $User.Status = $false
+    }
     return $User
 }
 
@@ -63,6 +78,9 @@ Function Invoke-User-Action
     if ($Action.Action -eq 'Add')
     {
         New-User -User $Action
+    } elseif ($Action.Action -eq 'Modify')
+    {
+        Set-User -User $Action
     } elseif ($Action.Action -eq 'Remove')
     {
         Remove-User -User $Action
@@ -100,6 +118,31 @@ Function New-User
     }
     New-ADUser -Name $User.Name -DisplayName $User.DisplayName -AccountPassword $User.Password -Path $User.Path
     Write-Log-Abstract -Category 'INF' -MessageName 'AddedUser' -AdditionalMessage $Name
+}
+
+Function Set-User
+{
+    param (
+        $User
+    )
+    $User = Read-User-Fields -User $User -LastCN
+    $Path = $User.Path
+    $Existing = Get-ADUser -Filter {DistinguishedName -eq $Path}
+    if (-not $Existing)
+    {
+        throw "UserNotFound"
+    }
+    Write-Log-Abstract -Category 'INF' -MessageName 'ModifyingUser' -AdditionalMessage $User.Name
+    Set-ADUser -Identity $Existing -DisplayName $User.DisplayName
+    Set-ADUser -Identity $Existing -Enabled $User.Status
+    Set-ADUser -Identity $Existing -EmailAddress $User.Email
+    Set-ADUser -Identity $Existing -Department $User.Department
+    Set-ADAccountPassword -Identity $Existing -Reset -NewPassword $User.Password
+    if ($User.Name -ne $Existing.Name)
+    {
+        Rename-ADObject -Identity $Existing.DistinguishedName -NewName $User.Name
+    }
+    Write-Log-Abstract -Category 'INF' -MessageName 'ModifyingUserComplete' -AdditionalMessage $User.Name
 }
 
 Function Remove-User

@@ -8,15 +8,22 @@ Function Read-Group-Fields
     param (
         $Group,
         [switch]
-        $Remove
+        $Remove,
+        [switch]
+        $LastCN
     )
     $Group.Path = Read-Field -Field $Group.Path -Default '' -FieldName 'Path'
-    if ($Remove)
+    if ($LastCN)
     {
         $Group.Path = Get-Parsed-Path -Path $Group.Path -LastCN
+    } else
+    {
+        $Group.Path = Get-Parsed-Path -Path $Group.Path
+    }
+    if ($Remove)
+    {
         return $Group
     }
-    $Group.Path = Get-Parsed-Path -Path $Group.Path
     $Group.Name = Read-Field -Field $Group.Name -FieldName 'Name'
     $Group.Description = Read-Field -Field $Group.Description -Default '' -FieldName 'Description'
     $Group.Scope = Read-Field -Field $Group.Scope -Default 'DomainLocal' -FieldName 'Scope'
@@ -60,6 +67,9 @@ Function Invoke-Group-Action
     if ($Action.Action -eq 'Add')
     {
         New-Group -Group $Action
+    } elseif ($Action.Action -eq 'Modify')
+    {
+        Set-Group -Group $Action
     } elseif ($Action.Action -eq 'Remove')
     {
         Remove-Group -Group $Action
@@ -97,6 +107,29 @@ Function New-Group
     }
     New-ADGroup -Name $Group.Name -Path $Group.Path -GroupScope $Group.Scope -GroupCategory $Group.Type -Description $Group.Description
     Write-Log-Abstract -Category 'INF' -MessageName 'AddedGroup' -AdditionalMessage $Name
+}
+
+Function Set-Group
+{
+    param (
+        $Group
+    )
+    $Group = Read-Group-Fields -Group $Group -LastCN
+    $Path = $Group.Path
+    $Existing = Get-ADGroup -Filter {DistinguishedName -eq $Path}
+    if (-not $Existing)
+    {
+        throw "GroupNotFound"
+    }
+    Write-Log-Abstract -Category 'INF' -MessageName 'ModifyingGroup' -AdditionalMessage $Group.Name
+    Set-ADGroup -Identity $Existing -Description $Group.Description
+    Set-ADGroup -Identity $Existing -GroupCategory $Group.Type
+    Set-ADGroup -Identity $Existing -GroupScope $Group.Scope
+    if ($Group.Name -ne $Existing.Name)
+    {
+        Rename-ADObject -Identity $Existing.DistinguishedName -NewName $Group.Name
+    }
+    Write-Log-Abstract -Category 'INF' -MessageName 'ModifyingGroupComplete' -AdditionalMessage $Group.Name
 }
 
 Function Remove-Group
