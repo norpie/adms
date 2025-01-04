@@ -81,6 +81,9 @@ AddingGroupFailed,Failed to add group:
 RemovingGroupFailed,Failed to remove group:
 GroupActionFailed,Failed group action:
 InvalidGroupAction,Invalid group action:
+NonExistingGroup,Group does not exist:
+ModifyingGroup,Modifying group:
+ModifyingGroupComplete,Group modification completed:
 
 ExportingGroups,Exporting groups:
 ExportingGroup,Exporting group:

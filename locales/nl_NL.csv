@@ -81,6 +81,9 @@ AddingGroupFailed,Groep toevoegen mislukt:
 RemovingGroupFailed,Groep verwijderen mislukt:
 GroupActionFailed,Groepsactie mislukt:
 InvalidGroupAction,Ongeldige groepsactie:
+NonExistingGroup,Groep bestaat niet:
+ModifyingGroup,Groep wijzigen:
+ModifyingGroupComplete,Wijziging van groep voltooid:
 
 ExportingGroups,Groepen exporteren:
 ExportingGroup,Groep exporteren:
