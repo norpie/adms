@@ -24,9 +24,10 @@ Function Get-Best-Locale
     {
         return $UserLocale
     }
-    $UserLanguage = $UserLocale.Split('-')[0]
-    $LanguageMatch = $Locales | Where-Object { $_ -eq $UserLanguage }
-    if ($LanguageMatch) {
+    $UserLanguage = $UserLocale.Split('_')[0]
+    $LanguageMatch = $Locales | Where-Object { $_ -like "$UserLanguage*" }
+    if ($LanguageMatch)
+    {
         return $LanguageMatch
     }
     return 'en_US'
