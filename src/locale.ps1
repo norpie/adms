@@ -8,8 +8,9 @@ Function Get-Supported-Locales
 
 Function Get-User-Locale
 {
-    # $UserLocale = Get-WinSystemLocale
-    return 'nl_BE'
+    $UserLocale = Get-WinSystemLocale
+    $UserLocale -replace '-', '_'
+    return $UserLocale
 }
 
 Function Get-Best-Locale
