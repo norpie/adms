@@ -25,6 +25,9 @@ MissingParameter,Missing parameter:
 MissingField,Missing field in CSV:
 MissingFieldDefault,Missing field in CSV, using default value:
 
+Resetting,Resetting OUs...
+Resetted,Resetted OUs.
+
 InvalidAction,Invalid operation for entity:
 FileNotFound,File not found:
 
