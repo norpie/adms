@@ -141,7 +141,7 @@ Function Remove-Group
         $Group
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'RemovingGroup' -AdditionalMessage $Group.Path
-    $Group = Read-Group-Fields -Group $Group -Remove
+    $Group = Read-Group-Fields -Group $Group -Remove -LastCN
     $Path = $Group.Path
     $Existing = Get-ADGroup -Filter {DistinguishedName -eq $Path}
     if ($Existing)
