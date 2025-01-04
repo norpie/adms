@@ -47,6 +47,7 @@ EndCreateOUs,OU's aangemaakt.
 EndRemoveOUs,OU's verwijderd.
 ModifyingOU,OU wijzigen:
 ModifyingOUComplete,Wijziging van OU voltooid:
+OUActionFailed,OU actie mislukt:
 
 ExportingOUs,OU's exporteren:
 ExportingOU,OU exporteren:

@@ -47,6 +47,7 @@ EndCreateOUs,OUs created.
 EndRemoveOUs,OUs removed.
 ModifyingOU,Modifying OU:
 ModifyingOUComplete,OU modification completed:
+OUActionFailed,Failed OU action:
 
 ExportingOUs,Exporting OUs:
 ExportingOU,Exporting OU:
