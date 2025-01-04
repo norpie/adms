@@ -66,6 +66,29 @@ $DefaultGroups = @(
 )
 
 # Check which entity to export, and execute respective function
+Function Invoke-Export
+{
+    param (
+        [string]
+        $Entity,
+        [string]
+        $File
+    )
+    if ($Entity -eq "OU")
+    {
+        Export-OUs -File $File
+    } elseif ($Entity -eq "User")
+    {
+        Export-Users -File $File
+    } elseif ($Entity -eq "Group")
+    {
+        Export-Groups -File $File
+    } else
+    {
+        Write-Log-Abstract -Category ERR -MessageName "UnknownEntity" -AdditionalMessage $Entity -Exit
+    }
+}
+
 Function Export-OUs
 {
     param (
