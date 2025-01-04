@@ -14,17 +14,17 @@ Function Read-User-Fields
         $LastCN
     )
     $User.Path = Read-Field -Field $User.Path -Default '' -FieldName 'Path'
+    if ($Remove)
+    {
+        $User.Path = Get-Parsed-Path -Path $User.Path -LastCN
+        return $User
+    }
     if ($LastCN)
     {
         $User.Path = Get-Parsed-Path -Path $User.Path -LastCN
     } else
     {
         $User.Path = Get-Parsed-Path -Path $User.Path
-    }
-    if ($Remove)
-    {
-        $User.Path = Get-Parsed-Path -Path $User.Path -LastCN
-        return $User
     }
     $User.Name = Read-Field -Field $User.Name -FieldName 'Name'
     $User.DisplayName = Read-Field -Field $User.DisplayName -FieldName 'DisplayName'
@@ -152,7 +152,7 @@ Function Remove-User
         $User
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'RemovingUser' -AdditionalMessage $User.Path
-    $User = Read-User-Fields -User $User -Remove
+    $User = Read-User-Fields -User $User -Remove -LastCN
     $Path = $User.Path
     $Existing = Get-ADUser -Filter {DistinguishedName -eq $Path}
     if ($Existing)
