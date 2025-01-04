@@ -1,5 +1,3 @@
-
-
 Describe "Paths" {
     BeforeAll {
         . $PSCommandPath.Replace('tests', 'src').Replace('.Tests.ps1','.ps1')
