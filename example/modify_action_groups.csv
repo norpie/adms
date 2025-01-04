@@ -1,0 +1,4 @@
+Action,Path,Name,Scope,Type,Description
+Modify,ROOT/Company/IT/IT_Admins,IT_Admins,DomainLocal,Security,Global IT Administrators
+Modify,ROOT/Company/Sales/International/EMEA/EMEA_Sales_Team,EMEA_Sales_Team,DomainLocal,Distribution,Sales Distribution Team for EMEA
+Modify,ROOT/Company/Finance/Audit/Audit_Team,Audit_Team,DomainLocal,Security,Audit and Compliance Team

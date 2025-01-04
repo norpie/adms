@@ -1,0 +1,4 @@
+Action,Path,Name,DisplayName,Password,Email,Department,Status
+Modify,ROOT/Company/IT/Support/jdoe,jdoe,Jane Doe,NewPassword1,jdoe_updated@mail.com,IT Support,Active
+Modify,ROOT/Company/HR/Recruitment/asmith,asmith,Alice L. Smith,Password1,asmith@mail.com,HR and Recruitment,Active
+Modify,ROOT/Company/Sales/International/EMEA/efrancis,efrancis,Edward L. Francis,Password1,efrancis_updated@mail.com,Sales - EMEA Region,Active

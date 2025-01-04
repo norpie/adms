@@ -1,0 +1,4 @@
+Action,Path,Name,Protect,Description
+Modify,ROOT/Company/IT,IT_Division,True,Information Technology Division
+Modify,ROOT/Company/Finance,Financial_Department,True,Finance and Accounting department
+Modify,ROOT/Company/Sales,Global_Sales,True,Worldwide Sales department
