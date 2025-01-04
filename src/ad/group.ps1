@@ -3,6 +3,7 @@
 . $PSScriptRoot\util.ps1
 . $PSScriptRoot\path.ps1
 
+# Verify all the required fields are present
 Function Read-Group-Fields
 {
     param (
@@ -31,6 +32,7 @@ Function Read-Group-Fields
     return $Group
 }
 
+# Function called from main to invoke the group actions
 Function Invoke-Group-Actions
 {
     param (
@@ -58,6 +60,7 @@ Function Invoke-Group-Actions
     }
 }
 
+# Individual action
 Function Invoke-Group-Action
 {
     param (

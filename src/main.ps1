@@ -49,6 +49,7 @@ param(
 )
 
 . $PSScriptRoot/log.ps1
+. $PSScriptRoot/reset.ps1
 . $PSScriptRoot/actionlog.ps1
 . $PSScriptRoot/locale.ps1
 . $PSScriptRoot/help.ps1
@@ -59,10 +60,12 @@ param(
 . $PSScriptRoot/ad/groupuser.ps1
 . $PSScriptRoot/ad/export.ps1
 
+# Add exit handler, write log footer
 Register-EngineEvent PowerShell.Exiting –Action {
     Write-Log-Footer
 } -SupportEvent
 
+# Set global logging options
 $global:LoggingOptions = @{
     LogFile = Get-Log-File -LogDir $LogDir -LogFileName $LogFileName
     ActionLogFile = Get-Action-Log-File -LogDir $ActionLogDir -LogFileName $ActionLogFileName
@@ -70,21 +73,24 @@ $global:LoggingOptions = @{
     ConsoleVerbosity = $ConsoleVerbosity
 }
 
+# Set global action log
 $global:ActionLog = @()
 
+# Set global locale options
 $Locale = Get-Best-Locale
-
 $global:LocaleOptions = @{
     Locale = $Locale
     LocaleData = Read-Locale -Locale $Locale
 }
 
+# Handle `Help` and `H` params
 if ($Help -or $H)
 {
     Write-Help
     exit
 }
 
+# Set global active directory handling options
 $global:ADOptions = @{
     ErrorHandling = $ErrorHandling
     OverwriteExisting = $OverwriteExisting
@@ -106,15 +112,18 @@ function Reset
     Write-Log-Abstract -Category INF -MessageName "Resetted"
 }
 
+# Write both log headers
 Write-Log-Header
 Write-Action-Log-Header
 
+# Handle `Reset` param
 if ($Reset)
 {
     Reset
     exit
 }
 
+# Handle all AD actions
 function Invoke-Actions
 {
     param (
@@ -163,6 +172,7 @@ Function Invoke-Export
     }
 }
 
+# Main
 if ($Entity -and $File)
 {
     if ($Export)
@@ -190,4 +200,5 @@ if ($Entity -and $File)
     Write-Log-Abstract -Category ERR -MessageName "MissingParameter" -AdditionalMessage "-File" -Exit
 }
 
+# If no parameters are passed, show help
 Write-Help

@@ -1,6 +1,4 @@
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
-
+# Helper function to create a radio select list
 Function New-Select-Form
 {
     param(

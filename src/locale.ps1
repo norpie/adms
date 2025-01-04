@@ -1,11 +1,13 @@
 $LocalesDir = "$PSScriptRoot\..\locales"
 
+# Gets the list of supported locales from the locales directory
 Function Get-Supported-Locales
 {
     $locales = Get-ChildItem -Path $LocalesDir -Filter '*.csv' | ForEach-Object { $_.BaseName }
     return $locales
 }
 
+# Gets the user's locale from the system, e.g. en_US
 Function Get-User-Locale
 {
     $UserLocale = Get-WinSystemLocale
@@ -13,6 +15,7 @@ Function Get-User-Locale
     return $UserLocale
 }
 
+# Gets the best locale to use based on the user's locale and the supported locales
 Function Get-Best-Locale
 {
     param (
@@ -34,6 +37,7 @@ Function Get-Best-Locale
     return 'en_US'
 }
 
+# Get the locale file for the current user's language
 Function Read-Locale
 {
     param(
@@ -50,6 +54,7 @@ Function Read-Locale
     return $HashTable
 }
 
+# Get the message for the current user's language
 Function Get-Message
 {
     param(

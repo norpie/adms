@@ -8,6 +8,7 @@ $CategoryDictionary = @{
     'ERR' = 3
 }
 
+# Get the log file for current date etc.
 Function Get-Log-File
 {
     param (
@@ -25,16 +26,19 @@ Function Get-Log-File
     return "$LogDir\$LogFileName"
 }
 
+# Wrapper for EZLog header with set params
 Function Write-Log-Header
 {
     Write-EZLog -Header -LogFile $global:LoggingOptions.LogFile
 }
 
+# Wrapper for EZLog footer with set params
 Function Write-Log-Footer
 {
     Write-EZLog -Footer -LogFile $global:LoggingOptions.LogFile
 }
 
+# Wrapper for EZLog with set params, takes raw message and category
 Function Write-Log
 {
     param (
@@ -51,6 +55,8 @@ Function Write-Log
     }
 }
 
+# Wrapper for Write-Log, takes message name which is used to get message from dictionary,
+# additional message and switch for throw exception or exit program.
 Function Write-Log-Abstract
 {
     param (

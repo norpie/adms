@@ -1,17 +1,15 @@
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
 . $PSScriptRoot\radio.ps1
 . $PSScriptRoot\..\locale.ps1
 
 $global:File = ""
 $Locale = Get-Best-Locale
-Write-Host $Locale
 
 $global:LocaleOptions = @{
     Locale = $Locale
     LocaleData = Read-Locale -Locale $Locale
 }
 
+# Helper function to convert "enums" to number
 Function Convert-Enum-To-Num
 {
     param (
@@ -46,6 +44,7 @@ Function Convert-Enum-To-Num
     }
 }
 
+# Helper function to convert a radio button selection to a string
 Function Convert-Radio-To-String
 {
     param (
@@ -60,46 +59,46 @@ Function Convert-Radio-To-String
     }
 }
 
+# Main form
 $Main = New-Object System.Windows.Forms.Form
 $Main.Text = "ADMS GUI"
 $Main.Size = New-Object System.Drawing.Size(800,600)
 $Main.StartPosition = "CenterScreen"
 
+# A panel to organize, autosize, and flow
 $Panel = New-Object System.Windows.Forms.FlowLayoutPanel
 $Panel.Dock = [System.Windows.Forms.DockStyle]::Fill
 $Panel.FlowDirection = [System.Windows.Forms.FlowDirection]::TopDown
 $Main.Controls.Add($Panel)
 
+# Checkbox to control whether this is an export op.
 $ExportCheckbox = New-Object System.Windows.Forms.CheckBox
-# $ExportCheckbox.Text = "Export (This overwrites the file browsed to bellow)"
 $ExportCheckbox.Text = Get-Message "GUIExport"
 $ExportCheckbox.AutoSize = $true
 $Panel.Controls.Add($ExportCheckbox)
 
 $BrowseLabel = New-Object System.Windows.Forms.Label
-# $BrowseLabel.Text = "Select the import file"
 $BrowseLabel.Text = Get-Message "GUIImport"
 $BrowseLabel.AutoSize = $true
 $Panel.Controls.Add($BrowseLabel)
 
 $BrowseButton = New-Object System.Windows.Forms.Button
-# $BrowseButton.Text = "Browse"
 $BrowseButton.Text = Get-Message "GUIBrowse"
 $BrowseLabel.AutoSize = $true
 $Panel.Controls.Add($BrowseButton)
 
 $ApiReportLabel = New-Object System.Windows.Forms.Label
-# $ApiReportLabel.Text = "Report to endpoint (optional)"
 $ApiReportLabel.Text = Get-Message "GUIReport"
 $ApiReportLabel.AutoSize = $true
 $Panel.Controls.Add($ApiReportLabel)
 
+# Textinput for an API address
 $ApiReportTextInput = New-Object System.Windows.Forms.TextBox
 $ApiReportTextInput.Text = ""
 $ApiReportTextInput.AutoSize = $true
 $Panel.Controls.Add($ApiReportTextInput)
 
-
+# A panel for all of the radio selections
 $RadioPanel = New-Object System.Windows.Forms.FlowLayoutPanel
 $RadioPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
 $RadioPanel.Size = New-Object System.Drawing.Size(200, 200)
@@ -145,6 +144,7 @@ $ErrorHandlingSelection = New-Select-Form -Title $ErrorHandlingTitile -Options @
 
 $RadioPanel.Controls.Add($ErrorHandlingSelection)
 
+# Panel for all the switches
 $SwitchPanel = New-Object System.Windows.Forms.FlowLayoutPanel
 $SwitchPanel.FlowDirection = [System.Windows.Forms.FlowDirection]::TopDown
 $SwitchPanel.AutoSize = $true
@@ -167,6 +167,7 @@ $RecursiveDeleteCheckbox.Text = Get-Message "GUIRecursiveDelete"
 $RecursiveDeleteCheckbox.AutoSize = $true
 $SwitchPanel.Controls.Add($RecursiveDeleteCheckbox)
 
+# Browse to a file using explorer.exe
 $BrowseButton.Add_Click({
         $FileDialog = New-Object System.Windows.Forms.OpenFileDialog
         $FileDialog.InitialDirectory = [Environment]::GetFolderPath("Desktop")
@@ -180,6 +181,7 @@ $BrowseButton.Add_Click({
 $ExecuteButton = New-Object System.Windows.Forms.Button
 $ExecuteButton.Text = Get-Message "GUIExecute"
 $ExecuteButton.AutoSize = $true
+# Run the command with all the options
 $ExecuteButton.Add_Click({
         $Command = ".\src\main.ps1"
         if ($ExportCheckbox.Checked)

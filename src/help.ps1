@@ -1,8 +1,10 @@
 # This file implements the help command for the shell.
 . $PSScriptRoot/locale.ps1
 
+# This is the padding for the help command.
 $Tab = [char]9
 
+# This function returns the padding for the help command.
 Function Get-Padding {
     param (
         $CurrentPadding,
@@ -17,6 +19,7 @@ Function Get-Padding {
     return $MaxLength
 }
 
+# This function writes the help command.
 Function Write-Help {
     $Message = Get-Message -MessageName "Name"
     Write-Host $Message
@@ -47,6 +50,7 @@ Function Write-Help {
     Write-Help-Section -Padding $Padding -SectionName "ParameterAliases" -SectionContent $Aliases
 }
 
+# Helper function to write a help section
 Function Write-Help-Section {
     param (
         $Padding,

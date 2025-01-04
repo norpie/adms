@@ -1,3 +1,4 @@
+# Get the action log file path and create the file if it doesn't exist
 Function Get-Action-Log-File
 {
     param (
@@ -15,12 +16,14 @@ Function Get-Action-Log-File
     return "$LogDir\$LogFileName"
 }
 
+# Write the header to the action log file
 Function Write-Action-Log-Header
 {
     $ActionLog = $global:LoggingOptions.ActionLogFile
     Add-Content -Path $ActionLog -Value "Entity,Action,Id,Result"
 }
 
+# Write an action to the action log file
 Function Write-Action-To-Action-Log
 {
     param (

@@ -65,6 +65,7 @@ $DefaultGroups = @(
     "DnsUpdateProxy"
 )
 
+# Check which entity to export, and execute respective function
 Function Export-OUs
 {
     param (

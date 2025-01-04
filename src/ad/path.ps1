@@ -1,3 +1,4 @@
+# Gets the Top Level Domain for the current domain. e.g. "DC=example,DC=com"
 Function Get-Top-Level
 {
     $Top = Get-ADDomain | Select-Object -ExpandProperty DNSRoot

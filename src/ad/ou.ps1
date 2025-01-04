@@ -3,6 +3,7 @@
 . $PSScriptRoot\util.ps1
 . $PSScriptRoot\path.ps1
 
+# Create a temporary OU
 Function Get-Temp-OU
 {
     $Name = [System.Guid]::NewGuid().ToString()
@@ -10,6 +11,7 @@ Function Get-Temp-OU
     return $OU
 }
 
+# Verify all required fields are set
 Function Read-OU-Fields
 {
     param(
@@ -30,6 +32,7 @@ Function Read-OU-Fields
     return $OU
 }
 
+# Move all children of an OU up to a temporary OU
 Function Move-Children-Up
 {
     param(
@@ -49,6 +52,7 @@ Function Move-Children-Up
     return $NewChildren
 }
 
+# Function to move children back to their original OU
 Function Move-Children-Back
 {
     param(
@@ -63,6 +67,7 @@ Function Move-Children-Back
     }
 }
 
+# Function to write over existing OU
 Function Write-Over-Existing
 {
     param(

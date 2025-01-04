@@ -3,6 +3,7 @@
 . $PSScriptRoot\util.ps1
 . $PSScriptRoot\path.ps1
 
+# Verify all required fields are present
 Function Read-User-Fields
 {
     param (

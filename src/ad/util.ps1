@@ -1,3 +1,4 @@
+# Helper function to read a field and handle missing fields properly
 Function Read-Field
 {
     param (
