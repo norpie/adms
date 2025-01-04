@@ -1,8 +1,16 @@
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 . $PSScriptRoot\radio.ps1
+. $PSScriptRoot\..\locale.ps1
 
 $global:File = ""
+$Locale = Get-Best-Locale
+Write-Host $Locale
+
+$global:LocaleOptions = @{
+    Locale = $Locale
+    LocaleData = Read-Locale -Locale $Locale
+}
 
 Function Convert-Enum-To-Num
 {
@@ -63,22 +71,26 @@ $Panel.FlowDirection = [System.Windows.Forms.FlowDirection]::TopDown
 $Main.Controls.Add($Panel)
 
 $ExportCheckbox = New-Object System.Windows.Forms.CheckBox
-$ExportCheckbox.Text = "Export (This overwrites the file browsed to bellow)"
+# $ExportCheckbox.Text = "Export (This overwrites the file browsed to bellow)"
+$ExportCheckbox.Text = Get-Message "GUIExport"
 $ExportCheckbox.AutoSize = $true
 $Panel.Controls.Add($ExportCheckbox)
 
 $BrowseLabel = New-Object System.Windows.Forms.Label
-$BrowseLabel.Text = "Select the import file"
+# $BrowseLabel.Text = "Select the import file"
+$BrowseLabel.Text = Get-Message "GUIImport"
 $BrowseLabel.AutoSize = $true
 $Panel.Controls.Add($BrowseLabel)
 
 $BrowseButton = New-Object System.Windows.Forms.Button
-$BrowseButton.Text = "Browse"
+# $BrowseButton.Text = "Browse"
+$BrowseButton.Text = Get-Message "GUIBrowse"
 $BrowseLabel.AutoSize = $true
 $Panel.Controls.Add($BrowseButton)
 
 $ApiReportLabel = New-Object System.Windows.Forms.Label
-$ApiReportLabel.Text = "Report to endpoint (optional)"
+# $ApiReportLabel.Text = "Report to endpoint (optional)"
+$ApiReportLabel.Text = Get-Message "GUIReport"
 $ApiReportLabel.AutoSize = $true
 $Panel.Controls.Add($ApiReportLabel)
 
@@ -96,7 +108,8 @@ $RadioPanel.Auto
 $RadioPanel.FlowDirection = [System.Windows.Forms.FlowDirection]::LeftToRight
 $Panel.Controls.Add($RadioPanel)
 
-$EntitySelection = New-Select-Form -Title "Entity" -Options @(
+$EntityTitle = Get-Message "GUIEntity"
+$EntitySelection = New-Select-Form -Title $EntityTitle -Options @(
     "OU",
     "User",
     "Group",
@@ -105,7 +118,8 @@ $EntitySelection = New-Select-Form -Title "Entity" -Options @(
 
 $RadioPanel.Controls.Add($EntitySelection)
 
-$ConsoleVerbositySelection = New-Select-Form -Title "Console Verbosity" -Options @(
+$ConsoleVerbosityTitle = Get-Message "GUIConsoleVerbosity"
+$ConsoleVerbositySelection = New-Select-Form -Title $ConsoleVerbosityTitle -Options @(
     "INF",
     "WAR",
     "ERR"
@@ -113,7 +127,8 @@ $ConsoleVerbositySelection = New-Select-Form -Title "Console Verbosity" -Options
 
 $RadioPanel.Controls.Add($ConsoleVerbositySelection)
 
-$LogVerbositySelection = New-Select-Form -Title "Log Verbosity" -Options @(
+$LogVerbosityTitle = Get-Message "GUILogVerbosity"
+$LogVerbositySelection = New-Select-Form -Title $LogVerbosityTitle -Options @(
     "INF",
     "WAR",
     "ERR"
@@ -121,7 +136,8 @@ $LogVerbositySelection = New-Select-Form -Title "Log Verbosity" -Options @(
 
 $RadioPanel.Controls.Add($LogVerbositySelection)
 
-$ErrorHandlingSelection = New-Select-Form -Title "Error Handling" -Options @(
+$ErrorHandlingTitile = Get-Message "GUIErrorHandling"
+$ErrorHandlingSelection = New-Select-Form -Title $ErrorHandlingTitile -Options @(
     "Stop"
     "Skip",
     "Ignore"
@@ -137,17 +153,17 @@ $SwitchPanel.AutoSizeMode = [System.Windows.Forms.AutoSizeMode]::GrowAndShrink
 $RadioPanel.Controls.Add($SwitchPanel)
 
 $OverwriteExistingCheckbox = New-Object System.Windows.Forms.CheckBox
-$OverwriteExistingCheckbox.Text = "Overwrite existing entities"
+$OverwriteExistingCheckbox.Text = Get-Message "GUIOverwrite"
 $OverwriteExistingCheckbox.AutoSize = $true
 $SwitchPanel.Controls.Add($OverwriteExistingCheckbox)
 
 $FillDefaultsCheckbox = New-Object System.Windows.Forms.CheckBox
-$FillDefaultsCheckbox.Text = "Fill in default values"
+$FillDefaultsCheckbox.Text = Get-Message "GUIFillDefaults"
 $FillDefaultsCheckbox.AutoSize = $true
 $SwitchPanel.Controls.Add($FillDefaultsCheckbox)
 
 $RecursiveDeleteCheckbox = New-Object System.Windows.Forms.CheckBox
-$RecursiveDeleteCheckbox.Text = "Recursively delete entities"
+$RecursiveDeleteCheckbox.Text = Get-Message "GUIRecursiveDelete"
 $RecursiveDeleteCheckbox.AutoSize = $true
 $SwitchPanel.Controls.Add($RecursiveDeleteCheckbox)
 
@@ -162,7 +178,7 @@ $BrowseButton.Add_Click({
     })
 
 $ExecuteButton = New-Object System.Windows.Forms.Button
-$ExecuteButton.Text = "Execute"
+$ExecuteButton.Text = Get-Message "GUIExecute"
 $ExecuteButton.AutoSize = $true
 $ExecuteButton.Add_Click({
         $Command = ".\src\main.ps1"
@@ -196,10 +212,10 @@ $ExecuteButton.Add_Click({
         {
             $Command += " -Recursive"
         }
-        if ($ApiReportTextInput.Text -ne "") {
+        if ($ApiReportTextInput.Text -ne "")
+        {
             $Command += " -MakeReport -ApiReport $($ApiReportTextInput.Text)"
         }
-        # Run the command
         Invoke-Expression $Command
     })
 
