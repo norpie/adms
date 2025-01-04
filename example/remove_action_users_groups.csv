@@ -1,0 +1,4 @@
+Action,GroupPath,UserPath
+Remove,ROOT/Company/IT/Support/Support_Team,ROOT/Company/IT/Support/jdoe
+Remove,ROOT/Company/Sales/International/EMEA/EMEA_Sales_Team,ROOT/Company/Sales/International/EMEA/efrancis
+Remove,ROOT/Company/HR/HR_Admins,ROOT/Company/HR/Recruitment/asmith
