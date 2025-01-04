@@ -2,7 +2,7 @@
 
 Describe "Paths" {
     BeforeAll {
-        . $PSCommandPath.Replace('tests\unit', 'src').Replace('.Tests.ps1','.ps1')
+        . $PSCommandPath.Replace('tests', 'src').Replace('.Tests.ps1','.ps1')
     }
     It "Parsing a path" {
         Get-Parsed-Path -Path "ROOT/Example/Path/To/OU" -TopLevel "DC=Example,DC=com" | Should -Be "OU=OU,OU=To,OU=Path,OU=Example,DC=Example,DC=com"
