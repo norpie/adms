@@ -8,6 +8,4 @@
 
 ## Installation
 
-```powershell
-Install-Module #TODO: Fill in
-```
+`git clone` this repository or download the zip file and extract it. Open a PowerShell terminal in the folder and run the following command: `pwsh -ExecutionPolicy Bypass -File .\src\main.ps1` for the CLI version or `pwsh -ExecutionPolicy Bypass -File .\src\gui\main.ps1` for the GUI version.
