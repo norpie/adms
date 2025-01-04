@@ -1,4 +1,4 @@
-# Active Directory Managements Script
+# Active Directory Management Script
 > ADMS is a script for managing Active Directory entities in bulk.
 
 ## [Installation](docs/INSTALLATION.md)
