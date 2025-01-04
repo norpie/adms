@@ -45,6 +45,8 @@ CreatingOUFailed,Failed to create OU:
 RemovingOUFailed, Failed to remove OU:
 EndCreateOUs,OUs created.
 EndRemoveOUs,OUs removed.
+ModifyingOU,Modifying OU:
+ModifyingOUComplete,OU modification completed:
 
 ExportingOUs,Exporting OUs:
 ExportingOU,Exporting OU:
@@ -58,6 +60,11 @@ AddedUser,Added user:
 RemovedUser,Removed user:
 AddingUserFailed,Failed to add user:
 RemovingUserFailed,Failed to remove user:
+UserActionFailed,Failed user action:
+InvalidUserAction,Invalid user action:
+ModifyingUser,Modifying user:
+ModifyingUserComplete,User modification completed:
+NonExistingUser,User does not exist:
 
 ExportingUsers,Exporting users:
 ExportingUser,Exporting user:
@@ -71,6 +78,8 @@ AddedGroup,Added group:
 RemovedGroup,Removed group:
 AddingGroupFailed,Failed to add group:
 RemovingGroupFailed,Failed to remove group:
+GroupActionFailed,Failed group action:
+InvalidGroupAction,Invalid group action:
 
 ExportingGroups,Exporting groups:
 ExportingGroup,Exporting group:
@@ -81,6 +90,8 @@ AddingUserToGroup,Adding user to group:
 RemovingUserFromGroup,Removing user from group:
 AddedUserToGroup,Added user to group:
 RemovedUserFromGroup,Removed user from group:
+UserGroupActionFailed,Failed user group action:
+InvalidUserGroupAction,Invalid user group action:
 
 ReportTitle,# Report
 ReportSubject,Subject:
@@ -92,3 +103,18 @@ ActionTotalCount,Total:
 CompletionSummary,## Completion Summary
 CompletionSuccessCount,Success:
 CompletionErrorCount,Failed:
+
+GUIReport,The address of the API to report to
+GUIBrowse,Browse
+GUIExport,Export (overwrites the file browsed to below)
+GUIImport,Select the import file
+GUIExecute,Execute
+
+GUIEntity,Entity
+GUIConsoleVerbosity,Console Verbosity
+GUILogVerbosity,Log Verbosity
+GUIErrorHandling,Error Handling
+
+GUIOverwrite,Overwrite existing entities
+GUIFillDefaults,Fill in default values
+GUIRecursiveDelete,Recursively delete OUs
