@@ -11,6 +11,8 @@ Function Get-Parsed-Path
 {
     param(
         $Path,
+        [switch]
+        $LastCN,
         $TopLevel = $(Get-Top-Level)
     )
     $Path = $Path -replace 'ROOT/', ''
@@ -26,6 +28,10 @@ Function Get-Parsed-Path
     } else
     {
         $Path = "$Path,$TopLevel"
+    }
+    if ($LastCN)
+    {
+        $Path = $Path -replace '^OU=','CN='
     }
     return $Path
 }
