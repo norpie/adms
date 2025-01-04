@@ -4,3 +4,4 @@
 ## [Installation](docs/INSTALLATION.md)
 ## [Changelog](docs/CHANGELOG.md)
 ## [Usage](docs/USAGE.md)
+## [Sources](docs/SOURCES.md)
