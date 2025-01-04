@@ -19,11 +19,11 @@ Function Read-OU-Fields
     )
     $OU.Path = Read-Field -Field $OU.Path -FieldName "Path" -Default ''
     $OU.Path = Get-Parsed-Path -Path $OU.Path
-    $OU.Name = Read-Field -Field $OU.Name -FieldName "Name"
     if ($Remove)
     {
         return $OU
     }
+    $OU.Name = Read-Field -Field $OU.Name -FieldName "Name"
     $OU.Protect = Read-Field -Field $OU.Protect -Default $false -FieldName "Protect"
     $OU.Protect = [bool]::Parse($OU.Protect)
     $OU.Description = Read-Field -Field $OU.Description -Default '' -FieldName "Description"
@@ -158,8 +158,8 @@ Function Remove-OU
         $OU
     )
     $OU = Read-OU-Fields -OU $OU -Remove
-    $Name = $OU.Name
-    $Existing = Get-ADOrganizationalUnit -Filter {Name -eq $Name} -SearchBase $OU.Path
+    $Path = $OU.Path
+    $Existing = Get-ADOrganizationalUnit -Filter {DistinguishedName -eq $Path}
     if (-not $Existing)
     {
         throw "OUNotFound"

@@ -11,12 +11,13 @@ Function Read-User-Fields
         $Remove
     )
     $User.Path = Read-Field -Field $User.Path -Default '' -FieldName 'Path'
-    $User.Path = Get-Parsed-Path -Path $User.Path
-    $User.Name = Read-Field -Field $User.Name -FieldName 'Name'
     if ($Remove)
     {
+        $User.Path = Get-Parsed-Path -Path $User.Path -LastCN
         return $User
     }
+    $User.Path = Get-Parsed-Path -Path $User.Path
+    $User.Name = Read-Field -Field $User.Name -FieldName 'Name'
     $User.DisplayName = Read-Field -Field $User.DisplayName -FieldName 'DisplayName'
     $User.Password = Read-Field -Field $User.Password -FieldName 'Password'
     $User.Password = ConvertTo-SecureString -String $User.Password -AsPlainText -Force
@@ -106,19 +107,19 @@ Function Remove-User
     param (
         $User
     )
-    Write-Log-Abstract -Category 'INF' -MessageName 'RemovingUser' -AdditionalMessage $User.Name
+    Write-Log-Abstract -Category 'INF' -MessageName 'RemovingUser' -AdditionalMessage $User.Path
     $User = Read-User-Fields -User $User -Remove
-    $Name = $User.Name
-    $Existing = Get-ADUser -Filter {Name -eq $Name}
+    $Path = $User.Path
+    $Existing = Get-ADUser -Filter {DistinguishedName -eq $Path}
     if ($Existing)
     {
         Remove-ADUser -Confirm:$false -Identity $Existing
-        Write-Log-Abstract -Category 'INF' -MessageName 'RemovedUser' -AdditionalMessage $Name
+        Write-Log-Abstract -Category 'INF' -MessageName 'RemovedUser' -AdditionalMessage $Existing.Name
     } elseif ($global:ADOptions.ErrorHandling -eq 3)
     {
-        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingUser' -AdditionalMessage $User.Name -Throw
+        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingUser' -AdditionalMessage $User.Path -Throw
     } elseif ($global:ADOptions.ErrorHandling -eq 2)
     {
-        Write-Log-Abstract -Category 'WAR' -MessageName 'NonExistingUser' -AdditionalMessage $User.Name
+        Write-Log-Abstract -Category 'WAR' -MessageName 'NonExistingUser' -AdditionalMessage $User.Path
     }
 }

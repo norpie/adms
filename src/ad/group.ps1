@@ -11,12 +11,13 @@ Function Read-Group-Fields
         $Remove
     )
     $Group.Path = Read-Field -Field $Group.Path -Default '' -FieldName 'Path'
-    $Group.Path = Get-Parsed-Path -Path $Group.Path
-    $Group.Name = Read-Field -Field $Group.Name -FieldName 'Name'
     if ($Remove)
     {
+        $Group.Path = Get-Parsed-Path -Path $Group.Path -LastCN
         return $Group
     }
+    $Group.Path = Get-Parsed-Path -Path $Group.Path
+    $Group.Name = Read-Field -Field $Group.Name -FieldName 'Name'
     $Group.Description = Read-Field -Field $Group.Description -Default '' -FieldName 'Description'
     $Group.Scope = Read-Field -Field $Group.Scope -Default 'DomainLocal' -FieldName 'Scope'
     $Group.Type = Read-Field -Field $Group.Type -Default 'Security' -FieldName 'Type'
@@ -103,19 +104,19 @@ Function Remove-Group
     param (
         $Group
     )
-    Write-Log-Abstract -Category 'INF' -MessageName 'RemovingGroup' -AdditionalMessage $Group.Name
+    Write-Log-Abstract -Category 'INF' -MessageName 'RemovingGroup' -AdditionalMessage $Group.Path
     $Group = Read-Group-Fields -Group $Group -Remove
-    $Name = $Group.Name
-    $Existing = Get-ADGroup -Filter {Name -eq $Name}
+    $Path = $Group.Path
+    $Existing = Get-ADGroup -Filter {DistinguishedName -eq $Path}
     if ($Existing)
     {
         Remove-ADGroup -Confirm:$false -Identity $Existing
-        Write-Log-Abstract -Category 'INF' -MessageName 'RemovedGroup' -AdditionalMessage $Name
+        Write-Log-Abstract -Category 'INF' -MessageName 'RemovedGroup' -AdditionalMessage $Existing.Name
     } elseif ($global:ADOptions.ErrorHandling -eq 3)
     {
-        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingGroup' -AdditionalMessage $Group.Name -Throw
+        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingGroup' -AdditionalMessage $Group.Path -Throw
     } elseif ($global:ADOptions.ErrorHandling -eq 2)
     {
-        Write-Log-Abstract -Category 'WAR' -MessageName 'NonExistingGroup' -AdditionalMessage $Group.Name
+        Write-Log-Abstract -Category 'WAR' -MessageName 'NonExistingGroup' -AdditionalMessage $Group.Path
     }
 }

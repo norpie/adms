@@ -15,7 +15,7 @@ Function Invoke-GroupUser-Actions
             Invoke-GroupUser-Action -Action $Action
         } catch
         {
-            Write-Action-To-Action-Log -Entity 'UserToGroup' -Action $Action.Action -Id "$($Action.UserName):$($Action.GroupName)" -Result 'Failed'
+            Write-Action-To-Action-Log -Entity 'UserToGroup' -Action $Action.Action -Id "$($Action.UserPath):$($Action.GroupPath)" -Result 'Failed'
             if ($global:ADOptions.ErrorHandling -eq 2)
             {
                 Write-Log-Abstract -Category 'WAR' -MessageName 'UserGroupActionFailed' -AdditionalMessage $_.Exception.Message
@@ -26,7 +26,7 @@ Function Invoke-GroupUser-Actions
                 break
             }
         }
-        Write-Action-To-Action-Log -Entity 'UserToGroup' -Action $Action.Action -Id "$($Action.UserName):$($Action.GroupName)" -Result 'Success'
+        Write-Action-To-Action-Log -Entity 'UserToGroup' -Action $Action.Action -Id "$($Action.UserPath):$($Action.GroupPath)" -Result 'Success'
     }
 }
 
@@ -36,15 +36,17 @@ Function Invoke-GroupUser-Action
         $Action
     )
     $Action.Action = Read-Field -Field $Action.Action -FieldName "Action"
-    $Action.UserName = Read-Field -Field $Action.UserName -FieldName "UserName"
-    $Action.GroupName = Read-Field -Field $Action.GroupName -FieldName "GroupName"
+    $Action.UserPath = Read-Field -Field $Action.UserPath -FieldName "UserPath"
+    $Action.UserPath = Get-Parsed-Path -Path $Action.UserPath -LastCN
+    $Action.GroupPath = Read-Field -Field $Action.GroupPath -FieldName "GroupPath"
+    $Action.GroupPath = Get-Parsed-Path -Path $Action.GroupPath -LastCN
 
     if ($Action.Action -eq 'Add')
     {
-        Add-UserToGroup -UserName $Action.UserName -GroupName $Action.GroupName
+        Add-UserToGroup -UserPath $Action.UserPath -GroupPath $Action.GroupPath
     } elseif ($Action.Action -eq 'Remove')
     {
-        Remove-UserFromGroup -UserName $Action.UserName -GroupName $Action.GroupName
+        Remove-UserFromGroup -UserPath $Action.UserPath -GroupPath $Action.GroupPath
     } else
     {
         Write-Log-Abstract -Category 'ERR' -MessageName 'InvalidUserGroupAction' -AdditionalMessage $Action.Action -Throw
@@ -54,45 +56,46 @@ Function Invoke-GroupUser-Action
 Function Add-UserToGroup
 {
     param (
-        $UserName,
-        $GroupName
+        $UserPath,
+        $GroupPath
     )
-    Write-Log-Abstract -Category 'INF' -MessageName 'AddingUserToGroup' -AdditionalMessage "User: $UserName, Group: $GroupName"
-    $User = Get-ADUser -Filter {Name -eq $UserName}
-    $Group = Get-ADGroup -Filter {Name -eq $GroupName}
+    Write-Log-Abstract -Category 'INF' -MessageName 'AddingUserToGroup' -AdditionalMessage "User: $UserPath, Group: $GroupPath"
+    $User = Get-ADUser -Filter {Name -eq $UserPath}
+    $Group = Get-ADGroup -Filter {Name -eq $GroupPath}
 
     if (-not $User)
     {
-        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingUser' -AdditionalMessage $UserName -Throw
+        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingUser' -AdditionalMessage $UserPath -Throw
     }
     if (-not $Group)
     {
-        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingGroup' -AdditionalMessage $GroupName -Throw
+        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingGroup' -AdditionalMessage $GroupPath -Throw
     }
 
     Add-ADGroupMember -Identity $Group -Members $User -Confirm:$false
-    Write-Log-Abstract -Category 'INF' -MessageName 'AddedUserToGroup' -AdditionalMessage "User: $UserName, Group: $GroupName"
+    Write-Log-Abstract -Category 'INF' -MessageName 'AddedUserToGroup' -AdditionalMessage "User: $UserPath, Group: $GroupPath"
 }
 
 Function Remove-UserFromGroup
 {
     param (
-        $UserName,
-        $GroupName
+        $UserPath,
+        $GroupPath
     )
-    Write-Log-Abstract -Category 'INF' -MessageName 'RemovingUserFromGroup' -AdditionalMessage "User: $UserName, Group: $GroupName"
-    $User = Get-ADUser -Filter {Name -eq $UserName}
-    $Group = Get-ADGroup -Filter {Name -eq $GroupName}
+    Write-Log-Abstract -Category 'INF' -MessageName 'RemovingUserFromGroup' -AdditionalMessage "User: $UserPath, Group: $GroupPath"
+    $Group = Get-ADGroup -Filter {DistinguishedName -eq $GroupPath}
+    $User = Get-ADUser -Filter {DistinguishedName -eq $UserPath}
 
     if (-not $User)
     {
-        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingUser' -AdditionalMessage $UserName -Throw
+        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingUser' -AdditionalMessage $UserPath -Throw
     }
+
     if (-not $Group)
     {
-        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingGroup' -AdditionalMessage $GroupName -Throw
+        Write-Log-Abstract -Category 'ERR' -MessageName 'NonExistingGroup' -AdditionalMessage $GroupPath -Throw
     }
 
     Remove-ADGroupMember -Identity $Group -Members $User -Confirm:$false
-    Write-Log-Abstract -Category 'INF' -MessageName 'RemovedUserFromGroup' -AdditionalMessage "User: $UserName, Group: $GroupName"
+    Write-Log-Abstract -Category 'INF' -MessageName 'RemovedUserFromGroup' -AdditionalMessage "User: $UserPath, Group: $GroupPath"
 }
