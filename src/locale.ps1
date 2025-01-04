@@ -1,15 +1,27 @@
 $LocalesDir = "$PSScriptRoot\..\locales"
 
-Function Get-Supported-Locales {
+Function Get-Supported-Locales
+{
     $locales = Get-ChildItem -Path $LocalesDir -Filter '*.csv' | ForEach-Object { $_.BaseName }
     return $locales
 }
 
-Function Get-Best-Locale {
-    # $UserLocale =  Get-WinSystemLocale # TODO: Remove comment after testing
-    $UserLocale = 'nl_BE' # TODO: Remove after testing
-    $Locales = Get-Supported-Locales
-    if ($Locales -contains $UserLocale) {
+Function Get-User-Locale
+{
+    # $UserLocale = Get-WinSystemLocale
+    return 'nl_BE'
+}
+
+Function Get-Best-Locale
+{
+    param (
+        [string]
+        $UserLocale = (Get-User-Locale),
+        [array]
+        $Locales = (Get-Supported-Locales)
+    )
+    if ($Locales -contains $UserLocale)
+    {
         return $UserLocale
     }
     $UserLanguage = $UserLocale.Split('-')[0]
@@ -20,7 +32,8 @@ Function Get-Best-Locale {
     return 'en_US'
 }
 
-Function Read-Locale {
+Function Read-Locale
+{
     param(
         [string]
         $Locale
@@ -35,13 +48,15 @@ Function Read-Locale {
     return $HashTable
 }
 
-Function Get-Message {
+Function Get-Message
+{
     param(
         [string]
         $MessageName
     )
     $Message = $global:LocaleOptions.LocaleData[$MessageName]
-    if (-not $Message) {
+    if (-not $Message)
+    {
         return "Localization name not found for variable: $MessageName"
     }
     return $Message
