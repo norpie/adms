@@ -60,8 +60,8 @@ Function Add-UserToGroup
         $GroupPath
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'AddingUserToGroup' -AdditionalMessage "User: $UserPath, Group: $GroupPath"
-    $User = Get-ADUser -Filter {Name -eq $UserPath}
-    $Group = Get-ADGroup -Filter {Name -eq $GroupPath}
+    $User = Get-ADUser -Filter {DistinguishedName -eq $UserPath}
+    $Group = Get-ADGroup -Filter {DistinguishedName -eq $GroupPath}
 
     if (-not $User)
     {
