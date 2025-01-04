@@ -1,0 +1,120 @@
+Name,Value
+
+Name,NAAM
+Parameters,PARAMETERS
+ParameterAliases,PARAMETER ALIASEN
+
+HelpLogDir,Stel de map in waar de logbestanden worden opgeslagen.
+HelpActionLogDir,Stel de map in waar de actielogbestanden worden opgeslagen.
+HelpLogFileName,Stel de naam van het logbestand in.
+HelpActionLogFileName,Stel de naam van het actielogbestand in.
+HelpLogVerbosity,Stel de gedetailleerdheid van het logbestand in.
+HelpConsoleVerbosity,Stel de gedetailleerdheid van de console-uitvoer in.
+HelpHelp,Toon dit helpbericht.
+HelpErrorHandling,Stel de foutafhandelingsmodus in.
+HelpOverwriteExisting,Overschrijf bestaande AD-entiteiten.
+HelpReset,Verwijdert alle door de gebruiker gemaakte OU's recursief.
+HelpFillDefaults,Vul ontbrekende waarden in met standaardwaarden voor niet-verplichte velden.
+HelpRecursiveDelete,Verwijder OU's recursief.
+
+HelpEntity,Het type entiteit om te verwerken [OU Groep Gebruiker GroepGebruiker]
+HelpFile,Het bestand om de gegevens uit te lezen.
+HelpExport,Is dit een exportbewerking.
+
+MissingParameter,Ontbrekende parameter:
+MissingField,Ontbrekend veld in CSV:
+MissingFieldDefault,Ontbrekend veld in CSV, standaardwaarde gebruikt:
+
+Resetting,OU's worden gereset...
+Resetted,OU's gereset.
+
+InvalidAction,Ongeldige operatie voor entiteit:
+FileNotFound,Bestand niet gevonden:
+
+MovingObject,Object verplaatsen:
+MovedObject,Object verplaatst:
+
+StartCreateOUs,OU's aanmaken...
+StartRemoveOUs,OU's verwijderen...
+CreatingOU,OU aanmaken:
+RemovingOU,OU verwijderen:
+ExistingOU,OU bestaat al:
+CreatedOU,OU aangemaakt:
+RemovedOU,OU verwijderd:
+CreatingOUFailed,OU aanmaken mislukt:
+RemovingOUFailed,OU verwijderen mislukt:
+EndCreateOUs,OU's aangemaakt.
+EndRemoveOUs,OU's verwijderd.
+ModifyingOU,OU wijzigen:
+ModifyingOUComplete,Wijziging van OU voltooid:
+
+ExportingOUs,OU's exporteren:
+ExportingOU,OU exporteren:
+ExportedOUs,OU's geëxporteerd:
+ExportedOU,OU geëxporteerd:
+
+AddingUser,Gebruiker toevoegen:
+RemovingUser,Gebruiker verwijderen:
+ExistingUser,Gebruiker bestaat al:
+AddedUser,Gebruiker toegevoegd:
+RemovedUser,Gebruiker verwijderd:
+AddingUserFailed,Gebruiker toevoegen mislukt:
+RemovingUserFailed,Gebruiker verwijderen mislukt:
+UserActionFailed,Gebruikersactie mislukt:
+InvalidUserAction,Ongeldige gebruikersactie:
+ModifyingUser,Gebruiker wijzigen:
+ModifyingUserComplete,Wijziging van gebruiker voltooid:
+NonExistingUser,Gebruiker bestaat niet:
+
+ExportingUsers,Gebruikers exporteren:
+ExportingUser,Gebruiker exporteren:
+ExportedUsers,Gebruikers geëxporteerd:
+ExportedUser,Gebruiker geëxporteerd:
+
+AddingGroup,Groep toevoegen:
+RemovingGroup,Groep verwijderen:
+ExistingGroup,Groep bestaat al:
+AddedGroup,Groep toegevoegd:
+RemovedGroup,Groep verwijderd:
+AddingGroupFailed,Groep toevoegen mislukt:
+RemovingGroupFailed,Groep verwijderen mislukt:
+GroupActionFailed,Groepsactie mislukt:
+InvalidGroupAction,Ongeldige groepsactie:
+
+ExportingGroups,Groepen exporteren:
+ExportingGroup,Groep exporteren:
+ExportedGroups,Groepen geëxporteerd:
+ExportedGroup,Groep geëxporteerd:
+
+AddingUserToGroup,Gebruiker aan groep toevoegen:
+RemovingUserFromGroup,Gebruiker uit groep verwijderen:
+AddedUserToGroup,Gebruiker aan groep toegevoegd:
+RemovedUserFromGroup,Gebruiker uit groep verwijderd:
+UserGroupActionFailed,Gebruiker-groep-actie mislukt:
+InvalidUserGroupAction,Ongeldige gebruiker-groep-actie:
+
+ReportTitle,# Rapport
+ReportSubject,Onderwerp:
+ActionSummary,## Actiesamenvatting
+ActionAddedCount,Toegevoegd:
+ActionRemovedCount,Verwijderd:
+ActionModifiedCount,Aangepast:
+ActionTotalCount,Totaal:
+CompletionSummary,## Voltooïngssamenvatting
+CompletionSuccessCount,Gelukt:
+CompletionErrorCount,Mislukt:
+
+GUIReport,Het adres van de API om te rapporteren
+GUIBrowse,Bladeren
+GUIExport,Exporteren (overschrijft het hieronder geselecteerde bestand)
+GUIImport,Selecteer het importbestand
+GUIExecute,Uitvoeren
+
+GUIEntity,Entiteit
+GUIConsoleVerbosity,Console-gedetailleerdheid
+GUILogVerbosity,Log-gedetailleerdheid
+GUIErrorHandling,Foutafhandeling
+
+GUIOverwrite,Bestaande entiteiten overschrijven
+GUIFillDefaults,Standaardwaarden invullen
+GUIRecursiveDelete,OU's recursief verwijderen
