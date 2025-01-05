@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - OU import/export
     - User import/export
     - Group import/export
-    - User-Group association import
+    - User-Group association import/export
 - Logging
 - Documentation
 - Unit tests
