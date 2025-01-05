@@ -7,6 +7,7 @@
 Function Read-Group-Fields
 {
     param (
+        [Parameter(Mandatory=$true)]
         $Group,
         [switch]
         $Remove,
@@ -36,6 +37,8 @@ Function Read-Group-Fields
 Function Invoke-Group-Actions
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [array]
         $Actions
     )
     foreach ($Action in $Actions)
@@ -64,6 +67,8 @@ Function Invoke-Group-Actions
 Function Invoke-Group-Action
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Action
     )
     $Action.Action = Read-Field -Field $Action.Action -FieldName "Action"
@@ -85,6 +90,8 @@ Function Invoke-Group-Action
 Function New-Group
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Group
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'AddingGroup' -AdditionalMessage $Group.Name
@@ -115,6 +122,8 @@ Function New-Group
 Function Set-Group
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Group
     )
     $Group = Read-Group-Fields -Group $Group -LastCN
@@ -138,6 +147,8 @@ Function Set-Group
 Function Remove-Group
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Group
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'RemovingGroup' -AdditionalMessage $Group.Path

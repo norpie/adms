@@ -6,6 +6,8 @@
 Function Invoke-GroupUser-Actions
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Actions
     )
     foreach ($Action in $Actions)
@@ -33,6 +35,8 @@ Function Invoke-GroupUser-Actions
 Function Invoke-GroupUser-Action
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Action
     )
     $Action.Action = Read-Field -Field $Action.Action -FieldName "Action"
@@ -56,7 +60,11 @@ Function Invoke-GroupUser-Action
 Function Add-UserToGroup
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $UserPath,
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $GroupPath
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'AddingUserToGroup' -AdditionalMessage "User: $UserPath, Group: $GroupPath"
@@ -79,7 +87,11 @@ Function Add-UserToGroup
 Function Remove-UserFromGroup
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $UserPath,
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $GroupPath
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'RemovingUserFromGroup' -AdditionalMessage "User: $UserPath, Group: $GroupPath"

@@ -15,6 +15,8 @@ Function Get-Temp-OU
 Function Read-OU-Fields
 {
     param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $OU,
         [switch]
         $Remove
@@ -36,7 +38,11 @@ Function Read-OU-Fields
 Function Move-Children-Up
 {
     param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $OU,
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Temp
     )
     $Children = Get-ADObject -Filter * -SearchBase $OU -SearchScope OneLevel
@@ -56,7 +62,11 @@ Function Move-Children-Up
 Function Move-Children-Back
 {
     param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $OU,
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Children
     )
     foreach ($Child in $Children)
@@ -71,7 +81,11 @@ Function Move-Children-Back
 Function Write-Over-Existing
 {
     param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $OU,
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Existing
     )
     $Temp = Get-Temp-OU
@@ -86,6 +100,8 @@ Function Write-Over-Existing
 Function New-OU
 {
     param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $OU
     )
     $OU = Read-OU-Fields -OU $OU
@@ -115,6 +131,8 @@ Function New-OU
 Function Invoke-OU-Actions
 {
     param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Actions
     )
     foreach ($Action in $Actions)
@@ -142,6 +160,8 @@ Function Invoke-OU-Actions
 Function Invoke-OU-Action
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Action
     )
     $Action.Action = Read-Field -Field $Action.Action -FieldName "Action"
@@ -163,6 +183,8 @@ Function Invoke-OU-Action
 Function Set-OU
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $OU
     )
     $OU = Read-OU-Fields -OU $OU
@@ -185,6 +207,8 @@ Function Set-OU
 Function Remove-OU
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $OU
     )
     $OU = Read-OU-Fields -OU $OU -Remove

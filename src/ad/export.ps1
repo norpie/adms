@@ -70,8 +70,10 @@ $DefaultGroups = @(
 Function Invoke-Export
 {
     param (
+        [Parameter(Mandatory=$true)]
         [string]
         $Entity,
+        [Parameter(Mandatory=$true)]
         [string]
         $File
     )
@@ -96,6 +98,7 @@ Function Invoke-Export
 Function Export-OUs
 {
     param (
+        [Parameter(Mandatory=$true)]
         [string]$File
     )
     Write-Log-Abstract -Category INF -MessageName "ExportingOUs" -AdditionalMessage $File
@@ -121,6 +124,7 @@ Function Export-OUs
 Function Export-Users
 {
     param(
+        [Parameter(Mandatory=$true)]
         [string]$File
     )
     Write-Log-Abstract -Category INF -MessageName "ExportingUsers" -AdditionalMessage $File
@@ -148,6 +152,7 @@ Function Export-Users
 Function Export-Groups
 {
     param(
+        [Parameter(Mandatory=$true)]
         [string]$File
     )
     Write-Log-Abstract -Category INF -MessageName "ExportingGroups" -AdditionalMessage $File

@@ -7,6 +7,8 @@
 Function Read-User-Fields
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $User,
         [switch]
         $Remove,
@@ -46,6 +48,8 @@ Function Read-User-Fields
 Function Invoke-User-Actions
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Actions
     )
     foreach ($Action in $Actions)
@@ -73,6 +77,8 @@ Function Invoke-User-Actions
 Function Invoke-User-Action
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $Action
     )
     $Action.Action = Read-Field -Field $Action.Action -FieldName "Action"
@@ -94,6 +100,8 @@ Function Invoke-User-Action
 Function New-User
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $User
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'AddingUser' -AdditionalMessage $User.Name
@@ -124,6 +132,8 @@ Function New-User
 Function Set-User
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $User
     )
     $User = Read-User-Fields -User $User -LastCN
@@ -149,6 +159,8 @@ Function Set-User
 Function Remove-User
 {
     param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         $User
     )
     Write-Log-Abstract -Category 'INF' -MessageName 'RemovingUser' -AdditionalMessage $User.Path
