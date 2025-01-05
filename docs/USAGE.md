@@ -57,22 +57,24 @@ PARAMETER ALIASES
 
 ## Parameters
 
-- **-LogDir** - The directory to write the log files to.
-- **-ActionLogDir** - The directory to write the actionlogs to.
-- **-LogFile** - The log file's name to write to.
-- **-ActionLogFileName** - The actionlog's filename.
-- **-LogVerbosity** - The verbosity of the log file. 1-3 (Default: 1)
-- **-ConsoleVerbosity** - The verbosity of the console output.
-- **-Help** - Display this help message.
-- **-ErrorHandling** - Set the error handling mode. 1-3 (Default: 3)
-- **-Reset** - Remove all user created OUs from AD, this will execute immediatly and will destroy your environment. USE WITH CAUTION.
-- **-OverwriteExisting** - Overwrites existing entities when 'Add'-actioning.
-- **-FillDefaults** - Fills the default values for the entities when they are missing from the CSV.
-- **-RecursiveDelete** - When removing an OU, this will also remove all child entities.
-- **-Entity** - The entity to act upon.
-- **-File** - The CSV file to act upon.
-- **-Export** - Whether this is an export operation. Creates a CSV file with 'Add' actions in the `-File` arguments location, so that you can import them using this script again.
+- **-LogDir** - **DIR** The directory to write the log files to.
+- **-ActionLogDir** - **DIR** The directory to write the actionlogs to.
+- **-LogFile** - **String** The log file's name to write to.
+- **-ActionLogFileName** - **String** The actionlog's filename.
+- **-LogVerbosity** - **Int** The verbosity of the log file. 1-3 (Default: 1)
+- **-ConsoleVerbosity** - **Int** The verbosity of the console output.
+- **-Help** - **Switch** Display the help message.
+- **-ErrorHandling** - **Int** Set the error handling mode. 1-3 (Default: 3)
+- **-Reset** - **Switch** Remove all user created OUs from AD, this will execute immediately and will destroy your environment. USE WITH CAUTION.
+- **-OverwriteExisting** - **Switch** Overwrites existing entities when 'Add'-actioning.
+- **-FillDefaults** - **Switch** Fills the default values for the entities when they are missing from the CSV where possible.
+- **-RecursiveDelete** - **Switch** When removing an OU, this will also remove all child entities.
+- **-Entity** - **Enum** The entity to act upon. [OU, User, Group, GroupUser]
+- **-File** - **FILE** The CSV file to act upon.
+- **-Export** - **Switch** Whether this is an export operation. Creates a CSV file with 'Add' actions in the `-File` arguments location, so that you can import them using this script again.
+- **-MakeReport** - **Switch** Prints a summary of all the actions performed at the end.
+- **-ApiReport** - **String** Send the summary of all actions performed to a specified endpoint in a POST.
 
 ## Aliases
 
-- **-H** - Alias for the `-Help` parameter
+- **-H** - **Switch** Alias for the `-Help` parameter
