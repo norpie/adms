@@ -1,3 +1,6 @@
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
 . $PSScriptRoot\radio.ps1
 . $PSScriptRoot\..\locale.ps1
 
