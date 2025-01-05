@@ -21,6 +21,9 @@ HelpEntity,Het type entiteit om te verwerken [OU Groep Gebruiker GroepGebruiker]
 HelpFile,Het bestand om de gegevens uit te lezen.
 HelpExport,Is dit een exportbewerking.
 
+HelpMakeReport,Maak een rapport van de uitgevoerde acties aan het einde van de bewerking.
+HelpApiReport,De API-eindpunt om de uitgevoerde acties naar te rapporteren als `-MakeReport` is ingesteld.
+
 MissingParameter,Ontbrekende parameter:
 MissingField,Ontbrekend veld in CSV:
 MissingFieldDefault,Ontbrekend veld in CSV, standaardwaarde gebruikt:

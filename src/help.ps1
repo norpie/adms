@@ -39,7 +39,9 @@ Function Write-Help {
         "RecursiveDelete",
         "Entity",
         "File",
-        "Export"
+        "Export",
+        "MakeReport",
+        "ApiReport"
     )
     $Aliases = @{
         "H" = "Help"

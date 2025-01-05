@@ -21,6 +21,9 @@ HelpEntity,The type of entity to process [OU Group User GroupUser]
 HelpFile,The file to read the data from.
 HelpExport,Is this an export operation.
 
+HelpMakeReport,Make a report of the actions performed at the end of the operation.
+HelpApiReport,The API endpoint to report the actions performed to if `-MakeReport` is set.
+
 MissingParameter,Missing parameter:
 MissingField,Missing field in CSV:
 MissingFieldDefault,Missing field in CSV, using default value:
