@@ -27,8 +27,10 @@ Function Get-Parsed-Path
     [array]::Reverse($PathSegments)
 
     # Convert segments into "OU=" format
-    $Path = $PathSegments | ForEach-Object { "OU=$_" }
-    $Path = $Path -replace ' ',','
+    $PathSegments = $PathSegments | ForEach-Object { "OU=$_" }
+
+    # Join the segments with commas
+    $Path = $PathSegments -join ','
 
     # Handle cases where the path is empty
     if ($Path -eq 'OU=')
