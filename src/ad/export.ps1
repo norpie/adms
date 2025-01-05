@@ -104,11 +104,11 @@ Function Export-OUs
     foreach ($OU in $OUs)
     {
         Write-Log-Abstract -Category INF -MessageName "ExportingOU" -AdditionalMessage $OU.Name
-        $UnparsedPath = Get-AD-Compatible-Path -Path $OU.DistinguishedName
-        $UnparsedPath = $UnparsedPath.Replace("/$($OU.Name)", "")
+        $ADPath = Get-AD-Compatible-Path -Path $OU.DistinguishedName
+        $ADPath = $ADPath.Replace("/$($OU.Name)", "")
         $CustomOUs += [PSCustomObject]@{
             "Action" = "Add"
-            "Path" = $UnparsedPath
+            "Path" = $ADPath
             "Name" = $OU.Name
             "Protect" = $false
         }
