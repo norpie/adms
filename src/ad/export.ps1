@@ -11,7 +11,8 @@ $DefaultOUs = @(
 
 $DefaultUsers = @(
     "Administrator",
-    "Guest"
+    "Guest",
+    "krbtgt"
 )
 
 $DefaultGroups = @(
