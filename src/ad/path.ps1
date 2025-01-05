@@ -51,7 +51,7 @@ Function Get-Parsed-Path
 
 # Converts a string like "OU=OU,DC=To,DC=Path,DC=Example,DC=com"
 # to a string like "Example/Path/To/ROOT".
-function Get-Unparsed-Path
+function Get-AD-Compatible-Path
 {
     param(
         [string]$Path,

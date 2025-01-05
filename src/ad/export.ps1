@@ -104,7 +104,7 @@ Function Export-OUs
     foreach ($OU in $OUs)
     {
         Write-Log-Abstract -Category INF -MessageName "ExportingOU" -AdditionalMessage $OU.Name
-        $UnparsedPath = Get-Unparsed-Path -Path $OU.DistinguishedName
+        $UnparsedPath = Get-AD-Compatible-Path -Path $OU.DistinguishedName
         $UnparsedPath = $UnparsedPath.Replace("/$($OU.Name)", "")
         $CustomOUs += [PSCustomObject]@{
             "Action" = "Add"
@@ -131,7 +131,7 @@ Function Export-Users
         Write-Log-Abstract -Category INF -MessageName "ExportingUser" -AdditionalMessage $User.Name
         $CustomUsers += [PSCustomObject]@{
             "Action" = "Add"
-            "Path" = Get-Unparsed-Path -Path $User.DistinguishedName
+            "Path" = Get-AD-Compatible-Path -Path $User.DistinguishedName
             "Name" = $User.Name
             "DisplayName" = $User.DisplayName
             "Password" = $null
@@ -158,7 +158,7 @@ Function Export-Groups
         Write-Log-Abstract -Category INF -MessageName "ExportingGroup" -AdditionalMessage $Group.Name
         $CustomGroups += [PSCustomObject]@{
             "Action" = "Add"
-            "Path" = Get-Unparsed-Path -Path $Group.DistinguishedName
+            "Path" = Get-AD-Compatible-Path -Path $Group.DistinguishedName
             "Name" = $Group.Name
             "Scope" = $Group.GroupScope
             "Type" = $Group.GroupCategory
@@ -183,13 +183,13 @@ Function Export-GroupUsers
     {
         Write-Log-Abstract -Category INF -MessageName "ExportingGroupUser" -AdditionalMessage "User: $User.Name"
         $Groups = Get-ADPrincipalGroupMembership -Identity $User | Where-Object { $_.Name -notin $DefaultGroups }
-        $UserPath = Get-Unparsed-Path -Path $User.DistinguishedName -AllowCN
+        $UserPath = Get-AD-Compatible-Path -Path $User.DistinguishedName -AllowCN
         foreach ($Group in $Groups)
         {
             $UsersGroups += [PSCustomObject]@{
                 Action = "Add"
                 UserPath = $UserPath
-                GroupPath = Get-Unparsed-Path -Path $Group.DistinguishedName -AllowCN
+                GroupPath = Get-AD-Compatible-Path -Path $Group.DistinguishedName -AllowCN
             }
         }
         Write-Log-Abstract -Category INF -MessageName "ExportedGroupUser" -AdditionalMessage "User: $User.Name"

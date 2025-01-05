@@ -12,9 +12,9 @@ Describe "Paths" {
         Get-Parsed-Path -Path "ROOT/Example/Path/To/OU" -TopLevel "DC=Example,DC=com" -LastCN | Should -Be "CN=OU,OU=To,OU=Path,OU=Example,DC=Example,DC=com"
     }
     It "Unparsing a path" {
-        Get-Unparsed-Path -Path "OU=OU,OU=To,OU=Path,OU=Example,DC=Example,DC=com" -TopLevel "DC=Example,DC=com" | Should -Be "ROOT/Example/Path/To/OU"
+        Get-AD-Compatible-Path -Path "OU=OU,OU=To,OU=Path,OU=Example,DC=Example,DC=com" -TopLevel "DC=Example,DC=com" | Should -Be "ROOT/Example/Path/To/OU"
     }
     It "Unparsing a top level path" {
-        Get-Unparsed-Path -Path "DC=Example,DC=com" -TopLevel "DC=Example,DC=com" | Should -Be "ROOT"
+        Get-AD-Compatible-Path -Path "DC=Example,DC=com" -TopLevel "DC=Example,DC=com" | Should -Be "ROOT"
     }
 }
