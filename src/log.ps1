@@ -45,13 +45,13 @@ Function Write-Log
         [string]$Category,
         [string]$Message
     )
-    if ($CategoryDictionary[$Category] -ge $global:LoggingOptions.LogVerbosity)
-    {
-        Write-EZLog -Category $Category -Message $Message -LogFile $LoggingOptions.LogFile
-    }
     if ($CategoryDictionary[$Category] -ge $global:LoggingOptions.ConsoleVerbosity)
     {
         Write-Host "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $Category, $Message"
+    }
+    if ($CategoryDictionary[$Category] -ge $global:LoggingOptions.LogVerbosity)
+    {
+        Write-EZLog -Category $Category -Message $Message -LogFile $LoggingOptions.LogFile
     }
 }
 
