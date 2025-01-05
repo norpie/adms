@@ -7,22 +7,30 @@ Function Get-Top-Level
     return $Top
 }
 
-# Takes a string like "Example/Path/To/OU" and returns an array of strings like "OU=OU,DC=To,DC=Path,DC=Example,$(Get-Top-Level)"
+# Converts a string like "Example/Path/To/OU" into a distinguished name format
+# e.g., "OU=OU,DC=To,DC=Path,DC=Example,$(Get-Top-Level)"
 Function Get-Parsed-Path
 {
     param(
-        $Path,
-        [switch]
-        $LastCN,
-        $TopLevel = $(Get-Top-Level)
+        [string] $Path,                     # Input path to be parsed
+        [switch] $LastCN,                   # If set, replaces the first OU with CN
+        $TopLevel = $(Get-Top-Level)        # Default top-level domain from a function
     )
-    $Path = $Path -replace 'ROOT/', ''
-    $Path = $Path -replace 'ROOT', ''
-    $Path = $Path -replace '\\', '/'
-    $Path = $Path -split '/'
-    [array]::Reverse($Path)
-    $Path = $Path | ForEach-Object { "OU=$_" }
-    $Path = $Path -join ','
+
+    # Normalize the path
+    $Path = $Path -replace 'ROOT/', ''     # Remove "ROOT/" prefix
+    $Path = $Path -replace 'ROOT', ''      # Remove standalone "ROOT"
+    $Path = $Path -replace '\\', '/'       # Replace backslashes with forward slashes
+
+    # Split the path and reverse the segments
+    $PathSegments = $Path -split '/'
+    [array]::Reverse($PathSegments)
+
+    # Convert segments into "OU=" format
+    $Path = $PathSegments | ForEach-Object { "OU=$_" }
+    $Path = $Path -replace ' ',','
+
+    # Handle cases where the path is empty
     if ($Path -eq 'OU=')
     {
         $Path = $TopLevel
@@ -30,12 +38,16 @@ Function Get-Parsed-Path
     {
         $Path = "$Path,$TopLevel"
     }
+
+    # Optionally replace the first "OU=" with "CN="
     if ($LastCN)
     {
-        $Path = $Path -replace '^OU=','CN='
+        $Path = $Path -replace '^OU=', 'CN='
     }
+
     return $Path
 }
+
 
 # Converts a string like "OU=OU,DC=To,DC=Path,DC=Example,DC=com"
 # to a string like "Example/Path/To/ROOT".
