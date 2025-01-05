@@ -21,15 +21,6 @@
 - **-Group** - Group
 - **-GroupUser** - Refers to user's group membership
 
-## Actions
-
-> [!NOTE]
-> Not all actions are available for all entities. E.g., the **-Modify** action is not available for the **-GroupUser** entity, as you can not really edit a membership.
-
-- **-Add** - Adds the specified entity.
-- **-Remove** - Removes the specified entity.
-- **-Modify** - Updates the specified entity.
-
 ## Parameters
 
 - **-LogDir** - **DIR** The directory to write the log files to.

@@ -13,6 +13,15 @@ There are 2 variations of path expected in different scenarios.
 - Variation 1: A path to the container of the entity. E.g. `ROOT/Path/To/OU`
 - Variation 2: A path to the entity itself. E.g. `ROOT/Path/To/OU/User`
 
+## Actions
+
+> [!NOTE]
+> Not all actions are available for all entities. E.g., the **Modify** action is not available for the **-GroupUser** entity, as you can not really edit a membership.
+
+- **Add** - Adds the specified entity.
+- **Remove** - Removes the specified entity.
+- **Modify** - Updates the specified entity.
+
 ## OU
 
 The OU CSV supports the following fields:
