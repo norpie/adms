@@ -2,7 +2,7 @@ param (
     $ConsoleVerbosity = 2
 )
 
-$ProjectDir = $PSCommandPath.replace('tests\integration\test1.ps1', '')
+$ProjectDir = $PSCommandPath.replace('tests\integration\operations.test.ps1', '')
 $Script = "$ProjectDir\src\main.ps1"
 
 & $Script -Reset -ConsoleVerbosity $ConsoleVerbosity
