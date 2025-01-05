@@ -6,4 +6,5 @@
 ## [Installation](docs/INSTALLATION.md)
 ## [Changelog](docs/CHANGELOG.md)
 ## [Usage](docs/USAGE.md)
+## [Design Choices and Assumptions](docs/DESIGN.md)
 ## [Sources](docs/SOURCES.md)
