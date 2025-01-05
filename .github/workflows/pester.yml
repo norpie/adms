@@ -8,6 +8,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          Install-Module -Name EZLog -Force
       - name: Perform Pester tests
         shell: pwsh
         run: |
