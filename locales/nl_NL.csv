@@ -99,8 +99,8 @@ InvalidUserGroupAction,Ongeldige gebruiker-groep-actie:
 
 ExportingGroupUsers,Alle gebruikers groepen exporteren:
 ExportedGroupUsers,Alle gebruikers groepen geëxporteerd:
-ExportingGroupUsers,Gebruikers groepen exporteren:
-ExportedGroupUsers,Gebruikers groepen geëxporteerd:
+ExportingGroupUser,Gebruikers groepen exporteren:
+ExportedGroupUser,Gebruikers groepen geëxporteerd:
 
 ReportTitle,# Rapport
 ReportSubject,Onderwerp:

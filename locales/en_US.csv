@@ -99,8 +99,8 @@ InvalidUserGroupAction,Invalid user group action:
 
 ExportingGroupUsers,Exporting users' groups:
 ExportedGroupUsers,Exported users' groups:
-ExportingGroupUsers,Exporting user's groups:
-ExportedGroupUsers,Exported users' groups:
+ExportingGroupUser,Exporting user's groups:
+ExportedGroupUser,Exported users' groups:
 
 ReportTitle,# Report
 ReportSubject,Subject:
