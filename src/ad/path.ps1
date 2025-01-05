@@ -42,15 +42,23 @@ Function Get-Unparsed-Path
 {
     param(
         $Path,
-        $TopLevel = $(Get-Top-Level)
+        $TopLevel = $(Get-Top-Level),
+        [switch]
+        $AllowCN
     )
     $Path = $Path -replace ",$TopLevel", ''
     $Path = $Path -replace "$TopLevel", ''
-    while ($Path -match '^CN=')
+    if (!$AllowCN)
+    {
+        while ($Path -match '^CN=')
+        {
+            $Path = $Path -replace '^CN=',''
+            $Path = $Path -replace '^[^,]*', ''
+            $Path = $Path -replace '^,',''
+        }
+    } else
     {
         $Path = $Path -replace '^CN=',''
-        $Path = $Path -replace '^[^,]*', ''
-        $Path = $Path -replace '^,',''
     }
     $Path = $Path -replace 'OU=', ''
     $Path = $Path -replace 'DC=', ','
