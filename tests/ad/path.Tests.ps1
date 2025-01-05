@@ -5,6 +5,9 @@ Describe "Paths" {
     It "Parsing a path" {
         Get-Parsed-Path -Path "ROOT/Example/Path/To/OU" -TopLevel "DC=Example,DC=com" | Should -Be "OU=OU,OU=To,OU=Path,OU=Example,DC=Example,DC=com"
     }
+    It "Parsing a path with spaces" {
+        Get-Parsed-Path -Path "ROOT/Example/Path/To/OU With Spaces" -TopLevel "DC=Example,DC=com" | Should -Be "OU=OU With Spaces,OU=To,OU=Path,OU=Example,DC=Example,DC=com"
+    }
     It "Parsing an empty path" {
         Get-Parsed-Path -Path "" -TopLevel "DC=Example,DC=com" | Should -Be "DC=Example,DC=com"
     }
