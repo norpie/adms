@@ -117,7 +117,7 @@ Function New-User
             return
         }
     }
-    New-ADUser -Name $User.Name -DisplayName $User.DisplayName -AccountPassword $User.Password -Path $User.Path
+    New-ADUser -Name $User.Name -DisplayName $User.DisplayName -AccountPassword $User.Password -Path $User.Path -Enabled $User.Status -EmailAddress $User.Email -Department $User.Department
     Write-Log-Abstract -Category 'INF' -MessageName 'AddedUser' -AdditionalMessage $Name
 }
 
