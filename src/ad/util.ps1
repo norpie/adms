@@ -1,3 +1,5 @@
+. $PSScriptRoot\..\log.ps1
+
 # Helper function to read a field and handle missing fields properly
 Function Read-Field
 {
@@ -8,7 +10,7 @@ Function Read-Field
     )
     if (-not $Field)
     {
-        if ($Default)
+        if ($Default -and $global:ADOptions.FillDefaults)
         {
             Write-Log-Abstract -Category 'INF' -MessageName 'MissingFieldDefault' -AdditionalMessage "$($FieldName): $Default"
             return $Default
