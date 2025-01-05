@@ -1,0 +1,10 @@
+"Action","Path","Name","DisplayName","Password","Email","Department"
+"Add","ROOT/Company/IT/Support","jdoe","Jane Doe",,,
+"Add","ROOT/Company/HR/Recruitment","asmith","Alice Smith",,,
+"Add","ROOT/Company/Finance/Accounts","cmiller","Charlie Miller",,,
+"Add","ROOT/Company/Sales/Domestic/Regional Office East","dwilson","Diana Wilson",,,
+"Add","ROOT/Company/Sales/International/EMEA","efrancis","Edward Francis",,,
+"Add","ROOT/Company/IT/Development/Frontend","fgarcia","Fiona Garcia",,,
+"Add","ROOT/Company/IT/Development/Backend","gharris","George Harris",,,
+"Add","ROOT/Company/HR/Payroll","hthompson","Hannah Thompson",,,
+"Add","ROOT/Company/Finance/Audit","ijackson","Isaac Jackson",,,
