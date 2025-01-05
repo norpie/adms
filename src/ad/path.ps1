@@ -37,39 +37,47 @@ Function Get-Parsed-Path
     return $Path
 }
 
-# Takes a string like "OU=OU,DC=To,DC=Path,DC=Example,DC=com" and returns a string like "Example/Path/To"
-Function Get-Unparsed-Path
+# Converts a string like "OU=OU,DC=To,DC=Path,DC=Example,DC=com"
+# to a string like "Example/Path/To/ROOT".
+function Get-Unparsed-Path
 {
     param(
-        $Path,
-        $TopLevel = $(Get-Top-Level),
-        [switch]
-        $AllowCN
+        [string]$Path,
+        [string]$TopLevel = $(Get-Top-Level),
+        [switch]$AllowCN
     )
+
+    # Remove the top-level domain and its prefix
     $Path = $Path -replace ",$TopLevel", ''
     $Path = $Path -replace "$TopLevel", ''
-    if (!$AllowCN)
+
+    # Remove CN components if $AllowCN is not set
+    if (-not $AllowCN)
     {
         while ($Path -match '^CN=')
         {
-            $Path = $Path -replace '^CN=',''
-            $Path = $Path -replace '^[^,]*', ''
-            $Path = $Path -replace '^,',''
+            $Path = $Path -replace '^CN=[^,]*,?', ''
         }
     } else
     {
-        $Path = $Path -replace '^CN=',''
+        $Path = $Path -replace '^CN=', ''
     }
+
+    # Replace OU= and DC= components
     $Path = $Path -replace 'OU=', ''
     $Path = $Path -replace 'DC=', ','
     $Path = $Path -replace ',', '/'
-    if ($Path -eq '')
+
+    # Handle empty paths
+    if ([string]::IsNullOrEmpty($Path))
     {
         return 'ROOT'
-    } else
-    {
-        $Path = "$Path/ROOT"
     }
+
+    # Append ROOT to the path
+    $Path = "$Path/ROOT"
+
+    # Reverse the path components
     $Split = $Path -split '/'
     $Reversed = ""
     for ($i = $Split.Length - 1; $i -ge 0; $i--)
@@ -80,6 +88,6 @@ Function Get-Unparsed-Path
             $Reversed += "/"
         }
     }
-    $Path = $Reversed
-    return $Path
+
+    return $Reversed
 }
