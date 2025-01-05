@@ -23,7 +23,7 @@ Function Get-Padding {
 Function Write-Help {
     $Message = Get-Message -MessageName "Name"
     Write-Host $Message
-    Write-Host "$Tab adms.ps1"
+    Write-Host "$Tab main.ps1"
     $Parameters = @(
         "LogDir",
         "ActionLogDir",
