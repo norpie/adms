@@ -101,9 +101,11 @@ Function Export-OUs
     foreach ($OU in $OUs)
     {
         Write-Log-Abstract -Category INF -MessageName "ExportingOU" -AdditionalMessage $OU.Name
+        $UnparsedPath = Get-Unparsed-Path -Path $OU.DistinguishedName
+        $UnparsedPath = $UnparsedPath.Replace("/$($OU.Name)", "")
         $CustomOUs += [PSCustomObject]@{
             "Action" = "Add"
-            "Path" = Get-Unparsed-Path -Path $OU.DistinguishedName
+            "Path" = $UnparsedPath
             "Name" = $OU.Name
             "Protect" = $false
         }
