@@ -97,6 +97,11 @@ RemovedUserFromGroup,Gebruiker uit groep verwijderd:
 UserGroupActionFailed,Gebruiker-groep-actie mislukt:
 InvalidUserGroupAction,Ongeldige gebruiker-groep-actie:
 
+ExportingGroupUsers,Alle gebruikers groepen exporteren:
+ExportedGroupUsers,Alle gebruikers groepen geëxporteerd:
+ExportingGroupUsers,Gebruikers groepen exporteren:
+ExportedGroupUsers,Gebruikers groepen geëxporteerd:
+
 ReportTitle,# Rapport
 ReportSubject,Onderwerp:
 ActionSummary,## Actiesamenvatting

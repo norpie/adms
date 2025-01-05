@@ -84,6 +84,9 @@ Function Invoke-Export
     } elseif ($Entity -eq "Group")
     {
         Export-Groups -File $File
+    } elseif ($Entity -eq "GroupUsers")
+    {
+        Export-GroupUsers -File $File
     } else
     {
         Write-Log-Abstract -Category ERR -MessageName "UnknownEntity" -AdditionalMessage $Entity -Exit
@@ -165,4 +168,32 @@ Function Export-Groups
     }
     $CustomGroups | Export-Csv -Path $File -NoTypeInformation
     Write-Log-Abstract -Category INF -MessageName "ExportedGroups" -AdditionalMessage $File
+}
+
+Function Export-GroupUsers
+{
+    param(
+        [Parameter(Mandatory = $true)]
+        [String]$File
+    )
+    Write-Log-Abstract -Category INF -MessageName "ExportingGroupUsers" -AdditionalMessage $File
+    $Users = Get-ADUser -Filter * -Properties * | Where-Object { $_.Name -notin $DefaultUsers }
+    $UsersGroups = @()
+    foreach ($User in $Users)
+    {
+        Write-Log-Abstract -Category INF -MessageName "ExportingGroupUser" -AdditionalMessage "User: $User.Name"
+        $Groups = Get-ADPrincipalGroupMembership -Identity $User | Where-Object { $_.Name -notin $DefaultGroups }
+        $UserPath = Get-Unparsed-Path -Path $User.DistinguishedName -AllowCN
+        foreach ($Group in $Groups)
+        {
+            $UsersGroups += [PSCustomObject]@{
+                Action = "Add"
+                UserPath = $UserPath
+                GroupPath = Get-Unparsed-Path -Path $Group.DistinguishedName -AllowCN
+            }
+        }
+        Write-Log-Abstract -Category INF -MessageName "ExportedGroupUser" -AdditionalMessage "User: $User.Name"
+    }
+    $UsersGroups | Export-Csv -Path $File -NoTypeInformation
+    Write-Log-Abstract -Category INF -MessageName "ExportedGroupUsers" -AdditionalMessage $File
 }
