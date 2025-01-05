@@ -1,30 +1,5 @@
 # Usage
 
-<!-- pwsh -ExecutionPolicy bypass -File .\src\main.ps1 -Entity OU -File .\example\modify_action_ous.csv -RecursiveDelete -MakeReport -OverwriteExisting-->
-
-<!--
-NAME
-         main.ps1
-PARAMETERS
-         -LogDir            Set the directory where the log files will be stored.
-         -ActionLogDir      Set the directory where the action log files will be stored.
-         -LogFileName       Set the name of the log file.
-         -ActionLogFileName Set the name of the action log file.
-         -LogVerbosity      Set the verbosity of the log file.
-         -ConsoleVerbosity  Set the verbosity of the console output.
-         -Help              Display this help message.
-         -ErrorHandling     Set the error handling mode.
-         -Reset             Deletes all user-made OUs recursively.
-         -OverwriteExisting Overwrite existing AD entities.
-         -FillDefaults      Fill missing values with default values for fields that are not required.
-         -RecursiveDelete   Recursively delete OUs.
-         -Entity            The type of entity to process [OU Group User GroupUser]
-         -File              The file to read the data from.
-         -Export            Is this an export operation.
-PARAMETER ALIASES
-         -H                 -help
--->
-
 **To get help at any time, use the -Help parameter or the -H alias.**
 
 ## Verbosities
@@ -78,3 +53,37 @@ PARAMETER ALIASES
 ## Aliases
 
 - **-H** - **Switch** Alias for the `-Help` parameter
+
+## Examples
+
+### Example 1
+
+> Import all OUs from the OUs.csv file.
+
+```powershell
+.\src\main.ps1 -Entity OU -File .\OUs.csv
+```
+
+### Example 2
+
+> Import all OUs from the OUs.csv file and print a summary of all the actions performed at the end.
+
+```powershell
+.\src\main.ps1 -Entity OU -File .\OUs.csv -MakeReport
+```
+
+### Example 3
+
+> Import all OUs from the OUs.csv file and only print errors to the console.
+
+```powershell
+.\src\main.ps1 -Entity OU -File .\OUs.csv -ConsoleVerbosity 3
+```
+
+### Example 4
+
+> Export all OUs to the OUs.csv file.
+
+```powershell
+.\src\main.ps1 -Entity OU -File .\OUs.csv -Export
+```
