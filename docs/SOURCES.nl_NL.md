@@ -1,27 +1,27 @@
-# Sources
+# Bronnen
 
 ## TabbyML
 
-The [TabbyML](https://www.tabbyml.com/) IDE plugin was used for code completions.
+De [TabbyML](https://www.tabbyml.com/) IDE-plugin werd gebruikt voor code-aanvullingen.
 
-### Models used
+### Gebruikte modellen
 - TabbyML/DeepseekCoder-6.7B
 - TabbyML/Qwen2.5-Coder-14B
 
 ## ChatGPT
 
-[ChatGPT](https://chat.openai.com/chat) was used for help with miscellaneous code help and locale translations.
+[ChatGPT](https://chat.openai.com/chat) werd gebruikt voor hulp met diverse codevragen en lokale vertalingen.
 
 ### Chats
 
 - [Locales](https://chatgpt.com/share/67799001-a104-8002-88cb-85aa2b6fc26f)
-- [Example Data](https://chatgpt.com/share/67799015-9420-8002-811f-8a06c5d351f5)
-- [PowerShell Sorting](https://chatgpt.com/share/67799028-df94-8002-9c4c-919ba781a2e7)
-- [Integration Testing](https://chatgpt.com/share/67799045-735c-8002-9b8a-63f577a211dc)
+- [Voorbeeldgegevens](https://chatgpt.com/share/67799015-9420-8002-811f-8a06c5d351f5)
+- [PowerShell Sorteren](https://chatgpt.com/share/67799028-df94-8002-9c4c-919ba781a2e7)
+- [Integratietesten](https://chatgpt.com/share/67799045-735c-8002-9b8a-63f577a211dc)
 - [Invoke-Expression](https://chatgpt.com/share/67799057-652c-8002-a11d-beddd17a8015)
-- [PS Form File Browser](https://chatgpt.com/share/67799064-ef88-8002-9fab-1cbb36540a36)
-- [Action methodology](https://chatgpt.com/share/67799092-0ce4-8002-8f18-769b9ab51180)
-- [Docs Translation](https://chatgpt.com/share/677a898f-0bc8-8002-9f69-996fd80976e2)
+- [PS Form Bestand Browser](https://chatgpt.com/share/67799064-ef88-8002-9fab-1cbb36540a36)
+- [Actiemethodologie](https://chatgpt.com/share/67799092-0ce4-8002-8f18-769b9ab51180)
+- [Docu. Vertaling](https://chatgpt.com/share/677a898f-0bc8-8002-9f69-996fd80976e2)
 
 ## Websites
 
